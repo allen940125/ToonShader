@@ -16,8 +16,40 @@ CBUFFER_START(UnityPerMaterial)
     float4 _BaseMap_ST;     // 貼圖的 Tiling (xy) 與 Offset (zw)
     half4  _BaseColor;      // 基礎顏色 (half 精度足以應付色彩數據，節省暫存器)
 
+    float _AlphaClip;
+    float _Dither;
+    float _UseNormalMap;
+    float _CullMode;
+    float _AddLightOn;
+    float _ReflectionOn;
+    float _EmissionOn;
+    float _UseLighting;
+    float _UseFresnel;
+    float _UseOutline;
+    float _UseMatCap;
+    float _UseAnisotropic;
+
+    // Alpha Clipping
+    float _AlphaClipThreshold;
+
+    // Dither
+    float _DitherThreshold;
+    float _DitherScale;
+
     // 法線參數
     float _NormalScale;     // 法線強度 (float 確保純量計算精度)
+
+    // 附加光源
+    float _AddLightIntensity;
+
+    // 反射
+    float _ReflectionIntensity;
+    float _Smoothness;
+    float _Metallic;
+
+    // 自發光
+    half4 _EmissionColor;
+    float4 _EmissionMap_ST;
 
     // 環境光控制參數
     half _MinBrightness;
@@ -45,9 +77,12 @@ CBUFFER_END
 // 紋理與採樣器分離宣告
 // 邏輯目的：允許不同紋理共用同一個取樣器 (Sampler) 以突破硬體取樣器數量上限。
 TEXTURE2D(_BaseMap);
+TEXTURE2D(_DitherMap);
 TEXTURE2D(_NormalMap);
 TEXTURE2D(_MatCapMap);
+TEXTURE2D(_EmissionMap);
 SAMPLER(sampler_BaseMap);
+SAMPLER(sampler_DitherMap);
 SAMPLER(sampler_NormalMap); // 保留獨立取樣器：法線貼圖通常需要線性 (Linear) 且無 Mipmap 過濾，與 BaseMap 可能不同。
 
 // ==============================================================================
@@ -90,6 +125,7 @@ struct Varyings
     float3 positionWS   : TEXCOORD1;   // 世界空間座標
     float3 normalWS     : NORMAL;      // 世界空間法線
     float4 tangentWS    : TANGENT;     // 世界空間切線 (xyz 為方向，w 仍為符號以供後續計算副切線)
+    float4 screenPos : TEXCOORD5;
     UNITY_VERTEX_INPUT_INSTANCE_ID 
 };
 

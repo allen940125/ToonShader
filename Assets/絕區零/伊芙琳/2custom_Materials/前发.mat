@@ -12,6 +12,10 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ADD_LIGHT_ON
+  - _EMISSION_ON
+  - _REFLECTION_ON
+  - _USE_LIGHTING
   - _USE_OUTLINE
   m_InvalidKeywords:
   - _EMISSIVE_SIMPLE
@@ -101,6 +105,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DistortionVectorMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DitherMap:
+        m_Texture: {fileID: 2800000, guid: e3d24661c1e055f45a7560c033dbb837, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -272,12 +280,15 @@ Material:
     - _AR_OffsetV: 0.3
     - _ATDistance: 1
     - _AbyssShadowBias: 0.05
+    - _AddLightIntensity: 1
+    - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
     - _Add_Antipodean_RimLight: 0
     - _AdditionalLightIgnoreCelShade: 0.9
     - _AlbedoAffectEmissive: 0
     - _Alpha: 1
     - _AlphaClip: 0
+    - _AlphaClipThreshold: 0.5
     - _AlphaCutoff: 0.5
     - _AlphaCutoffEnable: 0
     - _AlphaCutoffPostpass: 0.5
@@ -298,7 +309,7 @@ Material:
     - _Ap_RimLight_Power: 0.1
     - _AutoRenderQueue: 1
     - _BandSmoothness: 0.05
-    - _BandThreshold: 0.326
+    - _BandThreshold: 0.5
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
     - _BaseColor_Step: 0.026
@@ -352,12 +363,16 @@ Material:
     - _DistortionSrcBlend: 0
     - _DistortionVectorBias: -1
     - _DistortionVectorScale: 2
+    - _Dither: 0
+    - _DitherScale: 10
+    - _DitherThreshold: 0.5
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EMISSIVE: 0
     - _EmissionMulByBaseColor: 0
+    - _EmissionOn: 1
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 1
@@ -463,6 +478,8 @@ Material:
     - _ReceiveShadowMappingPosOffset: 0
     - _ReceiveShadows: 1
     - _ReceivesSSR: 1
+    - _ReflectionIntensity: 1
+    - _ReflectionOn: 1
     - _RefractionModel: 0
     - _RimLight: 1
     - _RimLightAlign: 0
@@ -566,7 +583,7 @@ Material:
     - _UseEmission: 0
     - _UseEmissiveIntensity: 0
     - _UseFresnel: 0
-    - _UseLighting: 0
+    - _UseLighting: 1
     - _UseMatCap: 0
     - _UseNormalMap: 0
     - _UseOcclusion: 0

@@ -23,8 +23,16 @@ inline void InitializeSurfaceData(Varyings input, out AbyssSurfaceData surface)
     // 数值 (2,3,-5) 表示：从顶点出发，往 +X 走 2，往 +Y 走 3，往 -Z 走 5，就到了摄像机。
     // 所以方向是 朝着摄像机。这就是 viewDir 的定义。
     surface.viewDirWS = normalize(GetCameraPositionWS() - input.positionWS);
-    surface.emission = 0; // 預設發光量歸零，避免出現未初始化的垃圾數據
-
+    
+    // 在 InitializeSurfaceData 內部正確處理自發光
+    #if defined(_EMISSION_ON)
+        float2 emissionUV = input.uv * _EmissionMap_ST.xy + _EmissionMap_ST.zw;
+        half4 emissionTex = SAMPLE_TEXTURE2D(_EmissionMap, sampler_BaseMap, emissionUV); // 可共用 BaseMap 取樣器
+        surface.emission = emissionTex.rgb * _EmissionColor.rgb;
+    #else
+        surface.emission = 0;
+    #endif
+    
     // 2. 基礎色彩取樣
     // 透過巨集 SAMPLE_TEXTURE2D 進行貼圖取樣，並與材質屬性 _BaseColor 相乘
     // half4 是一个 向量类型，包含 4个分量，比如 (r, g, b, a)。

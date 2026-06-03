@@ -17,6 +17,26 @@
     #include "Effect_AnisotropicHighlight.hlsl"
 #endif
 
+// 執行 Alpha Clipping，若低於閾值則丟棄像素
+inline void DoAlphaClip(half alpha)
+{
+    #if defined(_ALPHA_CLIP)
+        clip(alpha - _AlphaClipThreshold);
+    #endif
+}
+
+inline void DoDitherClip(half alpha, float2 screenPos)
+{
+    #if defined(_DITHER)
+        float2 ditherUV = screenPos * _ScreenParams.xy / _DitherScale;
+        half dither = SAMPLE_TEXTURE2D(_DitherMap, sampler_DitherMap, ditherUV).a;
+            
+        // 將材質本身的 Alpha 與 Dither 控制參數相乘，作為最終的「目標不透明度」
+        // 當目標不透明度小於 Dither 貼圖上的數值時，數值為負，觸發 clip
+        clip((alpha * _DitherThreshold) - dither);
+    #endif
+}
+
 // ===============================
 // 統一的頂點著色器 (Vertex Shader)
 // 邏輯目的：處理多個 Pass 共通的空間轉換，並根據巨集決定最終裁剪空間座標的計算方式。
@@ -67,8 +87,12 @@ Varyings vert(Attributes input)
     #else 
         // 預設 (FORWARD 或 DEPTH Pass)：標準的物件至裁剪空間轉換
         output.positionHCS = TransformObjectToHClip(input.positionOS.xyz);
+    
+    
     #endif
 
+    output.screenPos = ComputeScreenPos(output.positionHCS);
+    
     return output;
 }
 
@@ -81,54 +105,74 @@ half4 frag(Varyings input) : SV_Target
     // GPU Instancing 設置
     UNITY_SETUP_INSTANCE_ID(input);
 
-    // 陰影與深度 Pass 不需輸出顏色，直接返回 0 節省效能
+    // ---- Shadow Caster ----
     #if defined(PASS_SHADOW_CASTER)
-    return 0;
-    #elif defined(PASS_DEPTH)
-    return 0;
+        half alpha = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a * _BaseColor.a;
+        DoAlphaClip(alpha);
+        DoDitherClip(alpha, input.screenPos.xy / input.screenPos.w);
+        return 0;
+    #endif
+
+    // ---- Depth Normals ----
+    #if defined(PASS_DEPTH)
+        half alpha = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a * _BaseColor.a;
+        DoAlphaClip(alpha);
+        DoDitherClip(alpha, input.screenPos.xy / input.screenPos.w);
+        return 0;
+    #endif
+
+    // ---- Outline ----
+    #if defined(PASS_OUTLINE)
+        half alpha = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a * _BaseColor.a;
+        DoAlphaClip(alpha);
+        // 通常描邊不建議加 Dither，但若需要也可留著
+        #if defined(_DITHER)
+            DoDitherClip(alpha, input.screenPos.xy / input.screenPos.w);
+        #endif
+            return _OutlineColor;
+    #endif
     
-    // 描邊 Pass 直接輸出材質設定的純色
-    #elif defined(PASS_OUTLINE)
-    return _OutlineColor;
+    #if defined(PASS_FORWARD)
+        
+        AbyssSurfaceData surface;
+            
+        // ---- 1. 初始化 SurfaceData ----
+        // 提取所有幾何數據與基礎貼圖資訊
+        InitializeSurfaceData(input, surface);
+        
+        DoAlphaClip(surface.alpha);   // 新增這行
+        DoDitherClip(surface.alpha, input.screenPos.xy / input.screenPos.w);
+        
+        // ---- 2. 環境設定與主光源獲取 ----
+        half3 finalColor = surface.albedo; 
+        
+        // 轉換世界座標至陰影貼圖空間，並取得主光源 (Main Light) 資訊 (方向、顏色、陰影衰減)
+        float4 shadowCoord = TransformWorldToShadowCoord(surface.positionWS);
+        Light mainLight = GetMainLight(shadowCoord);
+        
+        // ---- 3. 特效組件疊加 (透過巨集開關控制) ----
+        #if defined(_USE_LIGHTING)
+            finalColor = ComputeFinalLighting(surface, mainLight);
+        #endif
 
-    // 前向渲染 Pass (Forward) - 核心光照與特效邏輯
-    #elif defined(PASS_FORWARD)
-        
-    AbyssSurfaceData surface;
-        
-    // ---- 1. 初始化 SurfaceData ----
-    // 提取所有幾何數據與基礎貼圖資訊
-    InitializeSurfaceData(input, surface);
+        #if defined(_USE_FRESNEL)
+            ApplyFresnel(surface); // 通常 Fresnel 會將結果寫入 surface.emission
+        #endif
+            
+        #if defined(_USE_MATCAP)
+            ApplyMatCap(surface);  // MatCap 同樣可能修改 albedo 或 emission
+        #endif
+            
+        #if defined(_USE_ANISOTROPIC)
+            ApplyAnisotropicHighlight(surface, mainLight); // 各向異性高光疊加
+        #endif
 
-    // ---- 2. 環境設定與主光源獲取 ----
-    half3 finalColor = surface.albedo; 
-    
-    // 轉換世界座標至陰影貼圖空間，並取得主光源 (Main Light) 資訊 (方向、顏色、陰影衰減)
-    float4 shadowCoord = TransformWorldToShadowCoord(surface.positionWS);
-    Light mainLight = GetMainLight(shadowCoord);
-    
-    // ---- 3. 特效組件疊加 (透過巨集開關控制) ----
-    #if defined(_USE_LIGHTING)
-    finalColor = ApplyBasicLighting(surface, mainLight);
-    #endif
-
-    #if defined(_USE_FRESNEL)
-    ApplyFresnel(surface); // 通常 Fresnel 會將結果寫入 surface.emission
-    #endif
-        
-    #if defined(_USE_MATCAP)
-    ApplyMatCap(surface);  // MatCap 同樣可能修改 albedo 或 emission
-    #endif
-        
-    #if defined(_USE_ANISOTROPIC)
-    ApplyAnisotropicHighlight(surface, mainLight); // 各向異性高光疊加
-    #endif
-
-    // ---- 4. 最終合成輸出 ----
-    // 結合基礎色與所有的附加自發光/高光計算
-    finalColor += surface.emission; 
-        
-    return half4(finalColor, surface.alpha);
+        // ---- 4. 最終合成輸出 ----
+        // 結合基礎色與所有的附加自發光/高光計算
+        finalColor += surface.emission; // 保留原本 Fresnel 等寫入的 emission
+        finalColor += GetEmission(input.uv); // 新增的自發光貼圖
+            
+        return half4(finalColor, surface.alpha);
     #endif
 
     // Fallback 顏色，若未定義任何 Pass 巨集則輸出亮洋紅色 (Magenta)，用於快速除錯 (Debug)
