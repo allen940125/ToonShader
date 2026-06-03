@@ -95,7 +95,7 @@ inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight)
     // 檢查是否為無貼圖的純白預設狀態
     if (rampColor.r > 0.99 && rampColor.g > 0.99 && rampColor.b > 0.99)
     {
-        // ---- 軌道 A：Fallback 數學卡通渲染 ----
+        // ---- 軌道 A：Fallback 數學卡通渲染 (修正版) ----
         float minBand = _BandThreshold - _BandSmoothness;
         float maxBand = _BandThreshold + _BandSmoothness;
         float mathBand = smoothstep(minBand, maxBand, halfLambert);
@@ -103,33 +103,43 @@ inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight)
         float shadowFactor = lerp(1.0, mainLight.shadowAttenuation, _ShadowIntensity);
         mathBand *= shadowFactor;
 
-        half3 indirectDiffuse = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
-
+        // 【修正 1】：統一亮暗部的基礎光源能量，讓暗部不再與主光斷聯
         half3 litColor = surface.albedo * mainLight.color;
-        half3 shadowColor = surface.albedo * _ShadowTint.rgb * (indirectDiffuse + _MinBrightness);
+        half3 shadowColor = surface.albedo * _ShadowTint.rgb * mainLight.color;
         
         finalDiffuse = lerp(shadowColor, litColor, mathBand);
+
+        // 【修正 2】：環境光必須是全局補償，疊加在最後，確保任何角度都有基礎可見度
+        half3 indirectDiffuse = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
+        finalDiffuse += surface.albedo * indirectDiffuse * _MinBrightness; 
     }
     else
     {
-        // 亮部：材質原色 * Ramp貼圖色 * 亮部微調色 * 主光源色
+        // ---- 軌道 B：高階 Ramp 貼圖 + 數學 Border 渲染 (日夜交替升級版) ----
+        
+        // 1. 取得全局環境光 (GI) - 這是感受日夜變化的「感測器」
+        half3 indirectDiffuse = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
+
+        // 2. 亮部：只受太陽/月亮 (主光) 影響
+        half3 rampColor = SAMPLE_TEXTURE2D(_RampMap, sampler_BaseMap, float2(halfLambert, 0.5)).rgb;
         half3 litColor = surface.albedo * rampColor * _RampColorLight.rgb * mainLight.color;
 
-        // 陰影色：材質原色 * 陰影微調色 * 主光源色 (當物理遮蔽時的顏色底線)
-        half3 shadowColor = surface.albedo * _RampColorShadow.rgb * mainLight.color;
+        // 【核心大改】3. 暗部：捨棄主光，改由 GI 接管
+        half3 shadowRampColor = SAMPLE_TEXTURE2D(_RampMap, sampler_BaseMap, float2(0.01, 0.5)).rgb;
+        // 注意看！這裡乘的是 indirectDiffuse！
+        // 這樣白天陰影會有天空的藍色，晚上 GI 變暗，陰影就會自然融入黑夜
+        half3 shadowColor = surface.albedo * shadowRampColor * _RampColorShadow.rgb * indirectDiffuse;
 
-        // 利用物理陰影 (physicalAtten) 作為權重，在陰影色與 Ramp 色之間切換
+        // 4. 物理陰影切換
         finalDiffuse = lerp(shadowColor, litColor, physicalAtten);
 
-        // 疊加 Border 交界色
+        // 5. 交界線 (同樣受物理衰減與主光影響)
         float borderBand = smoothstep(_BorderThreshold - _BorderWidth, _BorderThreshold, halfLambert) 
                          - smoothstep(_BorderThreshold, _BorderThreshold + _BorderWidth, halfLambert);
-        
-        // 交界線同樣需要受物理陰影壓制，避免在全黑環境下發光
         finalDiffuse = saturate(finalDiffuse + (_BorderColor.rgb * borderBand * surface.albedo * physicalAtten));
 
-        // 環境光補償
-        half3 indirectDiffuse = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
+        // 6. 全局環境補光 (讓 _AmbientColor 變成 GI 的染色濾鏡)
+        // 晚上 indirectDiffuse 為 0 時，這裡也會歸零，不會產生突兀的發光
         finalDiffuse += surface.albedo * indirectDiffuse * _AmbientColor.rgb;
     }
 
