@@ -13,70 +13,73 @@
 // 將導致 Draw Call 無法合併，嚴重影響渲染效能。
 // ==============================================================================
 CBUFFER_START(UnityPerMaterial)
-    float4 _BaseMap_ST;     // 貼圖的 Tiling (xy) 與 Offset (zw)
-    half4  _BaseColor;      // 基礎顏色 (half 精度足以應付色彩數據，節省暫存器)
 
-    float _AlphaClip;
-    float _Dither;
-    float _UseNormalMap;
-    float _CullMode;
-    float _AddLightOn;
-    float _ReflectionOn;
-    float _EmissionOn;
-    float _UseLighting;
-    float _UseFresnel;
-    float _UseOutline;
-    float _UseMatCap;
-    float _UseAnisotropic;
+    // [空間轉換與 TilingOffset 向量]
+    float4 _BaseMap_ST;         
+    float4 _EmissionMap_ST;     
 
-    // Alpha Clipping
-    float _AlphaClipThreshold;
+    // [色彩數據向量]
+    half4  _BaseColor;          
+    half4  _EmissionColor;      
+    half4  _RampColorLight;     
+    half4  _RampColorShadow;    
+    half4  _AmbientColor;       
+    half4  _BorderColor;        
+    half4  _SpecularColor;      
+    half4  _FresnelColor;       
+    half4  _OutlineColor;       
+    half4  _AnisoColor;         
+    half4  _ShadowTint;         // 補回：陰影染色
 
-    // Dither
-    float _DitherThreshold;
-    float _DitherScale;
+    // [狀態控制與開關]
+    float  _Transparency_Mode;  
+    float  _CullMode;           
+    float  _UseLighting;        
+    float  _AddLightOn;         
+    float  _ReflectionOn;       
+    float  _UseSpecular;        
+    float  _UseOutline;         
 
-    // 法線參數
-    float _NormalScale;     // 法線強度 (float 確保純量計算精度)
+    // [空間座標與幾何位移純量]
+    float  _OutlineWidth;       
 
-    // 附加光源
-    float _AddLightIntensity;
+    // [標量控制參數與強度滑桿]
+    half   _AlphaClipThreshold; 
+    half   _DitherThreshold;    
+    half   _DitherScale;        
+    half   _NormalScale;        
 
-    // 反射
-    float _ReflectionIntensity;
-    float _Smoothness;
-    float _Metallic;
+    half   _MinBrightness;      
+    half   _IndirectLightMultiplier; 
+    half   _AddLightIntensity;  
 
-    // 自發光
-    half4 _EmissionColor;
-    float4 _EmissionMap_ST;
+    half   _BorderThreshold;    
+    half   _BorderWidth;        
+    half   _SpecularStep;       
+    half   _SpecularFeather;    
 
-    // 環境光控制參數
-    half _MinBrightness;
-    half _IndirectLightMultiplier;
+    half   _BandThreshold;      // 補回：卡通渲染明暗交界閾值
+    half   _BandSmoothness;     // 補回：邊緣平滑度
+    half   _ShadowIntensity;    // 補回：陰影強度
 
-    // 陰影參數
-    half4 _ShadowTint;      // 陰影染色
-    float _BandThreshold;   // 卡通渲染的明暗交界閾值
-    float _BandSmoothness;  // 邊緣平滑度
-    float _ShadowIntensity; // 陰影濃度
+    half   _ReflectionIntensity;
+    half   _Smoothness;         
+    half   _Metallic;           
 
-    // 邊緣光 (Fresnel) 參數
-    half4  _FresnelColor;
-    float  _FresnelPower;   // 邊緣光衰減指數
-    
-    // 描邊 (Outline) 參數
-    float  _OutlineWidth;
-    half4  _OutlineColor;
+    half   _FresnelPower;       
+    half   _FresnelIntensity;   
 
-    // 各向異性高光 (Anisotropic Highlight) 參數
-    float  _AnisoPower;
-    half4  _AnisoColor;
+    half   _MatCapIntensity;    
+
+    half   _AnisoPower;         
+    half   _AnisoIntensity;     
+
 CBUFFER_END
 
 // 紋理與採樣器分離宣告
 // 邏輯目的：允許不同紋理共用同一個取樣器 (Sampler) 以突破硬體取樣器數量上限。
 TEXTURE2D(_BaseMap);
+TEXTURE2D(_RampMap);
 TEXTURE2D(_DitherMap);
 TEXTURE2D(_NormalMap);
 TEXTURE2D(_MatCapMap);

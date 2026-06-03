@@ -25,13 +25,9 @@ inline void InitializeSurfaceData(Varyings input, out AbyssSurfaceData surface)
     surface.viewDirWS = normalize(GetCameraPositionWS() - input.positionWS);
     
     // 在 InitializeSurfaceData 內部正確處理自發光
-    #if defined(_EMISSION_ON)
-        float2 emissionUV = input.uv * _EmissionMap_ST.xy + _EmissionMap_ST.zw;
-        half4 emissionTex = SAMPLE_TEXTURE2D(_EmissionMap, sampler_BaseMap, emissionUV); // 可共用 BaseMap 取樣器
-        surface.emission = emissionTex.rgb * _EmissionColor.rgb;
-    #else
-        surface.emission = 0;
-    #endif
+    float2 emissionUV = input.uv * _EmissionMap_ST.xy + _EmissionMap_ST.zw;
+    half4 emissionTex = SAMPLE_TEXTURE2D(_EmissionMap, sampler_BaseMap, emissionUV); // 可共用 BaseMap 取樣器
+    surface.emission = emissionTex.rgb * _EmissionColor.rgb;
     
     // 2. 基礎色彩取樣
     // 透過巨集 SAMPLE_TEXTURE2D 進行貼圖取樣，並與材質屬性 _BaseColor 相乘
@@ -50,23 +46,18 @@ inline void InitializeSurfaceData(Varyings input, out AbyssSurfaceData surface)
     // 確保經過插值後的法線與切線長度仍為 1
     float3 normalWS = normalize(input.normalWS);
     float3 tangentWS = normalize(input.tangentWS.xyz);
-
-    #if defined(_USE_NORMALMAP)
-        // 取樣法線貼圖
-        half4 nTex = SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, input.uv);
-        // 解包法線貼圖並套用強度縮放 (_NormalScale)
-        float3 tangentSpaceNormal = UnpackNormalScale(nTex, _NormalScale);
+    
+    // 取樣法線貼圖
+    half4 nTex = SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, input.uv);
+    // 解包法線貼圖並套用強度縮放 (_NormalScale)
+    float3 tangentSpaceNormal = UnpackNormalScale(nTex, _NormalScale);
         
-        // 構建 TBN 矩陣 (Tangent, Bitangent, Normal)
-        // 利用叉積 (cross) 求出副切線 (Bitangent)，並乘上 input.tangentWS.w 修正鏡像 UV 導致的反向問題
-        float3 bitangentWS = cross(normalWS, tangentWS) * input.tangentWS.w;
+    // 構建 TBN 矩陣 (Tangent, Bitangent, Normal)
+    // 利用叉積 (cross) 求出副切線 (Bitangent)，並乘上 input.tangentWS.w 修正鏡像 UV 導致的反向問題
+    float3 bitangentWS = cross(normalWS, tangentWS) * input.tangentWS.w;
         
-        // 將切線空間 (Tangent Space) 的法線轉換至世界空間 (World Space)
-        surface.normalWS = normalize(TransformTangentToWorld(tangentSpaceNormal, half3x3(tangentWS, bitangentWS, normalWS)));
-    #else
-        // 若未使用法線貼圖，直接使用幾何法線
-        surface.normalWS = normalWS;
-    #endif
+    // 將切線空間 (Tangent Space) 的法線轉換至世界空間 (World Space)
+    surface.normalWS = normalize(TransformTangentToWorld(tangentSpaceNormal, half3x3(tangentWS, bitangentWS, normalWS)));
 
     surface.tangentWS = tangentWS;
 }

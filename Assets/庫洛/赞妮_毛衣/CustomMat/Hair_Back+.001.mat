@@ -26,8 +26,10 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ADD_LIGHT_ON
+  - _TRANSPARENCYMODE_OPAQUE
+  - _TRANSPARENCY_MODE_CUTOUT
+  m_InvalidKeywords:
   - _ALPHA_CLIP
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -104,6 +106,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DissolveNoiseMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DitherMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -247,6 +253,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RampMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ReflectionColorTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -320,6 +330,7 @@ Material:
     - _AlphaMaskScale: 1
     - _AlphaMaskValue: 0
     - _AlphaToMask: 1
+    - _AnisoIntensity: 0
     - _AnisoPower: 64
     - _Anisotropy2MatCap: 0
     - _Anisotropy2MatCap2nd: 0
@@ -383,7 +394,10 @@ Material:
     - _DissolveNoiseStrength: 0.1
     - _DistanceFadeMode: 0
     - _DistanceFadeRimFresnelPower: 5
+    - _Dither: 0
     - _DitherMaxValue: 255
+    - _DitherScale: 10
+    - _DitherThreshold: 0.5
     - _DstBlend: 0
     - _DstBlendAlpha: 10
     - _DstBlendAlphaFA: 1
@@ -410,6 +424,7 @@ Material:
     - _EnvRimBorder: 3
     - _EnvironmentReflections: 1
     - _FlipNormal: 1
+    - _FresnelIntensity: 0
     - _FresnelPower: 2
     - _GSAAStrength: 0
     - _GlitterAngleRandomize: 0
@@ -511,6 +526,7 @@ Material:
     - _MatCapBumpScale: 1
     - _MatCapCustomNormal: 0
     - _MatCapEnableLighting: 1
+    - _MatCapIntensity: 0
     - _MatCapLod: 0
     - _MatCapMainStrength: 0
     - _MatCapNormalStrength: 1
@@ -569,6 +585,8 @@ Material:
     - _Parallax: 0.02
     - _ParallaxOffset: 0.5
     - _QueueOffset: 0
+    - _RampPosition: 0.5
+    - _RampTransition: 0.05
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
     - _ReflectionApplyTransparency: 1
@@ -612,6 +630,7 @@ Material:
     - _ShadowBorderMaskLOD: 0
     - _ShadowBorderRange: 0
     - _ShadowColorType: 0
+    - _ShadowDepth: 0.4
     - _ShadowEnvStrength: 1
     - _ShadowFlatBlur: 1
     - _ShadowFlatBorder: 1
@@ -623,6 +642,7 @@ Material:
     - _ShadowReceive: 0
     - _ShadowStrength: 0.65
     - _ShadowStrengthMaskLOD: 0
+    - _ShadowThreshold: 0.2
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
@@ -648,6 +668,8 @@ Material:
     - _TessFactorMax: 3
     - _TessShrink: 0
     - _TessStrength: 0.5
+    - _TransparencyMode: 0
+    - _Transparency_Mode: 1
     - _TransparentMode: 0
     - _UDIMDiscardCompile: 0
     - _UDIMDiscardMode: 0
@@ -707,6 +729,7 @@ Material:
     - _lilShadowCasterBias: 0
     - _lilToonVersion: 45
     m_Colors:
+    - _AmbientColor: {r: 0.5, g: 0.5, b: 0.6, a: 1}
     - _AnisoColor: {r: 1, g: 1, b: 1, a: 1}
     - _AudioLinkDefaultValue: {r: 0, g: 0, b: 2, a: 0.75}
     - _AudioLinkLocalMapParams: {r: 120, g: 1, b: 0, a: 0}
@@ -722,6 +745,9 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color2nd: {r: 1, g: 1, b: 1, a: 1}
     - _Color3rd: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorBright: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorDeep: {r: 0.29999998, g: 0.29999998, b: 0.39999998, a: 1}
+    - _ColorShallow: {r: 0.7, g: 0.7, b: 0.8, a: 1}
     - _DissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _DissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _DissolveParams: {r: 0, g: 0, b: 0.5, a: 0.1}
@@ -735,7 +761,7 @@ Material:
     - _Emission2ndMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionBlendMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
@@ -769,6 +795,8 @@ Material:
     - _OutlineLitColor: {r: 1, g: 0.19999996, b: 0, a: 0}
     - _OutlineTexHSVG: {r: 0, g: 1, b: 1, a: 1}
     - _OutlineTex_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _RampColorLight: {r: 1, g: 1, b: 1, a: 1}
+    - _RampColorShadow: {r: 0.29999998, g: 0.29999998, b: 0.39999998, a: 1}
     - _ReflectionColor: {r: 0.6754716, g: 0.6754716, b: 0.6754716, a: 1}
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}

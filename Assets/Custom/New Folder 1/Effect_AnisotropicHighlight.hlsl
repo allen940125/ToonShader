@@ -4,6 +4,8 @@
 // 假設你已經將 tangentWS (世界空間切線) 加入了你的 AbyssSurfaceData 結構中
 inline void ApplyAnisotropicHighlight(inout AbyssSurfaceData surface, Light mainLight)
 {
+    if (_AnisoIntensity <= 0.001) return;
+    
     // 1. 計算半角向量 H
     float3 H = normalize(mainLight.direction + surface.viewDirWS);
     
@@ -28,7 +30,7 @@ inline void ApplyAnisotropicHighlight(inout AbyssSurfaceData surface, Light main
     // 這裡示範最簡單的純亮點疊加
     
     // 7. 將高光結果加上去 (這裡我們直接加在 emission，或你該加的 Specular 緩衝區)
-    surface.emission += specularIntensity * color;
+    surface.emission += specularIntensity * color * _AnisoIntensity;
 }
 
 #endif

@@ -5,6 +5,8 @@
 
 inline void ApplyMatCap(inout AbyssSurfaceData surface)
 {
+    if (_MatCapIntensity <= 0.001) return;
+    
     // 1. 【關鍵修正】使用逐像素的觀察向量，而非攝影機鏡頭朝向
     float3 viewDir = surface.viewDirWS; 
     

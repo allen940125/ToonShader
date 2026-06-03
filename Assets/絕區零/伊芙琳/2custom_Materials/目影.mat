@@ -26,11 +26,14 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ADD_LIGHT_ON
-  - _EMISSION_ON
   - _REFLECTION_ON
+  - _TRANSPARENCYMODE_OPAQUE
+  - _TRANSPARENCY_MODE_OPAQUE
   - _USE_LIGHTING
   - _USE_OUTLINE
   m_InvalidKeywords:
+  - _DITHER
+  - _EMISSION_ON
   - _EMISSIVE_SIMPLE
   - _IS_ANGELRING_OFF
   - _IS_OUTLINE_CLIPPING_NO
@@ -121,7 +124,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DitherMap:
-        m_Texture: {fileID: 2800000, guid: e3d24661c1e055f45a7560c033dbb837, type: 3}
+        m_Texture: {fileID: 2800000, guid: 81200413a40918d4d8702e94db29911c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -316,6 +319,7 @@ Material:
     - _AngelRing: 0
     - _AngelRingOverridden: 0
     - _AngelRingVisible: 1
+    - _AnisoIntensity: 0
     - _AnisoPower: 64
     - _Anisotropy: 0
     - _Ap_RimLight_FeatherOff: 0
@@ -376,9 +380,9 @@ Material:
     - _DistortionSrcBlend: 0
     - _DistortionVectorBias: -1
     - _DistortionVectorScale: 2
-    - _Dither: 0
+    - _Dither: 1
     - _DitherScale: 10
-    - _DitherThreshold: 0.5
+    - _DitherThreshold: 1
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 0
@@ -398,6 +402,7 @@ Material:
     - _Farthest_Distance: 100
     - _FirstShadeOverridden: 0
     - _FirstShadeVisible: 1
+    - _FresnelIntensity: 0
     - _FresnelPower: 2
     - _GI_Intensity: 0
     - _GlossMapScale: 1
@@ -458,6 +463,7 @@ Material:
     - _LinkDetailsWithBase: 1
     - _MainLightIgnoreCelShade: 0
     - _MatCap: 0
+    - _MatCapIntensity: 0
     - _MaterialID: 1
     - _Metallic: 0
     - _MinBrightness: 0.1
@@ -566,6 +572,8 @@ Material:
     - _ToonThreshold: 0
     - _TransmissionEnable: 1
     - _TransmissionMask: 1
+    - _TransparencyMode: 0
+    - _Transparency_Mode: 0
     - _TransparentBackfaceEnable: 0
     - _TransparentCullMode: 2
     - _TransparentDepthPostpassEnable: 0

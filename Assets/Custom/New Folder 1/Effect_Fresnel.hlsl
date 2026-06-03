@@ -4,6 +4,8 @@
 // 接收標準包裹，直接修改裡面的 emission
 inline void ApplyFresnel(inout AbyssSurfaceData surface)
 {
+    if (_FresnelIntensity <= 0.001) return;
+    
     float NdotV = saturate(dot(surface.normalWS, surface.viewDirWS));
     float fresnelTerm = pow(1.0 - NdotV, _FresnelPower);
     

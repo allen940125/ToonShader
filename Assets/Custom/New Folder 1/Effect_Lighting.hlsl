@@ -70,13 +70,9 @@ inline half3 GetIndirectSpecular(float3 positionWS, float3 normalWS, float3 view
 // ------------------------------------------------------------------
 inline half3 GetEmission(float2 baseUV)
 {
-    half3 emission = 0;
-    #if defined(_EMISSION_ON)
-        float2 uv = baseUV * _EmissionMap_ST.xy + _EmissionMap_ST.zw;
-        half4 emissionTex = SAMPLE_TEXTURE2D(_EmissionMap, sampler_BaseMap, uv);
-        emission = emissionTex.rgb * _EmissionColor.rgb;
-    #endif
-    return emission;
+    float2 uv = baseUV * _EmissionMap_ST.xy + _EmissionMap_ST.zw;
+    half4 emissionTex = SAMPLE_TEXTURE2D(_EmissionMap, sampler_BaseMap, uv);
+    return emissionTex.rgb * _EmissionColor.rgb;
 }
 
 // ------------------------------------------------------------------
@@ -84,31 +80,75 @@ inline half3 GetEmission(float2 baseUV)
 // ------------------------------------------------------------------
 inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight)
 {
-    // ---- 直接主光 (你的階梯光) ----
+    // ---- 1. PBR 物理衰減提取 ----
+    float physicalAtten = mainLight.distanceAttenuation * mainLight.shadowAttenuation;
+    
+    // ---- 2. 幾何角度 (只看模型表面與光線的純粹角度) ----
     float NdotL = dot(surface.normalWS, mainLight.direction);
     float halfLambert = NdotL * 0.5 + 0.5;
-    float minBand = _BandThreshold - _BandSmoothness;
-    float maxBand = _BandThreshold + _BandSmoothness;
-    float lightBand = smoothstep(minBand, maxBand, halfLambert);
-    float shadowAtten = lerp(1.0, mainLight.shadowAttenuation, _ShadowIntensity);
-    lightBand *= shadowAtten;
 
-    // ---- 間接漫反射 ----
-    half3 indirectDiffuse = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
+    half3 finalDiffuse = 0;
 
-    // ---- 主光顏色混合 ----
-    half3 litColor = surface.albedo * (mainLight.color + indirectDiffuse);
-    half3 shadowColor = surface.albedo * _ShadowTint.rgb * indirectDiffuse;
-    half3 mainResult = lerp(shadowColor, litColor, lightBand);
+    // 【核心修正】：Ramp 採樣的 UV 絕對只吃 halfLambert，不准乘上 physicalAtten
+    half3 rampColor = SAMPLE_TEXTURE2D(_RampMap, sampler_BaseMap, float2(halfLambert, 0.5)).rgb;
 
-    // ---- 疊加附加光源 ----
+    // 檢查是否為無貼圖的純白預設狀態
+    if (rampColor.r > 0.99 && rampColor.g > 0.99 && rampColor.b > 0.99)
+    {
+        // ---- 軌道 A：Fallback 數學卡通渲染 ----
+        float minBand = _BandThreshold - _BandSmoothness;
+        float maxBand = _BandThreshold + _BandSmoothness;
+        float mathBand = smoothstep(minBand, maxBand, halfLambert);
+        
+        float shadowFactor = lerp(1.0, mainLight.shadowAttenuation, _ShadowIntensity);
+        mathBand *= shadowFactor;
+
+        half3 indirectDiffuse = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
+
+        half3 litColor = surface.albedo * mainLight.color;
+        half3 shadowColor = surface.albedo * _ShadowTint.rgb * (indirectDiffuse + _MinBrightness);
+        
+        finalDiffuse = lerp(shadowColor, litColor, mathBand);
+    }
+    else
+    {
+        // 亮部：材質原色 * Ramp貼圖色 * 亮部微調色 * 主光源色
+        half3 litColor = surface.albedo * rampColor * _RampColorLight.rgb * mainLight.color;
+
+        // 陰影色：材質原色 * 陰影微調色 * 主光源色 (當物理遮蔽時的顏色底線)
+        half3 shadowColor = surface.albedo * _RampColorShadow.rgb * mainLight.color;
+
+        // 利用物理陰影 (physicalAtten) 作為權重，在陰影色與 Ramp 色之間切換
+        finalDiffuse = lerp(shadowColor, litColor, physicalAtten);
+
+        // 疊加 Border 交界色
+        float borderBand = smoothstep(_BorderThreshold - _BorderWidth, _BorderThreshold, halfLambert) 
+                         - smoothstep(_BorderThreshold, _BorderThreshold + _BorderWidth, halfLambert);
+        
+        // 交界線同樣需要受物理陰影壓制，避免在全黑環境下發光
+        finalDiffuse = saturate(finalDiffuse + (_BorderColor.rgb * borderBand * surface.albedo * physicalAtten));
+
+        // 環境光補償
+        half3 indirectDiffuse = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
+        finalDiffuse += surface.albedo * indirectDiffuse * _AmbientColor.rgb;
+    }
+
+    // ---- 3. NPR 高光 ----
+    half3 finalSpecular = 0;
+    #if defined(_USE_SPECULAR)
+        float3 viewDir = surface.viewDirWS;
+        float3 halfVector = normalize(mainLight.direction + viewDir);
+        float NdotH = saturate(dot(surface.normalWS, halfVector));
+        
+        float specBand = smoothstep(_SpecularStep - _SpecularFeather, _SpecularStep + _SpecularFeather, NdotH);
+        finalSpecular = specBand * _SpecularColor.rgb * mainLight.color * physicalAtten;
+    #endif
+
+    // ---- 4. 附加光源與環境反射 ----
     half3 addLight = GetAdditionalLightsContribution(surface.positionWS, surface.normalWS, surface.viewDirWS, surface.albedo);
-
-    // ---- 疊加間接鏡面反射 ----
     half3 reflection = GetIndirectSpecular(surface.positionWS, surface.normalWS, surface.viewDirWS, surface.albedo);
 
-    // ---- 最終組合 (不含 Emission，Emission 留在外部疊加) ----
-    return mainResult + addLight + reflection;
+    return finalDiffuse + finalSpecular + addLight + reflection;
 }
 
 #endif

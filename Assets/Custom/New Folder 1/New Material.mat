@@ -13,11 +13,13 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ADD_LIGHT_ON
-  - _EMISSION_ON
   - _REFLECTION_ON
+  - _TRANSPARENCYMODE_OPAQUE
+  - _TRANSPARENCY_MODE_OPAQUE
   - _USE_LIGHTING
+  m_InvalidKeywords:
+  - _EMISSION_ON
   - _USE_MATCAP
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -46,6 +48,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DitherMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -99,7 +105,9 @@ Material:
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
+    - _AlphaClipThreshold: 0.5
     - _AlphaToMask: 0
+    - _AnisoIntensity: 0
     - _AnisoPower: 64
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
@@ -113,15 +121,20 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Dither: 0
+    - _DitherScale: 10
+    - _DitherThreshold: 0.5
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EmissionOn: 1
     - _EnvironmentReflections: 1
+    - _FresnelIntensity: 0
     - _FresnelPower: 2
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _IndirectLightMultiplier: 1
+    - _MatCapIntensity: 0
     - _Metallic: 0
     - _MinBrightness: 0.1
     - _NormalScale: 1
@@ -139,6 +152,8 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _TransparencyMode: 0
+    - _Transparency_Mode: 0
     - _UseAnisotropic: 0
     - _UseFresnel: 0
     - _UseLighting: 1
