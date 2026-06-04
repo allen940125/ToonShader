@@ -13,6 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ADD_LIGHT_ON
+  - _REFLECTION_ON
   - _TRANSPARENCY_MODE_OPAQUE
   - _USE_LIGHTING
   - _USE_OUTLINE
@@ -323,6 +324,7 @@ Material:
     - _AlphaMaskScale: 1
     - _AlphaMaskValue: 0
     - _AlphaToMask: 0
+    - _AmbientIntensity: 0
     - _AnisoIntensity: 0
     - _AnisoPower: 64
     - _Anisotropy2MatCap: 0
@@ -373,6 +375,7 @@ Material:
     - _BlendOpAlpha: 0
     - _BlendOpAlphaFA: 4
     - _BlendOpFA: 4
+    - _BorderIntensity: 1
     - _BorderThreshold: 0.5
     - _BorderWidth: 0.1
     - _Bump2ndMap_UVMode: 0
@@ -500,6 +503,7 @@ Material:
     - _Main3rdTex_Cull: 0
     - _Main3rdTex_UVMode: 0
     - _MainGradationStrength: 0
+    - _MainLightColorWeight: 0.5
     - _MatCap2ndApplyTransparency: 1
     - _MatCap2ndBackfaceMask: 0
     - _MatCap2ndBlend: 1
@@ -580,7 +584,9 @@ Material:
     - _Parallax: 0.02
     - _ParallaxOffset: 0.5
     - _QueueOffset: 0
+    - _RampLightIntensity: 1
     - _RampPosition: 0.5
+    - _RampShadowIntensity: 1
     - _RampTransition: 0.05
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
@@ -590,7 +596,7 @@ Material:
     - _ReflectionCubeOverride: 0
     - _ReflectionIntensity: 1
     - _ReflectionNormalStrength: 1
-    - _ReflectionOn: 0
+    - _ReflectionOn: 1
     - _RimApplyTransparency: 1
     - _RimBackfaceMask: 1
     - _RimBlendMode: 1
@@ -605,11 +611,14 @@ Material:
     - _RimIndirRange: 0
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
     - _RimShadeFresnelPower: 1
     - _RimShadeNormalStrength: 1
     - _RimShadowMask: 1
+    - _RimSmoothness: 0.05
+    - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.25
@@ -645,6 +654,7 @@ Material:
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
     - _SpecularHighlights: 1
+    - _SpecularIntensity: 0.2
     - _SpecularNormalStrength: 1
     - _SpecularStep: 0.8
     - _SpecularToon: 1
@@ -709,8 +719,10 @@ Material:
     - _UseOutline: 1
     - _UsePOM: 0
     - _UseParallax: 0
+    - _UseRampMode: 0
     - _UseReflection: 0
     - _UseRim: 1
+    - _UseRimLight: 1
     - _UseRimShade: 0
     - _UseShadow: 1
     - _UseSpecular: 1
@@ -727,7 +739,7 @@ Material:
     - _lilShadowCasterBias: 0
     - _lilToonVersion: 45
     m_Colors:
-    - _AmbientColor: {r: 0.5, g: 0.5, b: 0.6, a: 1}
+    - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _AnisoColor: {r: 1, g: 1, b: 1, a: 1}
     - _AudioLinkDefaultValue: {r: 0, g: 0, b: 2, a: 0.75}
     - _AudioLinkLocalMapParams: {r: 120, g: 1, b: 0, a: 0}
@@ -795,7 +807,7 @@ Material:
     - _OutlineTexHSVG: {r: 0, g: 1, b: 1, a: 1}
     - _OutlineTex_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _RampColorLight: {r: 1, g: 1, b: 1, a: 1}
-    - _RampColorShadow: {r: 0.3, g: 0.3, b: 0.4, a: 1}
+    - _RampColorShadow: {r: 1, g: 1, b: 1, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.5, g: 0.46249998, b: 0.42499983, a: 1}

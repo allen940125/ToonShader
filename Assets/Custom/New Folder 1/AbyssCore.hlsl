@@ -14,63 +14,94 @@
 // ==============================================================================
 CBUFFER_START(UnityPerMaterial)
 
-    // [空間轉換與 TilingOffset 向量]
+    // ==========================================
+    // 區塊一：向量資料 (float4 / half4)
+    // 物理規範：所有 4 維資料必須置於頂部，確保 16-Byte 暫存器完美對齊
+    // ==========================================
+    
+    // [空間轉換]
     float4 _BaseMap_ST;         
     float4 _EmissionMap_ST;     
 
-    // [色彩數據向量]
+    // [核心色彩]
     half4  _BaseColor;          
     half4  _EmissionColor;      
+    half4  _AmbientColor;       
+
+    // [卡通渲染色彩]
+    half4  _ShadowTint;         
     half4  _RampColorLight;     
     half4  _RampColorShadow;    
-    half4  _AmbientColor;       
     half4  _BorderColor;        
+
+    // [高光與附加特效色彩]
     half4  _SpecularColor;      
-    half4  _FresnelColor;       
+    half4  _FresnelColor;
+    half4  _RimColor;  
     half4  _OutlineColor;       
     half4  _AnisoColor;         
-    half4  _ShadowTint;         // 補回：陰影染色
+    
+    // half4  _RimColor;           // [嚴厲警告：請取消註解並補回此 RimLight 變數]
 
-    // [狀態控制與開關]
+
+    // ==========================================
+    // 區塊二：標量資料 (float / half)
+    // 物理規範：連續宣告的標量會被 GPU 自動以 4 個為一組打包，切勿與向量穿插
+    // ==========================================
+    
+    // [底層狀態與開關] 
     float  _Transparency_Mode;  
     float  _CullMode;           
     float  _UseLighting;        
     float  _AddLightOn;         
     float  _ReflectionOn;       
-    float  _UseSpecular;        
     float  _UseOutline;         
+    float  _UseRampMode;
+    float  _UseRimLight;
 
-    // [空間座標與幾何位移純量]
-    float  _OutlineWidth;       
-
-    // [標量控制參數與強度滑桿]
+    // [基礎運算與環境強度]
+    half   _MainLightColorWeight;
     half   _AlphaClipThreshold; 
     half   _DitherThreshold;    
     half   _DitherScale;        
     half   _NormalScale;        
-
     half   _MinBrightness;      
     half   _IndirectLightMultiplier; 
+    half   _AmbientIntensity;
     half   _AddLightIntensity;  
 
+    // [卡通光影階梯 (Cel / Ramp)]
+    half   _BandThreshold;      
+    half   _BandSmoothness;     
+    half   _ShadowIntensity;    
+    half   _RampLightIntensity;
+    half   _RampShadowIntensity;
+
+    // [明暗交界線 (Border)]
     half   _BorderThreshold;    
     half   _BorderWidth;        
+    half   _BorderIntensity;
+
+    // [物理高光與反射 (Specular & Reflection)]
     half   _SpecularStep;       
     half   _SpecularFeather;    
-
-    half   _BandThreshold;      // 補回：卡通渲染明暗交界閾值
-    half   _BandSmoothness;     // 補回：邊緣平滑度
-    half   _ShadowIntensity;    // 補回：陰影強度
-
     half   _ReflectionIntensity;
     half   _Smoothness;         
     half   _Metallic;           
 
+    // [各項獨立特效強度 (Fresnel, Rim, Outline, MatCap, Aniso)]
     half   _FresnelPower;       
     half   _FresnelIntensity;   
+    
+    half   _RimPower;
+    half   _RimThreshold;       
+    half   _RimSmoothness;      
+    half   _RimShadowMask;
 
+    float  _SpecularIntensity;    
+
+    float  _OutlineWidth;       
     half   _MatCapIntensity;    
-
     half   _AnisoPower;         
     half   _AnisoIntensity;     
 

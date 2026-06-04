@@ -90,22 +90,37 @@ public class DayNightSystemPro : MonoBehaviour
     private void ExecuteLighting()
     {
         float timePercent = timeOfDay / 24f;
+    
+        // 計算 Dot 時防呆，確保光源存在
         float sunDot = sunLight != null ? Mathf.Max(Vector3.Dot(sunLight.transform.forward, Vector3.down), 0f) : 0f;
         float moonDot = moonLight != null ? Mathf.Max(Vector3.Dot(moonLight.transform.forward, Vector3.down), 0f) : 0f;
 
-        if (sunLight != null) {
-            sunLight.gameObject.SetActive(sunDot > 0 || (timeOfDay > 5.5f && timeOfDay < 18.5f));
-            sunLight.intensity = sunIntensityCurve.Evaluate(timeOfDay) * sunIntensityMultiplier * SmoothStep(0f, 0.15f, sunDot);
+        if (sunLight != null) 
+        {
+            // 1. 先計算出最終強度
+            float currentSunIntensity = sunIntensityCurve.Evaluate(timeOfDay) * sunIntensityMultiplier * SmoothStep(0f, 0.15f, sunDot);
+        
+            // 2. 只有當強度具有實質意義時，才啟動物件，拔除所有寫死的時間判斷
+            sunLight.gameObject.SetActive(currentSunIntensity > 0.001f);
+            sunLight.intensity = currentSunIntensity;
+        
             if (usePhysicalLight) {
                 sunLight.useColorTemperature = true;
                 sunLight.colorTemperature = sunTemperature.Evaluate(timeOfDay);
                 sunLight.color = sunFilterColor.Evaluate(timePercent);
-            } else sunLight.color = sunColorGradient.Evaluate(timePercent);
+            } else {
+                sunLight.color = sunColorGradient.Evaluate(timePercent);
+            }
         }
 
-        if (moonLight != null) {
-            moonLight.gameObject.SetActive(moonDot > 0 || (timeOfDay > 18.5f || timeOfDay < 5.5f));
-            moonLight.intensity = moonIntensityCurve.Evaluate(timeOfDay) * moonIntensityMultiplier * SmoothStep(0f, 0.15f, moonDot);
+        if (moonLight != null) 
+        {
+            // 1. 計算月亮最終強度
+            float currentMoonIntensity = moonIntensityCurve.Evaluate(timeOfDay) * moonIntensityMultiplier * SmoothStep(0f, 0.15f, moonDot);
+        
+            // 2. 完全依賴曲線與 Dot 值來決定生死
+            moonLight.gameObject.SetActive(currentMoonIntensity > 0.001f);
+            moonLight.intensity = currentMoonIntensity;
             moonLight.color = moonColor;
         }
     }

@@ -13,9 +13,11 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ADD_LIGHT_ON
-  - _TRANSPARENCYMODE_OPAQUE
   - _TRANSPARENCY_MODE_OPAQUE
-  m_InvalidKeywords: []
+  - _USE_LIGHTING
+  m_InvalidKeywords:
+  - _TRANSPARENCYMODE_OPAQUE
+  - _USE_SPECULAR
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -316,6 +318,7 @@ Material:
     - _AlphaMaskScale: 1
     - _AlphaMaskValue: 0
     - _AlphaToMask: 0
+    - _AmbientIntensity: 1
     - _AnisoIntensity: 0
     - _AnisoPower: 64
     - _Anisotropy2MatCap: 0
@@ -366,6 +369,9 @@ Material:
     - _BlendOpAlpha: 0
     - _BlendOpAlphaFA: 4
     - _BlendOpFA: 4
+    - _BorderIntensity: 1
+    - _BorderThreshold: 0.5
+    - _BorderWidth: 0.1
     - _Bump2ndMap_UVMode: 0
     - _Bump2ndScale: 1
     - _BumpScale: 1
@@ -491,6 +497,7 @@ Material:
     - _Main3rdTex_Cull: 0
     - _Main3rdTex_UVMode: 0
     - _MainGradationStrength: 0
+    - _MainLightColorWeight: 0.5
     - _MatCap2ndApplyTransparency: 1
     - _MatCap2ndBackfaceMask: 0
     - _MatCap2ndBlend: 1
@@ -571,6 +578,8 @@ Material:
     - _Parallax: 0.02
     - _ParallaxOffset: 0.5
     - _QueueOffset: 0
+    - _RampLightIntensity: 1
+    - _RampShadowIntensity: 1
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
     - _ReflectionApplyTransparency: 1
@@ -594,11 +603,14 @@ Material:
     - _RimIndirRange: 0
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
     - _RimShadeFresnelPower: 1
     - _RimShadeNormalStrength: 1
     - _RimShadowMask: 0.5
+    - _RimSmoothness: 0.05
+    - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.15
@@ -630,8 +642,11 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
+    - _SpecularFeather: 0.05
     - _SpecularHighlights: 1
+    - _SpecularIntensity: 0
     - _SpecularNormalStrength: 1
+    - _SpecularStep: 0.8
     - _SpecularToon: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
@@ -685,7 +700,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
-    - _UseLighting: 0
+    - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
     - _UseMatCap: 0
@@ -694,10 +709,13 @@ Material:
     - _UseOutline: 0
     - _UsePOM: 0
     - _UseParallax: 0
+    - _UseRampMode: 0
     - _UseReflection: 0
     - _UseRim: 0
+    - _UseRimLight: 0
     - _UseRimShade: 0
     - _UseShadow: 0
+    - _UseSpecular: 0
     - _VertexLightStrength: 0
     - _WorkflowMode: 1
     - _ZClip: 1
@@ -724,6 +742,7 @@ Material:
     - _BackfaceColor: {r: 0, g: 0, b: 0, a: 0}
     - _BacklightColor: {r: 0.85, g: 0.8, b: 0.7, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BorderColor: {r: 1, g: 0.3, b: 0.1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color2nd: {r: 1, g: 1, b: 1, a: 1}
     - _Color3rd: {r: 1, g: 1, b: 1, a: 1}
@@ -789,6 +808,7 @@ Material:
     - _ShadowColor: {r: 0.82, g: 0.76, b: 0.85, a: 1}
     - _ShadowTint: {r: 0.7735849, g: 0.7402, b: 0.7273644, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _e2ga0: {r: 1, g: 0, b: 0, a: 0}
     - _e2ga1: {r: 1, g: 0, b: 0, a: 1}
     - _e2ga2: {r: 1, g: 0, b: 0, a: 0}

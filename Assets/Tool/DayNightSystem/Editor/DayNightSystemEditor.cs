@@ -83,9 +83,9 @@ public class DayNightSystemEditor : Editor
 
     private void ApplyOrbitDefaults(DayNightSystemPro script)
     {
-        script.rotationAxis = new Vector3(1f, 0f, 0f);
+        script.rotationAxis = new Vector3(1f, -1f, 0f);
         script.orbitDistance = 100f;
-        script.timeSpeed = 1f;
+        script.timeSpeed = 5f;
     }
 
     private void ApplyPhysicalData(DayNightSystemPro script)
