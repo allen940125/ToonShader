@@ -323,7 +323,7 @@ Material:
     - _AlphaMaskScale: 1
     - _AlphaMaskValue: 0
     - _AlphaToMask: 0
-    - _AmbientIntensity: 0
+    - _AmbientIntensity: 1
     - _AnisoIntensity: 0
     - _AnisoPower: 64
     - _Anisotropy2MatCap: 0
@@ -587,6 +587,7 @@ Material:
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
     - _RampTransition: 0.05
+    - _ReceiveShadowIntensity: 0
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
     - _ReflectionApplyTransparency: 1

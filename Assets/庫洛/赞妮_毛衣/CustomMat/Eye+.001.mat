@@ -14,7 +14,6 @@ Material:
   m_ValidKeywords:
   - _ADD_LIGHT_ON
   - _TRANSPARENCY_MODE_OPAQUE
-  - _USE_LIGHTING
   m_InvalidKeywords:
   - _TRANSPARENCYMODE_OPAQUE
   - _USE_SPECULAR
@@ -580,6 +579,7 @@ Material:
     - _QueueOffset: 0
     - _RampLightIntensity: 1
     - _RampShadowIntensity: 1
+    - _ReceiveShadowIntensity: 0
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
     - _ReflectionApplyTransparency: 1
@@ -700,7 +700,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
-    - _UseLighting: 1
+    - _UseLighting: 0
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
     - _UseMatCap: 0

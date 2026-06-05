@@ -61,6 +61,7 @@ CBUFFER_START(UnityPerMaterial)
 
     // [基礎運算與環境強度]
     half   _MainLightColorWeight;
+    half   _MainLightMultiplier;
     half   _AlphaClipThreshold; 
     half   _DitherThreshold;    
     half   _DitherScale;        
@@ -73,7 +74,7 @@ CBUFFER_START(UnityPerMaterial)
     // [卡通光影階梯 (Cel / Ramp)]
     half   _BandThreshold;      
     half   _BandSmoothness;     
-    half   _ShadowIntensity;    
+    half   _ReceiveShadowIntensity;    
     half   _RampLightIntensity;
     half   _RampShadowIntensity;
 

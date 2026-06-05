@@ -37,7 +37,9 @@ Shader "Abyss/UberShader_DOTS"
         _EmissionMap("Emission Map", 2D) = "white" {}
 
         [Header(Main Light Absorption)]
+        _MainLightMultiplier("Local Main Light Multiplier (專屬主光強度)", Range(0, 5)) = 1.0
         _MainLightColorWeight("Main Light Color Weight", Range(0, 1)) = 0.0
+        
         
         [Header(Environment Lighting)]
         _MinBrightness("Min Brightness", Range(0.0, 1.0)) = 0.1
@@ -51,7 +53,7 @@ Shader "Abyss/UberShader_DOTS"
         [Header(Cel Shading Settings)]
         _BandThreshold("Light Band Threshold", Range(0.0, 1.0)) = 0.5
         _BandSmoothness("Light Band Smoothness", Range(0.001, 0.5)) = 0.05
-        _ShadowIntensity("Receive Shadow Intensity", Range(0.0, 1.0)) = 1.0
+        _ReceiveShadowIntensity("Receive Shadow Intensity", Range(0.0, 1.0)) = 1.0
         
         [Header(Stylized Ramp Colors)]
         // 【已修改】純 UI 枚舉，零變體
