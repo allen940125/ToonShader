@@ -13,9 +13,10 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _EMISSIVE_SIMPLE
-  - _IS_CLIPPING_OFF
   - _IS_OUTLINE_CLIPPING_NO
+  - _IS_TRANSCLIPPING_OFF
   - _OUTLINE_NML
+  - _SHADINGGRADEMAP
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -324,7 +325,7 @@ Material:
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
     - _HeightOffset: 0
-    - _HighColor_Power: 0
+    - _HighColor_Power: 0.494
     - _HighlightOverridden: 0
     - _HighlightVisible: 1
     - _InvTilingScale: 1
@@ -337,7 +338,7 @@ Material:
     - _IsBaseMapAlphaAsClippingMask: 0
     - _Is_BLD: 0
     - _Is_BakedNormal: 0
-    - _Is_BlendAddToHiColor: 0
+    - _Is_BlendAddToHiColor: 1
     - _Is_BlendAddToMatCap: 1
     - _Is_BlendBaseColor: 0
     - _Is_ColorShift: 0
@@ -359,7 +360,7 @@ Material:
     - _Is_Ortho: 0
     - _Is_OutlineTex: 0
     - _Is_PingPong_Base: 0
-    - _Is_SpecularToHighColor: 0
+    - _Is_SpecularToHighColor: 1
     - _Is_UseTweakHighColorOnShadow: 0
     - _Is_UseTweakMatCapOnShadow: 0
     - _Is_ViewCoord_Scroll: 0
@@ -387,7 +388,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RimLight: 0
+    - _RimLight: 1
     - _RimLightOverridden: 0
     - _RimLightVisible: 1
     - _RimLight_FeatherOff: 0
@@ -472,7 +473,7 @@ Material:
     - _ZWrite: 1
     - _ZWriteMode: 1
     - _simpleUI: 0
-    - _utsTechnique: 0
+    - _utsTechnique: 1
     m_Colors:
     - _1st_ShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _2nd_ShadeColor: {r: 0, g: 0, b: 0, a: 1}
@@ -489,7 +490,7 @@ Material:
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _Emissive_Color: {r: 0, g: 0, b: 0, a: 1}
     - _FirstShadeMaskColor: {r: 0, g: 1, b: 1, a: 1}
-    - _HighColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HighColor: {r: 1, g: 1, b: 1, a: 1}
     - _HighlightMaskColor: {r: 1, g: 1, b: 0, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}

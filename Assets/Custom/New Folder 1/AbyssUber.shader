@@ -2,114 +2,130 @@ Shader "Abyss/UberShader_DOTS"
 {
     Properties
     {
-        _BaseMap("Base Map", 2D) = "white" {}
-        _BaseColor("Base Color", Color) = (1,1,1,1)
-
-        // ---- 透明度模式 ----
-        // 必須保留變體：牽涉到 clip() 函數與底層 Early-Z 剔除，交給引擎切斷最安全
-        [KeywordEnum(Opaque, Cutout, Dither)] _Transparency_Mode("Transparency Mode", Float) = 0
-        _AlphaClipThreshold("Alpha Clip Threshold", Range(0.0, 1.0)) = 0.5
-        _DitherMap("Dither Pattern (Blue Noise)", 2D) = "white" {}
-        _DitherThreshold("Dither Threshold", Range(0, 1)) = 0.5
-        _DitherScale("Dither Tiling Scale", Range(1, 20)) = 10
-
-        // ---- 法線貼圖 ----
-        [Normal] _NormalMap("Normal Map", 2D) = "bump" {}
-        _NormalScale("Normal Scale", Range(0.0, 2.0)) = 1.0
-
-        [Header(Render State)]
-        [Enum(UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode", Float) = 2.0
-
-        [Header(Additional Lights)]
-        // 必須保留變體：內部包含 for 迴圈
-        [Toggle(_ADD_LIGHT_ON)] _AddLightOn("Enable Additional Lights", Float) = 1
-        _AddLightIntensity("Additional Lights Intensity", Range(0,2)) = 1.0
-
-        [Header(Reflection)]
-        // 必須保留變體：內部包含昂貴的 Cubemap 採樣
-        [Toggle(_REFLECTION_ON)] _ReflectionOn("Enable Reflection", Float) = 1
-        _ReflectionIntensity("Reflection Intensity", Range(0,2)) = 1.0
-        _Smoothness("Smoothness", Range(0,1)) = 0.5
-        _Metallic("Metallic", Range(0,1)) = 0.0
-
-        [Header(Emission)]
-        [HDR] _EmissionColor("Emission Color", Color) = (0,0,0,1)
-        _EmissionMap("Emission Map", 2D) = "white" {}
-
-        [Header(Main Light Absorption)]
-        _MainLightMultiplier("Local Main Light Multiplier (專屬主光強度)", Range(0, 5)) = 1.0
-        _MainLightColorWeight("Main Light Color Weight", Range(0, 1)) = 0.0
+        // ==========================================
+        // 1. Render State (系統渲染狀態)
+        // ==========================================
+        [Main(RenderState, _, off)] _group_RenderState ("1. Render State (系統渲染狀態)", Float) = 0
         
-        
-        [Header(Environment Lighting)]
-        _MinBrightness("Min Brightness", Range(0.0, 1.0)) = 0.1
-        _IndirectLightMultiplier("GI Intensity", Range(0.0, 2.0)) = 1.0
-        
-        [Header(Shadow Settings)]
-        // 必須保留變體：控制整個光照管線是否執行
-        [Toggle(_USE_LIGHTING)] _UseLighting("Enable Lighting & Shadows", Float) = 1
-        _ShadowTint("Shadow Tint", Color) = (0.3, 0.3, 0.4, 1.0)
-        
-        [Header(Cel Shading Settings)]
-        _BandThreshold("Light Band Threshold", Range(0.0, 1.0)) = 0.5
-        _BandSmoothness("Light Band Smoothness", Range(0.001, 0.5)) = 0.05
-        _ReceiveShadowIntensity("Receive Shadow Intensity", Range(0.0, 1.0)) = 1.0
-        
-        [Header(Stylized Ramp Colors)]
-        // 【已修改】純 UI 枚舉，零變體
-        [Enum(Math Mode, 0, Ramp Mode, 1)] _UseRampMode("Lighting Mode", Float) = 0
-        _RampMap("Ramp Map (1D)", 2D) = "white" {}
-        
-        _RampColorLight("Ramp Light Color", Color) = (1.0,0.95,0.85,1)
-        _RampLightIntensity("Ramp Light Tint Intensity", Range(0, 1)) = 1.0
-        
-        _RampColorShadow("Ramp Shadow Color", Color) = (0.55,0.6,0.7,1)
-        _RampShadowIntensity("Ramp Shadow Tint Intensity", Range(0, 1)) = 1.0
+        // 使用 SubEnum 與 SubKeywordEnum 合併標籤，徹底解決群組脫離問題
+        [SubEnum(RenderState, UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode", Float) = 2.0
+        [SubKeywordEnum(RenderState, Opaque, Cutout, Dither)] _Transparency_Mode("Transparency Mode", Float) = 0
+        [Sub(RenderState)] _AlphaClipThreshold("Alpha Clip Threshold", Range(0.0, 1.0)) = 0.5
+        [Sub(RenderState)] _DitherMap("Dither Pattern (Blue Noise)", 2D) = "white" {}
+        [Sub(RenderState)] _DitherThreshold("Dither Threshold", Range(0, 1)) = 0.5
+        [Sub(RenderState)] _DitherScale("Dither Tiling Scale", Range(1, 20)) = 10
 
-        _AmbientColor("Ambient Color", Color) = (0.5,0.5,0.6,1)
-        _AmbientIntensity("Ambient Color Intensity", Range(0, 2)) = 1.0
+        // ==========================================
+        // 2. Base Surface (基礎表面屬性)
+        // ==========================================
+        [Main(BaseSurface, _, on)] _group_BaseSurface ("2. Base Surface (基礎表面屬性)", Float) = 0
         
-        [Header(Border)]
-        [HDR] _BorderColor("Border Color", Color) = (1, 0.3, 0.1, 1)
-        _BorderIntensity("Border Intensity", Range(0, 1)) = 1.0
-        _BorderThreshold("Border Threshold (交界線位置)", Range(0.01, 0.99)) = 0.5
-        _BorderWidth("Border Width (交界線寬度)", Range(0.01, 0.5)) = 0.1
+        [Sub(BaseSurface)] [MainTexture] _BaseMap("Base Map", 2D) = "white" {}
+        [Sub(BaseSurface)] [MainColor] _BaseColor("Base Color", Color) = (1,1,1,1)
+        [Sub(BaseSurface)] [Normal] _NormalMap("Normal Map", 2D) = "bump" {}
+        [Sub(BaseSurface)] _NormalScale("Normal Scale", Range(0.0, 2.0)) = 1.0
+        [Sub(BaseSurface)] [HDR] _EmissionColor("Emission Color", Color) = (0,0,0,1)
+        [Sub(BaseSurface)] _EmissionMap("Emission Map", 2D) = "white" {}
 
-        [Header(Specular Highlight)]
-        // 【已修改】只牽涉簡單數學，改為 ToggleUI，零變體
-        _SpecularIntensity("Enable Specular", Range(0, 1)) = 0.5
-        [HDR] _SpecularColor("Specular Color", Color) = (1, 1, 1, 1)
-        _SpecularStep("Specular Step (高光集中度)", Range(0.01, 1.0)) = 0.8
-        _SpecularFeather("Specular Feather (高光邊緣柔和度)", Range(0.001, 0.5)) = 0.05
-
-        [Header(Fresnel)]
-        [HDR] _FresnelColor("Fresnel Color", Color) = (0, 1, 1, 1)
-        _FresnelPower("Fresnel Power", Range(0.1, 10)) = 2.0
-        _FresnelIntensity("Fresnel Intensity", Range(0, 1)) = 0.0
+        // ==========================================
+        // 3. Core Lighting & Shadows (光照與陰影核心)
+        // ==========================================
+        [Main(Lighting, _, on)] _group_Lighting ("3. Core Lighting & Shadows (光照核心)", Float) = 0
         
-        [Header(Stylized Rim Light)]
-        // 【已修改】只牽涉簡單數學，改為 ToggleUI，零變體
-        [ToggleUI] _UseRimLight("Enable Rim Light", Float) = 0
-        [HDR] _RimColor("Rim Color", Color) = (1, 1, 1, 1)
-        _RimPower("Rim Power (邊緣光範圍)", Range(0.1, 10)) = 3.0
-        _RimThreshold("Rim Threshold (硬度切線)", Range(0, 1)) = 0.5
-        _RimSmoothness("Rim Smoothness (邊緣平滑度)", Range(0.001, 1)) = 0.05
-        _RimShadowMask("Shadow Mask (受陰影遮蔽程度)", Range(0, 1)) = 1.0
+        // 修正：將 [Sub] [Toggle] 統一重構為 [SubToggle]
+        [SubToggle(Lighting, _USE_LIGHTING)] _UseLighting("Enable Lighting & Shadows", Float) = 1
+        [Sub(Lighting)] _MainLightMultiplier("Local Main Light Multiplier", Range(0, 5)) = 1.0
+        [Sub(Lighting)] _MainLightColorWeight("Main Light Color Weight", Range(0, 1)) = 0.0
+        [SubToggle(Lighting, _ADD_LIGHT_ON)] _AddLightOn("Enable Additional Lights", Float) = 1
+        [Sub(Lighting)] _AddLightIntensity("Additional Lights Intensity", Range(0,2)) = 1.0
+        [Sub(Lighting)] _ShadowTint("Shadow Tint", Color) = (0.9333333, 0.7411765, 0.7098039, 1.0)
+        [Sub(Lighting)] _ReceiveShadowIntensity("Receive Shadow Intensity", Range(0.0, 1.0)) = 1.0
+        [Sub(Lighting)] _ShadowSmoothness ("接收陰影平滑度 (Shadow Smoothness)", Range(0.0, 0.5)) = 0.05
 
-        [Header(Outline)]
-        // 必須保留變體：Outline 在 Vertex Shader 會影響頂點座標甚至裁切，需物理切斷
-        [Toggle(_USE_OUTLINE)] _UseOutline("Enable Outline", Float) = 0
-        _OutlineWidth("Outline Width", Range(0, 0.1)) = 0.01
-        _OutlineColor("Outline Color", Color) = (0,0,0,1)
+        // ==========================================
+        // 4. PBR & Environment (物理渲染與環境光)
+        // ==========================================
+        [Main(PBR, _, off)] _group_PBR ("4. PBR & Environment (物理與環境光)", Float) = 0
+        
+        [Sub(PBR)] _Smoothness("Smoothness", Range(0,1)) = 0.5
+        [Sub(PBR)] _Metallic("Metallic", Range(0,1)) = 0.0
+        [SubToggle(PBR, _REFLECTION_ON)] _ReflectionOn("Enable Reflection", Float) = 1
+        [Sub(PBR)] _ReflectionIntensity("Reflection Intensity", Range(0,2)) = 1.0
+        [Sub(PBR)] _OcclusionMap("Occlusion Map (RGB)", 2D) = "white" {}
+        [Sub(PBR)] _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0
+        [Sub(PBR)] _IndirectLightMultiplier("GI Intensity", Range(0.0, 2.0)) = 1.0
+        [Sub(PBR)] _MinBrightness("Min Brightness", Range(0.0, 1.0)) = 0.1
+        [Sub(PBR)] _DiffuseImpact("Diffuse Lighting Impact", Range(0.0, 2.0)) = 1.0
+        [Sub(PBR)] _MaxHighlightEnergy("Max Highlight Energy", Range(1.0, 3.0)) = 1.3
+        [Sub(PBR)] _AmbientColor("Ambient Color", Color) = (1,1,1,1)
+        [Sub(PBR)] _AmbientIntensity("Ambient Color Intensity", Range(0, 2)) = 1.0
 
-        [Header(MatCap)]
-        _MatCapMap("MatCap Map", 2D) = "black" {}
-        _MatCapIntensity("MatCap Intensity", Range(0, 1)) = 0.0
+        // ==========================================
+        // 5. Stylized Cel Shading (卡通渲染核心設定)
+        // ==========================================
+        [Main(CelShading, _, on)] _group_CelShading ("5. Stylized Cel Shading (卡通渲染核心)", Float) = 0
+        
+        [SubEnum(CelShading, Math Mode, 0, Ramp Mode, 1)] _UseRampMode("Lighting Mode", Float) = 0
+        [Sub(CelShading)] _RampMap("Ramp Map (1D)", 2D) = "white" {}
+        [Sub(CelShading)] _RampColorLight("Ramp Light Color", Color) = (1.0,0.95,0.85,1)
+        [Sub(CelShading)] _RampLightIntensity("Ramp Light Tint Intensity", Range(0, 1)) = 1.0
+        [Sub(CelShading)] _RampColorShadow("Ramp Shadow Color", Color) = (0.55,0.6,0.7,1)
+        [Sub(CelShading)] _RampShadowIntensity("Ramp Shadow Tint Intensity", Range(0, 1)) = 1.0
+        [Sub(CelShading)] _BandThreshold("Light Band Threshold", Range(0.0, 1.0)) = 0.5
+        [Sub(CelShading)] _BandSmoothness("Light Band Smoothness", Range(0.001, 0.5)) = 0.05
+        [Sub(CelShading)] [HDR] _BorderColor("Border Color", Color) = (1, 0.3, 0.1, 1)
+        [Sub(CelShading)] _BorderIntensity("Border Intensity", Range(0, 1)) = 1.0
+        [Sub(CelShading)] _BorderThreshold("Border Threshold", Range(0.01, 0.99)) = 0.5
+        [Sub(CelShading)] _BorderWidth("Border Width", Range(0.01, 0.5)) = 0.1
+        [Sub(CelShading)] _BounceIntensity("Bounce Light Intensity", Range(0, 3)) = 1.2
+        [Sub(CelShading)] [HDR] _BounceColor("Bounce Light Color", Color) = (1, 0.9, 0.8, 1)
 
-        [Header(Anisotropic Highlight)]
-        _AnisoPower("Anisotropic Power", Range(1.0, 256.0)) = 64.0
-        _AnisoColor("Anisotropic Color", Color) = (1,1,1,1)
-        _AnisoIntensity("Anisotropic Intensity", Range(0, 1)) = 0.0
+        // ==========================================
+        // 6. Highlights (高光處理)
+        // ==========================================
+        [Main(Highlights, _, off)] _group_Highlights ("6. Highlights (高光處理)", Float) = 0
+        
+        [Sub(Highlights)] _SpecularIntensity("Enable Specular", Range(0, 1)) = 0.5
+        [Sub(Highlights)] [HDR] _SpecularColor("Specular Color", Color) = (1, 1, 1, 1)
+        [Sub(Highlights)] _SpecularStep("Specular Step", Range(0.01, 1.0)) = 0.95
+        [Sub(Highlights)] _SpecularFeather("Specular Feather", Range(0.001, 0.5)) = 0.05
+        [Sub(Highlights)] _AnisoPower("Anisotropic Power", Range(1.0, 256.0)) = 64.0
+        [Sub(Highlights)] [HDR] _AnisoColor("Anisotropic Color", Color) = (1,1,1,1)
+        [Sub(Highlights)] _AnisoIntensity("Anisotropic Intensity", Range(0, 1)) = 0.0
+
+        // ==========================================
+        // 7. Overlay & Edge Effects (覆蓋與邊緣特效)
+        // ==========================================
+        [Main(OverlayEffects, _, off)] _group_OverlayEffects ("7. Overlay & Edge Effects (特殊邊緣特效)", Float) = 0
+        
+        [Sub(OverlayEffects)] [HDR] _FresnelColor("Fresnel Color", Color) = (0, 1, 1, 1)
+        [Sub(OverlayEffects)] _FresnelPower("Fresnel Power", Range(0.1, 10)) = 2.0
+        [Sub(OverlayEffects)] _FresnelIntensity("Fresnel Intensity", Range(0, 1)) = 0.0
+        // 修正：沒有綁定編譯關鍵字的純 UI Toggle，在 LWGUI 中直接給予空字串參數即可
+        [SubToggle(OverlayEffects, _)] _UseRimLight("Enable Rim Light", Float) = 0
+        [Sub(OverlayEffects)] [HDR] _RimColor("Rim Color", Color) = (1, 1, 1, 1)
+        [Sub(OverlayEffects)] _RimPower("Rim Power", Range(0.1, 10)) = 3.0
+        [Sub(OverlayEffects)] _RimThreshold("Rim Threshold", Range(0, 1)) = 0.5
+        [Sub(OverlayEffects)] _RimSmoothness("Rim Smoothness", Range(0.001, 1)) = 0.05
+        [Sub(OverlayEffects)] _RimShadowMask("Shadow Mask", Range(0, 1)) = 1.0
+        [Sub(OverlayEffects)] _MatCapMap("MatCap Map", 2D) = "black" {}
+        [Sub(OverlayEffects)] _MatCapIntensity("MatCap Intensity", Range(0, 1)) = 0.0
+
+        // ==========================================
+        // 8. Geometry Effects (幾何特效)
+        // ==========================================
+        [Main(GeometryOutline, _, off)] _group_GeometryOutline ("8. Geometry Outline (幾何描邊)", Float) = 0
+        
+        [SubToggle(GeometryOutline, _USE_OUTLINE)] _UseOutline("Enable Outline", Float) = 0
+        [Sub(GeometryOutline)] _OutlineWidth("Outline Width", Range(0, 0.1)) = 0.01
+        [Sub(GeometryOutline)] _OutlineColor("Outline Color", Color) = (0,0,0,1)
+        
+        [Main(Environment, _, off)] _group_Env ("Environment (環境光設定)", Float) = 0
+
+        // 加入一個開關，預設為 0 (不覆寫，乖乖聽 C# 的話)
+        [SubToggle(Environment, _USE_LOCAL_ENV)] _UseLocalEnv("Override Global Day/Night", Float) = 0
+        [Sub(Environment)] _LocalShadowTint("Local Shadow Tint", Color) = (0.5, 0.5, 0.6, 1)
+        [Sub(Environment)] _LocalAmbientColor("Local Ambient Color", Color) = (1, 1, 1, 1)
     }
 
     SubShader
@@ -135,8 +151,8 @@ Shader "Abyss/UberShader_DOTS"
                 #pragma multi_compile_fragment _ _SHADOWS_SOFT
                 #pragma multi_compile _ LIGHTMAP_ON
                 #pragma multi_compile _ PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
+                #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
 
-                // ---- 剩餘的 local 關鍵字 ----
                 #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
                 #pragma shader_feature_local _USE_LIGHTING
                 #pragma shader_feature_local _ADD_LIGHT_ON
@@ -171,7 +187,6 @@ Shader "Abyss/UberShader_DOTS"
             ENDHLSL
         }
 
-
         // ---- Pass 3: ShadowCaster ----
         Pass
         {
@@ -197,11 +212,9 @@ Shader "Abyss/UberShader_DOTS"
         // ---- Pass 4: DepthOnly ----
         Pass
         {
-            //DepthOnly不用是因為DepthNormals才能支援SSAO 不然他會因為沒有Normal數據被踢掉 他需要同時有法線跟深度
             Name "DepthNormals"
             Tags { "LightMode" = "DepthNormals" }
             Cull [_CullMode]
-            //ColorMask 0
             
             ZWrite On
             ZTest LEqual
@@ -220,4 +233,6 @@ Shader "Abyss/UberShader_DOTS"
            ENDHLSL
         }
     }
+
+    CustomEditor "LWGUI.LWGUI"
 }

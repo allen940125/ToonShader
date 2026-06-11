@@ -32,7 +32,8 @@ CBUFFER_START(UnityPerMaterial)
     half4  _ShadowTint;         
     half4  _RampColorLight;     
     half4  _RampColorShadow;    
-    half4  _BorderColor;        
+    half4  _BorderColor;
+    half3 _BounceColor;
 
     // [高光與附加特效色彩]
     half4  _SpecularColor;      
@@ -62,7 +63,10 @@ CBUFFER_START(UnityPerMaterial)
     // [基礎運算與環境強度]
     half   _MainLightColorWeight;
     half   _MainLightMultiplier;
+    half   _DiffuseImpact;
+    half   _MaxHighlightEnergy;
     half   _AlphaClipThreshold; 
+    half   _OcclusionStrength;
     half   _DitherThreshold;    
     half   _DitherScale;        
     half   _NormalScale;        
@@ -74,14 +78,17 @@ CBUFFER_START(UnityPerMaterial)
     // [卡通光影階梯 (Cel / Ramp)]
     half   _BandThreshold;      
     half   _BandSmoothness;     
-    half   _ReceiveShadowIntensity;    
+    half   _ReceiveShadowIntensity;
+    float  _ShadowSmoothness;
     half   _RampLightIntensity;
     half   _RampShadowIntensity;
+    half   _BounceIntensity;
 
     // [明暗交界線 (Border)]
     half   _BorderThreshold;    
     half   _BorderWidth;        
     half   _BorderIntensity;
+    
 
     // [物理高光與反射 (Specular & Reflection)]
     half   _SpecularStep;       
@@ -116,6 +123,8 @@ TEXTURE2D(_DitherMap);
 TEXTURE2D(_NormalMap);
 TEXTURE2D(_MatCapMap);
 TEXTURE2D(_EmissionMap);
+TEXTURE2D(_OcclusionMap);
+
 SAMPLER(sampler_BaseMap);
 SAMPLER(sampler_DitherMap);
 SAMPLER(sampler_NormalMap); // 保留獨立取樣器：法線貼圖通常需要線性 (Linear) 且無 Mipmap 過濾，與 BaseMap 可能不同。

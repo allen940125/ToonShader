@@ -4,6 +4,7 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 #include "Packages/com.unity.render-pipelines.core/Runtime/Lighting/ProbeVolume/ProbeVolume.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/GlobalIllumination.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/AmbientOcclusion.hlsl"
 
 // ------------------------------------------------------------------
 // 1. 間接漫反射 (GI / Ambient)
@@ -107,85 +108,101 @@ inline half3 GetStylizedRimLight(AbyssSurfaceData surface, Light mainLight)
 }
 
 // ---------------------------------------------------------------
-// 純數學模式（無 Ramp） - 動態陰影褪色修正
+// 純數學模式（無 Ramp） - 接收全域陰影遮罩
 // ---------------------------------------------------------------
-inline half3 ComputeLighting_MathOnly(AbyssSurfaceData surface, Light mainLight, half3 indirectDiffuse)
+inline half3 ComputeLighting_MathOnly(AbyssSurfaceData surface, Light mainLight, half3 indirectDiffuse, float castShadowMask)
 {
     float NdotL = dot(surface.normalWS, mainLight.direction);
     float halfLambert = NdotL * 0.5 + 0.5;
 
-    float attenuation = mainLight.distanceAttenuation * mainLight.shadowAttenuation;
-    float shadowFactor = lerp(1.0, attenuation, _ReceiveShadowIntensity);
+    float mathBand;
 
-    float minBand = _BandThreshold - _BandSmoothness;
-    float maxBand = _BandThreshold + _BandSmoothness;
-    float mathBand = smoothstep(minBand, maxBand, halfLambert);
+    if (_BandSmoothness <= 0.001)
+    {
+        float delta = fwidth(halfLambert); 
+        mathBand = smoothstep(_BandThreshold - delta, _BandThreshold + delta, halfLambert);
+    }
+    else
+    {
+        float safeSmoothness = max(_BandSmoothness, 0.001);
+        mathBand = smoothstep(_BandThreshold - safeSmoothness, _BandThreshold + safeSmoothness, halfLambert);
+    }
     
-    // 1. 抓取主光絕對亮度 (0 ~ 1)
     float mainLightPower = saturate(max(mainLight.color.r, max(mainLight.color.g, mainLight.color.b)));
-    
     float lightWeight = saturate(mainLightPower * 10.0); 
-    float finalBand = mathBand * shadowFactor * lightWeight;
+    
+    // 【直接套用傳入的外部陰影遮罩】
+    float finalBand = mathBand * castShadowMask * lightWeight;
 
-    // ==========================================
-    // 【核心突破】：動態陰影染色 (Dynamic Shadow Tint)
-    // 主光越弱，陰影色越接近純白 (1,1,1)，代表陰影徹底消散
-    // ==========================================
     half3 dynamicShadowTint = lerp(half3(1, 1, 1), _ShadowTint.rgb, mainLightPower);
-
-    // 2. 環境濾鏡：用褪色後的陰影色來做過渡
     half3 ambientFilter = lerp(dynamicShadowTint, half3(1, 1, 1), finalBand) * _AmbientColor.rgb * _AmbientIntensity;
     half3 ambientColor = indirectDiffuse * ambientFilter;
     
+    // 原本的計算
     half3 directColor = mainLight.color * mainLight.distanceAttenuation * finalBand;
 
-    half3 finalDiffuse = surface.albedo * (ambientColor + directColor);
+    // ==========================================
+    // 【核心新增】：模擬物理反彈光 (Bounce Light)
+    // ==========================================
+    // 1. 取得與主光相反的方向，模擬打到地面後反彈向上的光線
+    float bounceLambert = saturate(dot(surface.normalWS, -mainLight.direction)) * 0.5 + 0.5;
+    
+    // 2. 反彈遮罩：反彈光只在「主光照不到的陰影區」才具有強烈可見性
+    float bounceMask = (1.0 - finalBand); 
+    
+    // 3. 假設新增一個 _BounceColor (反彈光顏色，通常設為暖棕色或地表顏色) 與 _BounceIntensity
+    // 如果不想加新變數，可以直接借用環境光或寫死一個柔和的數值
+    half3 bounceLight = bounceLambert * bounceMask * indirectDiffuse * _BounceIntensity * _BounceColor.rgb;
+    // 4. 將反彈光加入總能量
+    half3 totalLighting = ambientColor + directColor + bounceLight;
+
+    totalLighting = lerp(half3(1, 1, 1), totalLighting, _DiffuseImpact);
+    totalLighting = min(totalLighting, _MaxHighlightEnergy);
+
+    half3 finalDiffuse = surface.albedo * totalLighting;
 
     float borderBand = smoothstep(_BorderThreshold - _BorderWidth, _BorderThreshold, halfLambert) 
                      - smoothstep(_BorderThreshold, _BorderThreshold + _BorderWidth, halfLambert);
     finalDiffuse += _BorderColor.rgb * borderBand * surface.albedo * finalBand * _BorderIntensity * mainLight.color;
 
-    return saturate(finalDiffuse);
+    return finalDiffuse;
 }
 
 // ---------------------------------------------------------------
-// Ramp 貼圖模式 - 動態陰影褪色修正
+// Ramp 貼圖模式 - 接收全域陰影遮罩
 // ---------------------------------------------------------------
-inline half3 ComputeLighting_Ramp(AbyssSurfaceData surface, Light mainLight, half3 indirectDiffuse)
+inline half3 ComputeLighting_Ramp(AbyssSurfaceData surface, Light mainLight, half3 indirectDiffuse, float castShadowMask)
 {
     float NdotL = dot(surface.normalWS, mainLight.direction);
     float halfLambert = NdotL * 0.5 + 0.5;
     
-    float attenuation = mainLight.distanceAttenuation * mainLight.shadowAttenuation;
-    float shadowFactor = lerp(1.0, attenuation, _ReceiveShadowIntensity);
-
     float minBand = _BandThreshold - _BandSmoothness;
     float maxBand = _BandThreshold + _BandSmoothness;
     float mathBand = smoothstep(minBand, maxBand, halfLambert);
     
-    // 1. 抓取主光絕對亮度 (0 ~ 1)
     float mainLightPower = saturate(max(mainLight.color.r, max(mainLight.color.g, mainLight.color.b)));
-    
     float lightWeight = saturate(mainLightPower * 10.0);
-    float finalBand = mathBand * shadowFactor * lightWeight;
+    
+    // 【直接套用傳入的外部陰影遮罩】
+    float finalBand = mathBand * castShadowMask * lightWeight;
 
     half3 rampColor = SAMPLE_TEXTURE2D(_RampMap, sampler_BaseMap, float2(finalBand, 0.5)).rgb;
 
-    // ==========================================
-    // 【核心突破】：動態陰影染色 (Dynamic Shadow Tint)
-    // ==========================================
     half3 baseShadowTint = lerp(half3(1,1,1), _RampColorShadow.rgb, _RampShadowIntensity);
     half3 dynamicShadowTint = lerp(half3(1, 1, 1), baseShadowTint, mainLightPower);
     
     half3 lightTint = lerp(half3(1,1,1), _RampColorLight.rgb, _RampLightIntensity);
 
-    // 2. 環境濾鏡：用褪色後的陰影色來做過渡
     half3 ambientFilter = lerp(dynamicShadowTint, half3(1, 1, 1), finalBand) * _AmbientColor.rgb * _AmbientIntensity;
     half3 ambientColor = indirectDiffuse * ambientFilter;
     
     half3 directColor = mainLight.color * mainLight.distanceAttenuation * rampColor * lightTint * finalBand;
 
-    half3 finalDiffuse = surface.albedo * (ambientColor + directColor);
+    half3 totalLighting = ambientColor + directColor;
+    totalLighting = lerp(half3(1, 1, 1), totalLighting, _DiffuseImpact);
+    totalLighting = min(totalLighting, _MaxHighlightEnergy);
+
+    half3 finalDiffuse = surface.albedo * totalLighting;
 
     float borderBand = smoothstep(_BorderThreshold - _BorderWidth, _BorderThreshold, halfLambert) 
                      - smoothstep(_BorderThreshold, _BorderThreshold + _BorderWidth, halfLambert);
@@ -197,58 +214,74 @@ inline half3 ComputeLighting_Ramp(AbyssSurfaceData surface, Light mainLight, hal
 // ---------------------------------------------------------------
 // 主光照組合函式
 // ---------------------------------------------------------------
-inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight)
+inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight, half occlusion)
 {
-    // ==========================================
-    // 【核心修正】：主光色彩攔截與清洗 (Decouple Tint and Intensity)
-    // ==========================================
-    // 1. 攔截並調整該材質專屬的主光強度
+    // 1. 主光色彩攔截
     mainLight.color *= _MainLightMultiplier;
-    
-    // 1. 萃取出主光源的純粹亮度 (取 RGB 中最大值作為粗略能量)
     float lightIntensity = max(mainLight.color.r, max(mainLight.color.g, mainLight.color.b));
-    
-    // 2. 製作一盞只有亮度、沒有顏色的「中性光」
     half3 neutralLight = half3(lightIntensity, lightIntensity, lightIntensity);
-    
-    // 3. 根據滑桿，決定要保留多少場景的染色，並覆蓋原本的 mainLight
     mainLight.color = lerp(neutralLight, mainLight.color, _MainLightColorWeight);
 
     // ==========================================
-
-    // 1. 間接漫反射
-    half3 indirectDiffuse = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
-
-    // 2. 漫反射切換 (靜態分支)
-    half3 diffuse = (_UseRampMode > 0.5) ? 
-        ComputeLighting_Ramp(surface, mainLight, indirectDiffuse) : 
-        ComputeLighting_MathOnly(surface, mainLight, indirectDiffuse);
-
-    // 3. 高光 (利用 Intensity 進行靜態分支提早攔截)
-    half3 finalSpecular = 0;
+    // 【核心修正】：全域實時陰影遮罩 (帶有平滑度控制)
+    // ==========================================
+    float rawShadow = mainLight.distanceAttenuation * mainLight.shadowAttenuation;
     
-    // 只要強度大於 0.001 才執行昂貴的 normalize 與 smoothstep
+    // 1. 給予安全下限，防止 Smoothness 為 0 時發生除以零的數學崩潰
+    float shadowSmooth = max(_ShadowSmoothness, 0.001);
+    
+    // 2. 以 0.5 (陰影半衰點) 為中心，向左右推展平滑範圍
+    float minShadowEdge = 0.5 - shadowSmooth;
+    float maxShadowEdge = 0.5 + shadowSmooth;
+    
+    // 3. 算出帶有可控柔邊的陰影遮罩
+    float smoothShadowMask = smoothstep(minShadowEdge, maxShadowEdge, rawShadow);
+    
+    // 4. 套用面板接收強度權重
+    float castShadowMask = lerp(1.0, smoothShadowMask, _ReceiveShadowIntensity);
+
+    // 3. 間接漫反射 (GI)
+    half3 indirectDiffuse = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
+    indirectDiffuse *= occlusion;
+    
+    // 4. 漫反射 (強制將 castShadowMask 作為參數傳入)
+    half3 diffuse = (_UseRampMode > 0.5) ? 
+        ComputeLighting_Ramp(surface, mainLight, indirectDiffuse, castShadowMask) : 
+        ComputeLighting_MathOnly(surface, mainLight, indirectDiffuse, castShadowMask);
+
+    // 5. 高光 (Specular)
+    half3 finalSpecular = 0;
     if (_SpecularIntensity > 0.001) 
     {
-        float3 viewDir = surface.viewDirWS;
-        float3 halfVector = normalize(mainLight.direction + viewDir);
+        float3 halfVector = normalize(mainLight.direction + surface.viewDirWS);
         float NdotH = saturate(dot(surface.normalWS, halfVector));
         float specBand = smoothstep(_SpecularStep - _SpecularFeather, _SpecularStep + _SpecularFeather, NdotH);
         
-        // 疊加顏色與強度
         float NdotL_spec = dot(surface.normalWS, mainLight.direction);
-        float specShadowMask = smoothstep(0.0, 0.1, NdotL_spec); // 背光面没有高光
-        finalSpecular = specBand * _SpecularColor.rgb * _SpecularIntensity * mainLight.color * mainLight.distanceAttenuation * specShadowMask;
+        float selfShadowMask = smoothstep(0.0, 0.1, NdotL_spec); 
+        
+        finalSpecular = specBand * _SpecularColor.rgb * _SpecularIntensity * mainLight.color * selfShadowMask * castShadowMask;
     }
 
-    // 4. 卡通邊緣光 (呼叫新增的模組)
-    half3 rimLight = GetStylizedRimLight(surface, mainLight);
+    // 6. 卡通邊緣光 (Rim Light)
+    half3 rimLight = 0;
+    if (_UseRimLight > 0.5) 
+    {
+        float NdotV = saturate(dot(surface.normalWS, surface.viewDirWS));
+        float fresnel = pow(1.0 - NdotV, _RimPower);
+        float rimBand = smoothstep(_RimThreshold - _RimSmoothness, _RimThreshold + _RimSmoothness, fresnel);
+        
+        float NdotL_rim = dot(surface.normalWS, mainLight.direction);
+        float litSideMask = smoothstep(_BandThreshold - _BandSmoothness, _BandThreshold + _BandSmoothness, NdotL_rim * 0.5 + 0.5);
+        
+        float rimMask = lerp(1.0, litSideMask * castShadowMask, _RimShadowMask);
+        rimLight = rimBand * _RimColor.rgb * rimMask * surface.albedo * mainLight.color;
+    }
 
-    // 5. 附加光源與反射
+    // 7. 附加光源與反射
     half3 addLight = GetAdditionalLightsContribution(surface.positionWS, surface.normalWS, surface.viewDirWS, surface.albedo);
     half3 reflection = GetIndirectSpecular(surface.positionWS, surface.normalWS, surface.viewDirWS, surface.albedo);
 
-    // 6. 最終合成
     return diffuse + finalSpecular + rimLight + addLight + reflection;
 }
 

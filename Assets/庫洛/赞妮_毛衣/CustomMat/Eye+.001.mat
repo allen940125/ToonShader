@@ -14,6 +14,7 @@ Material:
   m_ValidKeywords:
   - _ADD_LIGHT_ON
   - _TRANSPARENCY_MODE_OPAQUE
+  - _USE_LIGHTING
   m_InvalidKeywords:
   - _TRANSPARENCYMODE_OPAQUE
   - _USE_SPECULAR
@@ -371,6 +372,7 @@ Material:
     - _BorderIntensity: 1
     - _BorderThreshold: 0.5
     - _BorderWidth: 0.1
+    - _BounceIntensity: 1.2
     - _Bump2ndMap_UVMode: 0
     - _Bump2ndScale: 1
     - _BumpScale: 1
@@ -382,6 +384,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DiffuseImpact: 1
     - _DissolveNoiseStrength: 0.1
     - _DistanceFadeMode: 0
     - _DistanceFadeRimFresnelPower: 5
@@ -496,7 +499,8 @@ Material:
     - _Main3rdTex_Cull: 0
     - _Main3rdTex_UVMode: 0
     - _MainGradationStrength: 0
-    - _MainLightColorWeight: 0.5
+    - _MainLightColorWeight: 1
+    - _MainLightMultiplier: 1
     - _MatCap2ndApplyTransparency: 1
     - _MatCap2ndBackfaceMask: 0
     - _MatCap2ndBlend: 1
@@ -526,6 +530,7 @@ Material:
     - _MatCapShadowMask: 0
     - _MatCapVRParallaxStrength: 1
     - _MatCapZRotCancel: 1
+    - _MaxHighlightEnergy: 2
     - _Metallic: 0
     - _MinBrightness: 0.1
     - _Mode: 0
@@ -635,6 +640,7 @@ Material:
     - _ShadowNormalStrength: 1
     - _ShadowPostAO: 0
     - _ShadowReceive: 0
+    - _ShadowSmoothness: 0.05
     - _ShadowStrength: 1
     - _ShadowStrengthMaskLOD: 0
     - _ShiftBackfaceUV: 0
@@ -700,7 +706,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
-    - _UseLighting: 0
+    - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
     - _UseMatCap: 0
@@ -725,6 +731,14 @@ Material:
     - _e2gci: 2
     - _egai: 2
     - _egci: 2
+    - _group_BaseSurface: 0
+    - _group_CelShading: 0
+    - _group_GeometryOutline: 0
+    - _group_Highlights: 0
+    - _group_Lighting: 0
+    - _group_OverlayEffects: 0
+    - _group_PBR: 0
+    - _group_RenderState: 0
     - _lilDirectionalLightStrength: 1
     - _lilShadowCasterBias: 0
     - _lilToonVersion: 45
@@ -743,6 +757,7 @@ Material:
     - _BacklightColor: {r: 0.85, g: 0.8, b: 0.7, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BorderColor: {r: 1, g: 0.3, b: 0.1, a: 1}
+    - _BounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color2nd: {r: 1, g: 1, b: 1, a: 1}
     - _Color3rd: {r: 1, g: 1, b: 1, a: 1}

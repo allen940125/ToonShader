@@ -98,9 +98,30 @@ half4 frag(Varyings input) : SV_Target
         float4 shadowCoord = TransformWorldToShadowCoord(surface.positionWS);
         Light mainLight = GetMainLight(shadowCoord);
 
+        // ==========================================
+        // 【新增】：AO (環境光遮蔽) 融合系統
+        // ==========================================
+        float2 screenUV = input.screenPos.xy / input.screenPos.w;
+        half ssao = 1.0;
+            
+        // 1. 讀取 URP 實時 SSAO
+        #if defined(_SCREEN_SPACE_OCCLUSION)
+        AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(screenUV);
+        ssao = aoFactor.indirectAmbientOcclusion; 
+        #endif
+
+        // 2. 讀取美術畫的 Baked AO 貼圖 (假設存在 G 通道，或直接取 g)
+        half bakedAO = SAMPLE_TEXTURE2D(_OcclusionMap, sampler_BaseMap, input.uv).g;
+        bakedAO = lerp(1.0, bakedAO, _OcclusionStrength);
+
+        // 3. 兩者結合 (取最暗的作為最終遮蔽值)
+        half finalAO = min(ssao, bakedAO);
+        // ==========================================
+    
         half3 finalColor = surface.albedo;
         #if defined(_USE_LIGHTING)
-            finalColor = ComputeFinalLighting(surface, mainLight);
+        // 將計算好的 finalAO 傳入光照函式
+        finalColor = ComputeFinalLighting(surface, mainLight, finalAO);
         #endif
 
         // 效果疊加（各函式內部自行檢查強度）

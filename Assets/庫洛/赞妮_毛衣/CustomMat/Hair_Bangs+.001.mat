@@ -384,6 +384,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DiffuseImpact: 1
     - _DissolveNoiseStrength: 0.1
     - _DistanceFadeMode: 0
     - _DistanceFadeRimFresnelPower: 5
@@ -498,6 +499,8 @@ Material:
     - _Main3rdTex_Cull: 0
     - _Main3rdTex_UVMode: 0
     - _MainGradationStrength: 0
+    - _MainLightColorWeight: 0
+    - _MainLightMultiplier: 1
     - _MatCap2ndApplyTransparency: 1
     - _MatCap2ndBackfaceMask: 0
     - _MatCap2ndBlend: 1
@@ -527,6 +530,7 @@ Material:
     - _MatCapShadowMask: 0
     - _MatCapVRParallaxStrength: 1
     - _MatCapZRotCancel: 1
+    - _MaxHighlightEnergy: 1.3
     - _Metallic: 0
     - _MinBrightness: 0.1
     - _Mode: 0
@@ -582,6 +586,7 @@ Material:
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
     - _RampTransition: 0.05
+    - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
     - _ReflectionApplyTransparency: 1
@@ -605,11 +610,14 @@ Material:
     - _RimIndirRange: 0
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
     - _RimShadeFresnelPower: 1
     - _RimShadeNormalStrength: 1
     - _RimShadowMask: 0
+    - _RimSmoothness: 0.05
+    - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.45
@@ -645,6 +653,7 @@ Material:
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
     - _SpecularHighlights: 1
+    - _SpecularIntensity: 0.5
     - _SpecularNormalStrength: 1
     - _SpecularStep: 0.8
     - _SpecularToon: 1
@@ -709,8 +718,10 @@ Material:
     - _UseOutline: 0
     - _UsePOM: 0
     - _UseParallax: 0
+    - _UseRampMode: 0
     - _UseReflection: 1
     - _UseRim: 0
+    - _UseRimLight: 0
     - _UseRimShade: 0
     - _UseShadow: 1
     - _UseSpecular: 1
