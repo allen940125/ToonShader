@@ -26,14 +26,11 @@ CBUFFER_START(UnityPerMaterial)
     // [核心色彩]
     half4  _BaseColor;          
     half4  _EmissionColor;      
-    half4  _AmbientColor;       
 
     // [卡通渲染色彩]
-    half4  _ShadowTint;         
     half4  _RampColorLight;     
     half4  _RampColorShadow;    
     half4  _BorderColor;
-    half3 _BounceColor;
 
     // [高光與附加特效色彩]
     half4  _SpecularColor;      
@@ -113,7 +110,15 @@ CBUFFER_START(UnityPerMaterial)
     half   _AnisoPower;         
     half   _AnisoIntensity;     
 
+    half4  _LocalShadowTint;         
+    half4  _LocalAmbientColor; 
+    half4  _LocalBounceColor; // 新增這行
 CBUFFER_END
+
+// 【必須放在這裡】：徹底脫離材質球的控制，純粹接收全域廣播
+half4 _GlobalShadowTint;
+half4 _GlobalAmbientColor;
+half4 _GlobalBounceColor;
 
 // 紋理與採樣器分離宣告
 // 邏輯目的：允許不同紋理共用同一個取樣器 (Sampler) 以突破硬體取樣器數量上限。

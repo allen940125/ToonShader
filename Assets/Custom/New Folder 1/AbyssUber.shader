@@ -38,7 +38,7 @@ Shader "Abyss/UberShader_DOTS"
         [Sub(Lighting)] _MainLightColorWeight("Main Light Color Weight", Range(0, 1)) = 0.0
         [SubToggle(Lighting, _ADD_LIGHT_ON)] _AddLightOn("Enable Additional Lights", Float) = 1
         [Sub(Lighting)] _AddLightIntensity("Additional Lights Intensity", Range(0,2)) = 1.0
-        [Sub(Lighting)] _ShadowTint("Shadow Tint", Color) = (0.9333333, 0.7411765, 0.7098039, 1.0)
+        //[Sub(Lighting)] _ShadowTint("Shadow Tint", Color) = (0.9333333, 0.7411765, 0.7098039, 1.0)
         [Sub(Lighting)] _ReceiveShadowIntensity("Receive Shadow Intensity", Range(0.0, 1.0)) = 1.0
         [Sub(Lighting)] _ShadowSmoothness ("接收陰影平滑度 (Shadow Smoothness)", Range(0.0, 0.5)) = 0.05
 
@@ -57,7 +57,7 @@ Shader "Abyss/UberShader_DOTS"
         [Sub(PBR)] _MinBrightness("Min Brightness", Range(0.0, 1.0)) = 0.1
         [Sub(PBR)] _DiffuseImpact("Diffuse Lighting Impact", Range(0.0, 2.0)) = 1.0
         [Sub(PBR)] _MaxHighlightEnergy("Max Highlight Energy", Range(1.0, 3.0)) = 1.3
-        [Sub(PBR)] _AmbientColor("Ambient Color", Color) = (1,1,1,1)
+        //[Sub(PBR)] _AmbientColor("Ambient Color", Color) = (1,1,1,1)
         [Sub(PBR)] _AmbientIntensity("Ambient Color Intensity", Range(0, 2)) = 1.0
 
         // ==========================================
@@ -78,7 +78,7 @@ Shader "Abyss/UberShader_DOTS"
         [Sub(CelShading)] _BorderThreshold("Border Threshold", Range(0.01, 0.99)) = 0.5
         [Sub(CelShading)] _BorderWidth("Border Width", Range(0.01, 0.5)) = 0.1
         [Sub(CelShading)] _BounceIntensity("Bounce Light Intensity", Range(0, 3)) = 1.2
-        [Sub(CelShading)] [HDR] _BounceColor("Bounce Light Color", Color) = (1, 0.9, 0.8, 1)
+        //[Sub(CelShading)] [HDR] _BounceColor("Bounce Light Color", Color) = (1, 0.9, 0.8, 1)
 
         // ==========================================
         // 6. Highlights (高光處理)
@@ -120,12 +120,11 @@ Shader "Abyss/UberShader_DOTS"
         [Sub(GeometryOutline)] _OutlineWidth("Outline Width", Range(0, 0.1)) = 0.01
         [Sub(GeometryOutline)] _OutlineColor("Outline Color", Color) = (0,0,0,1)
         
-        [Main(Environment, _, off)] _group_Env ("Environment (環境光設定)", Float) = 0
-
-        // 加入一個開關，預設為 0 (不覆寫，乖乖聽 C# 的話)
+        [Main(Environment, _, off)] _group_Env ("Environment (環境光局部覆寫)", Float) = 0
         [SubToggle(Environment, _USE_LOCAL_ENV)] _UseLocalEnv("Override Global Day/Night", Float) = 0
         [Sub(Environment)] _LocalShadowTint("Local Shadow Tint", Color) = (0.5, 0.5, 0.6, 1)
         [Sub(Environment)] _LocalAmbientColor("Local Ambient Color", Color) = (1, 1, 1, 1)
+        [Sub(Environment)] [HDR] _LocalBounceColor("Local Bounce Color", Color) = (1, 0.9, 0.8, 1) // 新增這行
     }
 
     SubShader
@@ -157,6 +156,7 @@ Shader "Abyss/UberShader_DOTS"
                 #pragma shader_feature_local _USE_LIGHTING
                 #pragma shader_feature_local _ADD_LIGHT_ON
                 #pragma shader_feature_local _REFLECTION_ON
+                #pragma shader_feature_local _USE_LOCAL_ENV
 
                 #pragma vertex vert
                 #pragma fragment frag
