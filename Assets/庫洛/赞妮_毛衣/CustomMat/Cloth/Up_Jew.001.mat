@@ -196,10 +196,6 @@ Material:
         m_Texture: {fileID: 2800000, guid: 027eba646de460745ac6e3137ee906f2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MaskMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MatCap2ndBlendMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -838,8 +834,8 @@ Material:
     - _OutlineLitColor: {r: 1, g: 0.19999906, b: 0, a: 0.5019608}
     - _OutlineTexHSVG: {r: 0, g: 1, b: 1, a: 1}
     - _OutlineTex_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
-    - _RampColorLight: {r: 1, g: 1, b: 1, a: 1}
-    - _RampColorShadow: {r: 1, g: 1, b: 1, a: 1}
+    - _RampColorLight: {r: 1, g: 0.95, b: 0.85, a: 1}
+    - _RampColorShadow: {r: 0.5499999, g: 0.6, b: 0.7, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}

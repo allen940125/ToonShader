@@ -35,7 +35,7 @@ Shader "Abyss/UberShader_DOTS"
         // 修正：將 [Sub] [Toggle] 統一重構為 [SubToggle]
         [SubToggle(Lighting, _USE_LIGHTING)] _UseLighting("Enable Lighting & Shadows", Float) = 1
         [Sub(Lighting)] _MainLightMultiplier("Local Main Light Multiplier", Range(0, 5)) = 1.0
-        [Sub(Lighting)] _MainLightColorWeight("Main Light Color Weight", Range(0, 1)) = 0.0
+        [Sub(Lighting)] _MainLightColorWeight("Main Light Color Weight", Range(0, 1)) = 1.0
         [SubToggle(Lighting, _ADD_LIGHT_ON)] _AddLightOn("Enable Additional Lights", Float) = 1
         [Sub(Lighting)] _AddLightIntensity("Additional Lights Intensity", Range(0,2)) = 1.0
         [Sub(Lighting)] _ShadowTint("Shadow Tint", Color) = (0.9333333, 0.7411765, 0.7098039, 1.0)
@@ -47,25 +47,19 @@ Shader "Abyss/UberShader_DOTS"
         // ==========================================
         [Main(PBR, _, off)] _group_PBR ("4. PBR & Environment (物理與環境光)", Float) = 0
         
-        // 【核心新增】：導入 Mask Map (R:金屬度, G:環境遮蔽, B:自訂, A:平滑度)
-        [Sub(PBR)] _MaskMap("Mask Map (R:Met, G:AO, A:Smooth)", 2D) = "white" {}
-        
-        // 將這兩個變數的 UI 標籤改為 Multiplier，底層變數名稱保留以相容舊資料
-        [Sub(PBR)] _Smoothness("Smoothness Multiplier", Range(0,1)) = 0.5
-        [Sub(PBR)] _Metallic("Metallic Multiplier", Range(0,1)) = 0.0
-        
+        [Sub(PBR)] _Smoothness("Smoothness", Range(0,1)) = 0.5
+        [Sub(PBR)] _Metallic("Metallic", Range(0,1)) = 0.0
         [SubToggle(PBR, _REFLECTION_ON)] _ReflectionOn("Enable Reflection", Float) = 1
         [Sub(PBR)] _ReflectionIntensity("Reflection Intensity", Range(0,2)) = 1.0
-        
-        // 【移除原本的 _OcclusionMap】，僅保留強度控制
+        [Sub(PBR)] _OcclusionMap("Occlusion Map (RGB)", 2D) = "white" {}
         [Sub(PBR)] _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0
         [Sub(PBR)] _IndirectLightMultiplier("GI Intensity", Range(0.0, 2.0)) = 1.0
-        [Sub(PBR)] _MinBrightness("Min Brightness", Range(0.0, 1.0)) = 0.1
+        [Sub(PBR)] _MinBrightness("Min Brightness", Range(0.0, 1.0)) = 0.03
         [Sub(PBR)] _DiffuseImpact("Diffuse Lighting Impact", Range(0.0, 2.0)) = 1.0
-        [Sub(PBR)] _MaxHighlightEnergy("Max Highlight Energy", Range(1.0, 3.0)) = 1.3
+        [Sub(PBR)] _MaxHighlightEnergy("Max Highlight Energy", Range(1.0, 3.0)) = 2.0
         [Sub(PBR)] _AmbientColor("Ambient Color", Color) = (1,1,1,1)
         [Sub(PBR)] _AmbientIntensity("Ambient Color Intensity", Range(0, 2)) = 1.0
-        
+
         // ==========================================
         // 5. Stylized Cel Shading (卡通渲染核心設定)
         // ==========================================
@@ -91,10 +85,10 @@ Shader "Abyss/UberShader_DOTS"
         // ==========================================
         [Main(Highlights, _, off)] _group_Highlights ("6. Highlights (高光處理)", Float) = 0
         
-        [Sub(Highlights)] _SpecularIntensity("Enable Specular", Range(0, 1)) = 0.5
+        [Sub(Highlights)] _SpecularIntensity("Enable Specular", Range(0, 1)) = 0.2
         [Sub(Highlights)] [HDR] _SpecularColor("Specular Color", Color) = (1, 1, 1, 1)
-        [Sub(Highlights)] _SpecularStep("Specular Step", Range(0.01, 1.0)) = 0.95
-        [Sub(Highlights)] _SpecularFeather("Specular Feather", Range(0.001, 0.5)) = 0.05
+        [Sub(Highlights)] _SpecularStep("Specular Step", Range(0.01, 1.0)) = 0.8
+        [Sub(Highlights)] _SpecularFeather("Specular Feather", Range(0.001, 0.5)) = 0.1
         [Sub(Highlights)] _AnisoPower("Anisotropic Power", Range(1.0, 256.0)) = 64.0
         [Sub(Highlights)] [HDR] _AnisoColor("Anisotropic Color", Color) = (1,1,1,1)
         [Sub(Highlights)] _AnisoIntensity("Anisotropic Intensity", Range(0, 1)) = 0.0
@@ -108,7 +102,7 @@ Shader "Abyss/UberShader_DOTS"
         [Sub(OverlayEffects)] _FresnelPower("Fresnel Power", Range(0.1, 10)) = 2.0
         [Sub(OverlayEffects)] _FresnelIntensity("Fresnel Intensity", Range(0, 1)) = 0.0
         // 修正：沒有綁定編譯關鍵字的純 UI Toggle，在 LWGUI 中直接給予空字串參數即可
-        [SubToggle(OverlayEffects, _)] _UseRimLight("Enable Rim Light", Float) = 0
+        [SubToggle(OverlayEffects, _)] _UseRimLight("Enable Rim Light", Float) = 1
         [Sub(OverlayEffects)] [HDR] _RimColor("Rim Color", Color) = (1, 1, 1, 1)
         [Sub(OverlayEffects)] _RimPower("Rim Power", Range(0.1, 10)) = 3.0
         [Sub(OverlayEffects)] _RimThreshold("Rim Threshold", Range(0, 1)) = 0.5
@@ -122,7 +116,7 @@ Shader "Abyss/UberShader_DOTS"
         // ==========================================
         [Main(GeometryOutline, _, off)] _group_GeometryOutline ("8. Geometry Outline (幾何描邊)", Float) = 0
         
-        [SubToggle(GeometryOutline, _USE_OUTLINE)] _UseOutline("Enable Outline", Float) = 0
+        [SubToggle(GeometryOutline, _USE_OUTLINE)] _UseOutline("Enable Outline", Float) = 1
         [Sub(GeometryOutline)] _OutlineWidth("Outline Width", Range(0, 0.1)) = 0.01
         [Sub(GeometryOutline)] _OutlineColor("Outline Color", Color) = (0,0,0,1)
     }
