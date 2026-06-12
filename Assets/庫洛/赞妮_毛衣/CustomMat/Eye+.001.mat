@@ -707,6 +707,7 @@ Material:
     - _UseFresnel: 0
     - _UseGlitter: 0
     - _UseLighting: 1
+    - _UseLocalEnv: 0
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
     - _UseMatCap: 0
@@ -733,6 +734,7 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Env: 0
     - _group_GeometryOutline: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
@@ -782,6 +784,9 @@ Material:
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
+    - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _LocalBounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
+    - _LocalShadowTint: {r: 0.5, g: 0.5, b: 0.6, a: 1}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _Main2ndDissolveParams: {r: 0, g: 0, b: 0.5, a: 0.1}

@@ -50,15 +50,9 @@ public class DayNightSystemPro : MonoBehaviour
     public AnimationCurve sunTemperature; 
     public Gradient sunFilterColor;
 
-    [Header("--- Shader 全域變數控制 (TA 專用) ---")]
-    [Tooltip("對應 Shader 中的 _GlobalShadowTint")]
-    public Gradient globalShadowTint;
-    
-    [Tooltip("對應 Shader 中的 _GlobalAmbientColor")]
-    public Gradient globalAmbientColor;
-    
-    [Tooltip("對應 Shader 中的 _GlobalBounceColor")]
-    public Gradient globalBounceColor;
+    [Header("--- Shader 全域陰影偏置 ---")]
+    [Tooltip("隨時間變化的陰影色調偏置。白天保持白色(1,1,1)，晚上可調成冷色。")]
+    public Gradient globalShadowColorBias;
     
     private ProbeReferenceVolume probeVolume;
 
@@ -72,20 +66,15 @@ public class DayNightSystemPro : MonoBehaviour
         ExecuteLighting();
         UpdateEnvironment();
         UpdateAPVAndVolumes(); // 方法名稱更新以符合實際邏輯
-        
-        // 加入這行：每幀更新 Shader 全域變數
+
         UpdateShaderGlobals();
     }
-    
+
     private void UpdateShaderGlobals()
     {
-        // 將 0~24 小時轉換為 0.0 ~ 1.0 的漸層採樣百分比
         float timePercent = timeOfDay / 24f;
-
-        // 提取漸層顏色並透過 Shader.SetGlobalColor 廣播給整個場景的材質
-        Shader.SetGlobalColor("_ShadowTint", globalShadowTint.Evaluate(timePercent));
-        Shader.SetGlobalColor("_AmbientColor", globalAmbientColor.Evaluate(timePercent));
-        Shader.SetGlobalColor("_BounceColor", globalBounceColor.Evaluate(timePercent));
+        Color shadowBias = globalShadowColorBias.Evaluate(timePercent);
+        Shader.SetGlobalColor("_GlobalShadowColorBias", shadowBias);
     }
     
     private void InitializeSystem()

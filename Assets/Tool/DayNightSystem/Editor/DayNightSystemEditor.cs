@@ -185,43 +185,20 @@ public class DayNightSystemEditor : Editor
         script.ambientSkyColor = CreateGradient(HexToColor("#05060d"), HexToColor("#4172B7"), HexToColor("#05060d"));
         script.ambientEquatorColor = CreateGradient(HexToColor("#080912"), new Color(0.88f, 0.97f, 1.31f), HexToColor("#080912"));
         script.ambientGroundColor = CreateGradient(Color.black, Color.black, Color.black);
-
-        // ==========================================
-        // 6. Shader 全域變數 (TA 專用預設)
-        // ==========================================
         
-        // _GlobalShadowTint (陰影染色 / SSS 透光)
-        // 設計邏輯：白天陰影受天空光影響呈清冷灰藍，黃昏與黎明邊緣透出暗酒紅/鏽色，深夜則沉入極暗的深紫。
-        script.globalShadowTint = new Gradient();
-        script.globalShadowTint.SetKeys(new GradientColorKey[] {
-            new GradientColorKey(HexToColor("#1a1528"), 0.00f), // 夜晚：深幽暗紫
-            new GradientColorKey(HexToColor("#4a2536"), 0.25f), // 黎明：暗酒紅 (SSS透光)
-            new GradientColorKey(HexToColor("#8b9bb4"), 0.50f), // 正午：清冷灰藍
-            new GradientColorKey(HexToColor("#4a2536"), 0.75f), // 黃昏：暗酒紅 (SSS透光)
-            new GradientColorKey(HexToColor("#1a1528"), 1.00f)  // 夜晚：深幽暗紫
-        }, defaultAlpha);
-
-        // _GlobalAmbientColor (全域環境光)
-        // 設計邏輯：壓低整體環境光亮度，即使在正午也是帶有地下層特性的深藍灰，夜晚則幾乎無光。
-        script.globalAmbientColor = new Gradient();
-        script.globalAmbientColor.SetKeys(new GradientColorKey[] {
-            new GradientColorKey(HexToColor("#05060d"), 0.00f), // 夜晚：極暗藍黑
-            new GradientColorKey(HexToColor("#24202e"), 0.25f), // 黎明：微弱紫灰
-            new GradientColorKey(HexToColor("#54657a"), 0.50f), // 正午：深藍灰
-            new GradientColorKey(HexToColor("#24202e"), 0.75f), // 黃昏：微弱紫灰
-            new GradientColorKey(HexToColor("#05060d"), 1.00f)  // 夜晚：極暗藍黑
-        }, defaultAlpha);
-
-        // _GlobalBounceColor (地表反彈光)
-        // 設計邏輯：模擬從石塊、泥土或血水中反彈的光線，以低明度的大地色、深褐色為主。
-        script.globalBounceColor = new Gradient();
-        script.globalBounceColor.SetKeys(new GradientColorKey[] {
-            new GradientColorKey(HexToColor("#0a0808"), 0.00f), // 夜晚：幾乎無反彈
-            new GradientColorKey(HexToColor("#3d2015"), 0.25f), // 黎明：暗鏽紅
-            new GradientColorKey(HexToColor("#4a3f35"), 0.50f), // 正午：岩石泥土的灰褐
-            new GradientColorKey(HexToColor("#3d2015"), 0.75f), // 黃昏：暗鏽紅
-            new GradientColorKey(HexToColor("#0a0808"), 1.00f)  // 夜晚：幾乎無反彈
-        }, defaultAlpha);
+        // 【新增】全域陰影色調偏置 Gradient
+        script.globalShadowColorBias = new Gradient();
+        script.globalShadowColorBias.SetKeys(
+            new GradientColorKey[]
+            {
+                new GradientColorKey(new Color(0.55f, 0.62f, 0.80f), 0.00f),  // 午夜：冷藍灰
+                new GradientColorKey(new Color(0.85f, 0.88f, 0.95f), 0.25f),  // 日出：淡冷
+                new GradientColorKey(Color.white,                 0.50f),  // 正午：純白
+                new GradientColorKey(new Color(0.95f, 0.93f, 0.90f), 0.75f),  // 傍晚：微暖
+                new GradientColorKey(new Color(0.55f, 0.62f, 0.80f), 1.00f)   // 午夜：回到冷藍灰
+            },
+            defaultAlpha
+        );
         
         script.timeOfDay = 12f;
         script.timeSpeed = 1f;

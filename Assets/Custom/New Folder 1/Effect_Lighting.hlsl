@@ -112,19 +112,6 @@ inline half3 GetStylizedRimLight(AbyssSurfaceData surface, Light mainLight)
 // ---------------------------------------------------------------
 inline half3 ComputeLighting_MathOnly(AbyssSurfaceData surface, Light mainLight, half3 indirectDiffuse, float castShadowMask)
 {
-    // ==========================================
-    // 【核心攔截】：全域與局部的環境光切換
-    // ==========================================
-    #if defined(_USE_LOCAL_ENV)
-    half3 activeShadowTint = _LocalShadowTint.rgb;
-    half3 activeAmbientColor = _LocalAmbientColor.rgb;
-    half3 activeBounceColor = _LocalBounceColor.rgb;
-    #else
-    half3 activeShadowTint = _GlobalShadowTint.rgb;
-    half3 activeAmbientColor = _GlobalAmbientColor.rgb;
-    half3 activeBounceColor = _GlobalBounceColor.rgb;
-    #endif
-    
     float NdotL = dot(surface.normalWS, mainLight.direction);
     float halfLambert = NdotL * 0.5 + 0.5;
 
@@ -147,8 +134,13 @@ inline half3 ComputeLighting_MathOnly(AbyssSurfaceData surface, Light mainLight,
     // 【直接套用傳入的外部陰影遮罩】
     float finalBand = mathBand * castShadowMask * lightWeight;
 
-    half3 dynamicShadowTint = lerp(half3(1, 1, 1), activeShadowTint.rgb, mainLightPower);
-    half3 ambientFilter = lerp(dynamicShadowTint, half3(1, 1, 1), finalBand) * activeAmbientColor * _AmbientIntensity;
+    half3 dynamicShadowTint = lerp(half3(1, 1, 1), _ShadowTint.rgb, mainLightPower);
+    // 原本的 ambientFilter 計算
+    half3 ambientFilter = lerp(dynamicShadowTint, half3(1,1,1), finalBand) * _AmbientColor.rgb * _AmbientIntensity;
+
+    // ── 加入這一行：全域陰影色調偏置（利用 finalBand 限制只作用在陰影區）──
+    ambientFilter *= lerp(_GlobalShadowColorBias.rgb, half3(1,1,1), finalBand);
+
     half3 ambientColor = indirectDiffuse * ambientFilter;
     
     // 原本的計算
@@ -165,7 +157,7 @@ inline half3 ComputeLighting_MathOnly(AbyssSurfaceData surface, Light mainLight,
     
     // 3. 假設新增一個 _BounceColor (反彈光顏色，通常設為暖棕色或地表顏色) 與 _BounceIntensity
     // 如果不想加新變數，可以直接借用環境光或寫死一個柔和的數值
-    half3 bounceLight = bounceLambert * bounceMask * indirectDiffuse * _BounceIntensity * activeBounceColor;
+    half3 bounceLight = bounceLambert * bounceMask * indirectDiffuse * _BounceIntensity * _BounceColor.rgb;
     // 4. 將反彈光加入總能量
     half3 totalLighting = ambientColor + directColor + bounceLight;
 
@@ -186,19 +178,6 @@ inline half3 ComputeLighting_MathOnly(AbyssSurfaceData surface, Light mainLight,
 // ---------------------------------------------------------------
 inline half3 ComputeLighting_Ramp(AbyssSurfaceData surface, Light mainLight, half3 indirectDiffuse, float castShadowMask)
 {
-    // ==========================================
-    // 【核心攔截】：全域與局部的環境光切換
-    // ==========================================
-    #if defined(_USE_LOCAL_ENV)
-    half3 activeShadowTint = _LocalShadowTint.rgb;
-    half3 activeAmbientColor = _LocalAmbientColor.rgb;
-    half3 activeBounceColor = _LocalBounceColor.rgb;
-    #else
-    half3 activeShadowTint = _GlobalShadowTint.rgb;
-    half3 activeAmbientColor = _GlobalAmbientColor.rgb;
-    half3 activeBounceColor = _GlobalBounceColor.rgb;
-    #endif
-    
     float NdotL = dot(surface.normalWS, mainLight.direction);
     float halfLambert = NdotL * 0.5 + 0.5;
     
@@ -219,7 +198,7 @@ inline half3 ComputeLighting_Ramp(AbyssSurfaceData surface, Light mainLight, hal
     
     half3 lightTint = lerp(half3(1,1,1), _RampColorLight.rgb, _RampLightIntensity);
 
-    half3 ambientFilter = lerp(dynamicShadowTint, half3(1, 1, 1), finalBand) * activeAmbientColor * _AmbientIntensity;
+    half3 ambientFilter = lerp(dynamicShadowTint, half3(1, 1, 1), finalBand) * _AmbientColor.rgb * _AmbientIntensity;
     half3 ambientColor = indirectDiffuse * ambientFilter;
     
     half3 directColor = mainLight.color * mainLight.distanceAttenuation * rampColor * lightTint * finalBand;
