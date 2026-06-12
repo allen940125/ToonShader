@@ -42,6 +42,22 @@ inline void InitializeSurfaceData(Varyings input, out AbyssSurfaceData surface)
     surface.albedo = texColor.rgb * _BaseColor.rgb;
     surface.alpha = texColor.a * _BaseColor.a;
 
+    // ==========================================
+    // 【核心新增】：統一取樣 Mask Map 避免效能浪費
+    // ==========================================
+    // 讀取 Mask Map (如果沒放貼圖，引擎預設回傳 1,1,1,1)
+    half4 maskTex = SAMPLE_TEXTURE2D(_MaskMap, sampler_BaseMap, input.uv);
+    
+    // R通道：金屬度 (貼圖數值 * 屬性面板乘數)
+    surface.metallic = maskTex.r * _Metallic;     
+    
+    // G通道：環境遮蔽 AO (純讀取，強度留到 Shared 裡做)
+    surface.occlusion = maskTex.g;                
+    
+    // A通道：平滑度 (貼圖數值 * 屬性面板乘數)
+    surface.smoothness = maskTex.a * _Smoothness; 
+    // ==========================================
+    
     // 3. 幾何向量與法線貼圖運算 (TBN 矩陣處理)
     // 確保經過插值後的法線與切線長度仍為 1
     float3 normalWS = normalize(input.normalWS);

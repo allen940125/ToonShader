@@ -126,7 +126,7 @@ TEXTURE2D(_DitherMap);
 TEXTURE2D(_NormalMap);
 TEXTURE2D(_MatCapMap);
 TEXTURE2D(_EmissionMap);
-TEXTURE2D(_OcclusionMap);
+TEXTURE2D(_MaskMap);
 
 SAMPLER(sampler_BaseMap);
 SAMPLER(sampler_DitherMap);
@@ -146,6 +146,10 @@ struct AbyssSurfaceData
     float3 positionWS;  // 世界空間座標
     half3 emission;     // 自發光/附加光貢獻 (如 Rim Light 會累加於此)
     float3 tangentWS;   // 世界空間切線 (供各向異性高光等依賴切線空間的特效使用)
+
+    half metallic;
+    half smoothness;
+    half occlusion;
 };
 
 // ==============================================================================

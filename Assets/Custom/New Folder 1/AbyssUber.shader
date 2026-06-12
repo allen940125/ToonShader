@@ -47,19 +47,25 @@ Shader "Abyss/UberShader_DOTS"
         // ==========================================
         [Main(PBR, _, off)] _group_PBR ("4. PBR & Environment (物理與環境光)", Float) = 0
         
-        [Sub(PBR)] _Smoothness("Smoothness", Range(0,1)) = 0.5
-        [Sub(PBR)] _Metallic("Metallic", Range(0,1)) = 0.0
+        // 【核心新增】：導入 Mask Map (R:金屬度, G:環境遮蔽, B:自訂, A:平滑度)
+        [Sub(PBR)] _MaskMap("Mask Map (R:Met, G:AO, A:Smooth)", 2D) = "white" {}
+        
+        // 將這兩個變數的 UI 標籤改為 Multiplier，底層變數名稱保留以相容舊資料
+        [Sub(PBR)] _Smoothness("Smoothness Multiplier", Range(0,1)) = 0.5
+        [Sub(PBR)] _Metallic("Metallic Multiplier", Range(0,1)) = 0.0
+        
         [SubToggle(PBR, _REFLECTION_ON)] _ReflectionOn("Enable Reflection", Float) = 1
         [Sub(PBR)] _ReflectionIntensity("Reflection Intensity", Range(0,2)) = 1.0
-        [Sub(PBR)] _OcclusionMap("Occlusion Map (RGB)", 2D) = "white" {}
+        
+        // 【移除原本的 _OcclusionMap】，僅保留強度控制
         [Sub(PBR)] _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0
         [Sub(PBR)] _IndirectLightMultiplier("GI Intensity", Range(0.0, 2.0)) = 1.0
-        [Sub(PBR)] _MinBrightness("Min Brightness", Range(0.0, 1.0)) = 0.03
+        [Sub(PBR)] _MinBrightness("Min Brightness", Range(0.0, 1.0)) = 0.1
         [Sub(PBR)] _DiffuseImpact("Diffuse Lighting Impact", Range(0.0, 2.0)) = 1.0
-        [Sub(PBR)] _MaxHighlightEnergy("Max Highlight Energy", Range(1.0, 3.0)) = 2.0
+        [Sub(PBR)] _MaxHighlightEnergy("Max Highlight Energy", Range(1.0, 3.0)) = 1.3
         [Sub(PBR)] _AmbientColor("Ambient Color", Color) = (1,1,1,1)
         [Sub(PBR)] _AmbientIntensity("Ambient Color Intensity", Range(0, 2)) = 1.0
-
+        
         // ==========================================
         // 5. Stylized Cel Shading (卡通渲染核心設定)
         // ==========================================
