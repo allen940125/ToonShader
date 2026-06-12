@@ -120,13 +120,16 @@ CBUFFER_END
 
 // 紋理與採樣器分離宣告
 // 邏輯目的：允許不同紋理共用同一個取樣器 (Sampler) 以突破硬體取樣器數量上限。
+// 紋理與採樣器分離宣告
 TEXTURE2D(_BaseMap);
 TEXTURE2D(_RampMap);
 TEXTURE2D(_DitherMap);
 TEXTURE2D(_NormalMap);
 TEXTURE2D(_MatCapMap);
 TEXTURE2D(_EmissionMap);
-TEXTURE2D(_OcclusionMap);
+
+// 【替換】：將 _OcclusionMap 改為 _MaskMap
+TEXTURE2D(_MaskMap);
 
 SAMPLER(sampler_BaseMap);
 SAMPLER(sampler_DitherMap);
@@ -146,6 +149,11 @@ struct AbyssSurfaceData
     float3 positionWS;  // 世界空間座標
     half3 emission;     // 自發光/附加光貢獻 (如 Rim Light 會累加於此)
     float3 tangentWS;   // 世界空間切線 (供各向異性高光等依賴切線空間的特效使用)
+
+    // 【核心新增】：承載 Mask Map 解包後的資料
+    half metallic;
+    half smoothness;
+    half occlusion;
 };
 
 // ==============================================================================

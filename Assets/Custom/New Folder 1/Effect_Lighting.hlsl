@@ -49,15 +49,19 @@ inline half3 GetAdditionalLightsContribution(float3 positionWS, float3 normalWS,
 // ------------------------------------------------------------------
 // 3. 間接鏡面反射 (Reflection Probe)
 // ------------------------------------------------------------------
-inline half3 GetIndirectSpecular(float3 positionWS, float3 normalWS, float3 viewDirWS, half3 albedo)
+// 【修正】：為函式新增 surface 參數，才能讀取裡面的 PBR 資料
+inline half3 GetIndirectSpecular(AbyssSurfaceData surface) 
 {
     half3 reflectionColor = 0;
     #if defined(_REFLECTION_ON)
-        float3 reflectVector = reflect(-viewDirWS, normalWS);
-        half perceptualRoughness = 1.0 - _Smoothness;
-        half3 envReflection = GlossyEnvironmentReflection(reflectVector, positionWS, perceptualRoughness, 1.0h);
-        half3 specularColor = lerp(0.04, albedo, _Metallic);
-        reflectionColor = envReflection * specularColor * _ReflectionIntensity;
+    float3 reflectVector = reflect(-surface.viewDirWS, surface.normalWS);
+        
+    // 【核心修正】：改用 surface.smoothness 和 surface.metallic
+    half perceptualRoughness = 1.0 - surface.smoothness;
+    half3 envReflection = GlossyEnvironmentReflection(reflectVector, surface.positionWS, perceptualRoughness, 1.0h);
+    half3 specularColor = lerp(0.04, surface.albedo, surface.metallic);
+        
+    reflectionColor = envReflection * specularColor * _ReflectionIntensity;
     #endif
     return reflectionColor;
 }
@@ -285,7 +289,7 @@ inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight, hal
 
     // 7. 附加光源與反射
     half3 addLight = GetAdditionalLightsContribution(surface.positionWS, surface.normalWS, surface.viewDirWS, surface.albedo);
-    half3 reflection = GetIndirectSpecular(surface.positionWS, surface.normalWS, surface.viewDirWS, surface.albedo);
+    half3 reflection = GetIndirectSpecular(surface);
 
     return diffuse + finalSpecular + rimLight + addLight + reflection;
 }

@@ -8,14 +8,12 @@ public class AbyssTextureToolkit : EditorWindow
     private int currentTab = 0;
     private string[] tabs = { "通道打包 (Channel Packer)", "ID 烘焙 (ID Baker)", "漸層烘焙 (Ramp Baker)" };
 
-    // --- 1. 通道打包變數 ---
     private Texture2D texR, texG, texB, texA;
     private string packerOutputName = "NewMaskMap";
 
-    // --- 2. ID 烘焙變數 ---
     private Texture2D idMapSource;
     private string idBakerOutputName = "NewIDMaskMap";
-    private float colorTolerance = 0.05f; // 顏色比對容差 (防邊緣壓縮雜訊)
+    private float colorTolerance = 0.08f;
     
     [System.Serializable]
     public class IDRule
@@ -27,7 +25,6 @@ public class AbyssTextureToolkit : EditorWindow
     }
     private List<IDRule> idRules = new List<IDRule>();
 
-    // --- 3. 漸層烘焙 (Ramp Baker) 變數 ---
     private Gradient rampGradient;
     private int rampWidth = 256;
     private string rampOutputName = "NewRampMap";
@@ -36,32 +33,12 @@ public class AbyssTextureToolkit : EditorWindow
     public static void ShowWindow()
     {
         var window = GetWindow<AbyssTextureToolkit>("Abyss Texture Toolkit");
-        window.minSize = new Vector2(450, 600);
+        window.minSize = new Vector2(450, 650);
     }
 
     private void OnEnable()
     {
-        // 預設給一個硬邊距的二次元 Ramp 漸層
-        if (rampGradient == null)
-        {
-            rampGradient = new Gradient();
-            rampGradient.SetKeys(
-                new GradientColorKey[] { 
-                    new GradientColorKey(new Color(0.4f, 0.45f, 0.6f), 0f), 
-                    new GradientColorKey(new Color(0.4f, 0.45f, 0.6f), 0.49f), 
-                    new GradientColorKey(Color.white, 0.51f), 
-                    new GradientColorKey(Color.white, 1f) 
-                },
-                new GradientAlphaKey[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
-            );
-        }
-
-        // 預設給定兩組 ID 規則防呆
-        if (idRules.Count == 0)
-        {
-            idRules.Add(new IDRule { idColor = Color.red, metallic = 1f, ao = 1f, smoothness = 0.8f }); // 金屬
-            idRules.Add(new IDRule { idColor = Color.green, metallic = 0f, ao = 1f, smoothness = 0.2f }); // 布料
-        }
+        if (idRules.Count == 0) idRules.Add(new IDRule { idColor = Color.red }); 
     }
 
     private void OnGUI()
@@ -78,9 +55,6 @@ public class AbyssTextureToolkit : EditorWindow
         }
     }
 
-    // ==========================================
-    // 模組 1：通道打包器
-    // ==========================================
     private void DrawChannelPacker()
     {
         EditorGUILayout.LabelField("將散裝黑白貼圖，打包為 URP 標準 Mask Map", EditorStyles.helpBox);
@@ -91,15 +65,18 @@ public class AbyssTextureToolkit : EditorWindow
         texB = (Texture2D)EditorGUILayout.ObjectField("B: 空白 (自訂)", texB, typeof(Texture2D), false);
         texA = (Texture2D)EditorGUILayout.ObjectField("A: 平滑 (Smoothness)", texA, typeof(Texture2D), false);
 
+        GUILayout.Space(5);
+        if (GUILayout.Button("一鍵檢查並修復上述貼圖的讀寫權限"))
+        {
+            FixReadable(texR); FixReadable(texG); FixReadable(texB); FixReadable(texA);
+        }
+
         GUILayout.Space(10);
         packerOutputName = EditorGUILayout.TextField("輸出檔名", packerOutputName);
 
         GUILayout.Space(10);
         GUI.backgroundColor = new Color(0.7f, 1f, 0.7f);
-        if (GUILayout.Button("執行打包 (Pack to RGBA)", GUILayout.Height(40)))
-        {
-            PackTextures();
-        }
+        if (GUILayout.Button("執行打包 (Pack to RGBA)", GUILayout.Height(40))) PackTextures();
         GUI.backgroundColor = Color.white;
     }
 
@@ -108,7 +85,7 @@ public class AbyssTextureToolkit : EditorWindow
         Texture2D baseTex = texR != null ? texR : (texG != null ? texG : (texA != null ? texA : texB));
         if (baseTex == null) { EditorUtility.DisplayDialog("錯誤", "請至少放入一張貼圖！", "確定"); return; }
 
-        EnsureTextureReadable(texR); EnsureTextureReadable(texG); EnsureTextureReadable(texB); EnsureTextureReadable(texA);
+        if (!CheckReadable(texR) || !CheckReadable(texG) || !CheckReadable(texB) || !CheckReadable(texA)) return;
 
         int w = baseTex.width, h = baseTex.height;
         Texture2D outputTex = new Texture2D(w, h, TextureFormat.RGBA32, false);
@@ -128,23 +105,30 @@ public class AbyssTextureToolkit : EditorWindow
                 pA != null ? pA[i].a : 0f
             );
         }
-
+        outputTex.SetPixels(outPixels);
+        
         SaveAndConfigureTexture(outputTex, packerOutputName, false, TextureWrapMode.Repeat);
     }
 
-    // ==========================================
-    // 模組 2：ID 烘焙器
-    // ==========================================
     private void DrawIDBaker()
     {
-        EditorGUILayout.LabelField("將 Color ID 轉譯為 Mask Map (用記憶體換取 GPU 效能)", EditorStyles.helpBox);
+        EditorGUILayout.LabelField("用滴管吸取來源圖顏色，轉譯為所需的遮罩", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         idMapSource = (Texture2D)EditorGUILayout.ObjectField("來源 Color ID 貼圖", idMapSource, typeof(Texture2D), false);
-        colorTolerance = EditorGUILayout.Slider("顏色容差 (防雜訊)", colorTolerance, 0f, 0.2f);
         
+        if (idMapSource != null && !idMapSource.isReadable)
+        {
+            GUI.backgroundColor = new Color(1f, 0.6f, 0.6f);
+            if (GUILayout.Button("點擊修復此 ID 貼圖的讀寫與壓縮設定"))
+            {
+                FixReadable(idMapSource);
+            }
+            GUI.backgroundColor = Color.white;
+        }
+
+        colorTolerance = EditorGUILayout.Slider("顏色容差", colorTolerance, 0f, 0.3f);
         GUILayout.Space(10);
-        EditorGUILayout.LabelField("ID 轉譯規則 (ID Rules)", EditorStyles.boldLabel);
         
         for (int i = 0; i < idRules.Count; i++)
         {
@@ -154,31 +138,32 @@ public class AbyssTextureToolkit : EditorWindow
             if (GUILayout.Button("移除", GUILayout.Width(50))) { idRules.RemoveAt(i); break; }
             GUILayout.EndHorizontal();
 
-            idRules[i].metallic = EditorGUILayout.Slider("R: 金屬度 (Metallic)", idRules[i].metallic, 0f, 1f);
-            idRules[i].ao = EditorGUILayout.Slider("G: 遮蔽 (AO)", idRules[i].ao, 0f, 1f);
-            idRules[i].smoothness = EditorGUILayout.Slider("A: 平滑度 (Smoothness)", idRules[i].smoothness, 0f, 1f);
+            idRules[i].metallic = EditorGUILayout.Slider("R: 金屬度", idRules[i].metallic, 0f, 1f);
+            idRules[i].ao = EditorGUILayout.Slider("G: 遮蔽", idRules[i].ao, 0f, 1f);
+            idRules[i].smoothness = EditorGUILayout.Slider("A: 平滑度", idRules[i].smoothness, 0f, 1f);
             EditorGUILayout.EndVertical();
         }
 
-        if (GUILayout.Button("+ 新增 ID 規則")) idRules.Add(new IDRule());
+        if (GUILayout.Button("+ 新增要提取的顏色")) idRules.Add(new IDRule());
 
         GUILayout.Space(10);
         idBakerOutputName = EditorGUILayout.TextField("輸出檔名", idBakerOutputName);
 
         GUILayout.Space(10);
+        GUILayout.BeginHorizontal();
         GUI.backgroundColor = new Color(0.7f, 0.8f, 1f);
-        if (GUILayout.Button("執行烘焙 (Bake from ID)", GUILayout.Height(40)))
-        {
-            BakeFromIDMap();
-        }
+        if (GUILayout.Button("A. 烘焙為 PBR 通道圖\n(輸出 RGBA)", GUILayout.Height(50))) BakeFromIDMap(false);
+        
+        GUI.backgroundColor = new Color(1f, 0.7f, 0.7f);
+        if (GUILayout.Button("B. 提取單純黑白遮罩\n(選中變白，其餘變黑)", GUILayout.Height(50))) BakeFromIDMap(true);
+        GUILayout.EndHorizontal();
         GUI.backgroundColor = Color.white;
     }
 
-    private void BakeFromIDMap()
+    private void BakeFromIDMap(bool isSimpleBlackAndWhite)
     {
         if (idMapSource == null) { EditorUtility.DisplayDialog("錯誤", "請放入 ID 貼圖！", "確定"); return; }
-        
-        EnsureTextureReadable(idMapSource);
+        if (!CheckReadable(idMapSource)) return;
         
         int w = idMapSource.width, h = idMapSource.height;
         Texture2D outputTex = new Texture2D(w, h, TextureFormat.RGBA32, false);
@@ -188,71 +173,91 @@ public class AbyssTextureToolkit : EditorWindow
         for (int i = 0; i < inPixels.Length; i++)
         {
             Color pixelColor = inPixels[i];
+            bool matched = false;
             float finalM = 0f, finalAO = 1f, finalS = 0f;
 
-            // 尋找最接近的 ID 規則
             foreach (var rule in idRules)
             {
-                float dist = Vector4.Distance(pixelColor, rule.idColor);
+                // 【核心修正】：閹割掉 Alpha，純看三維 RGB 距離
+                float dist = Vector3.Distance(
+                    new Vector3(pixelColor.r, pixelColor.g, pixelColor.b),
+                    new Vector3(rule.idColor.r, rule.idColor.g, rule.idColor.b)
+                );
+
                 if (dist <= colorTolerance)
                 {
+                    matched = true;
                     finalM = rule.metallic;
                     finalAO = rule.ao;
                     finalS = rule.smoothness;
-                    break; // 找到就跳出，提升效能
+                    break;
                 }
             }
-            outPixels[i] = new Color(finalM, finalAO, 0f, finalS);
-        }
 
+            if (isSimpleBlackAndWhite)
+            {
+                outPixels[i] = matched ? Color.white : Color.black;
+            }
+            else
+            {
+                outPixels[i] = new Color(finalM, finalAO, 0f, finalS);
+            }
+        }
+        outputTex.SetPixels(outPixels);
+        
         SaveAndConfigureTexture(outputTex, idBakerOutputName, false, TextureWrapMode.Repeat);
     }
 
-    // ==========================================
-    // 模組 3：漸層烘焙 (Ramp Baker)
-    // ==========================================
     private void DrawRampBaker()
     {
         EditorGUILayout.LabelField("生成卡通渲染專用的 1D Ramp 光影階梯貼圖", EditorStyles.helpBox);
         GUILayout.Space(10);
-
-        rampGradient = EditorGUILayout.GradientField("光影過渡漸層 (Left:暗部 -> Right:亮部)", rampGradient);
+        rampGradient = EditorGUILayout.GradientField("光影過渡漸層", rampGradient);
         rampWidth = EditorGUILayout.IntSlider("貼圖解析度 (寬)", rampWidth, 64, 1024);
         rampOutputName = EditorGUILayout.TextField("輸出檔名", rampOutputName);
-
         GUILayout.Space(10);
-        GUI.backgroundColor = new Color(1f, 0.8f, 0.6f);
-        if (GUILayout.Button("生成 Ramp 貼圖 (Generate 1D Texture)", GUILayout.Height(40)))
-        {
-            GenerateRampTexture();
-        }
-        GUI.backgroundColor = Color.white;
+        if (GUILayout.Button("生成 Ramp 貼圖", GUILayout.Height(40))) GenerateRampTexture();
     }
 
     private void GenerateRampTexture()
     {
-        int height = 4; // 高度給 4 個像素即可，避免引擎過度壓縮導致的一維失真
+        int height = 4;
         Texture2D rampTex = new Texture2D(rampWidth, height, TextureFormat.RGBA32, false);
-
         for (int x = 0; x < rampWidth; x++)
         {
-            // 將 X 座標正規化到 0~1 來採樣漸層
-            float t = (float)x / (rampWidth - 1);
-            Color c = rampGradient.Evaluate(t);
-            
-            for (int y = 0; y < height; y++)
-            {
-                rampTex.SetPixel(x, y, c);
-            }
+            Color c = rampGradient.Evaluate((float)x / (rampWidth - 1));
+            for (int y = 0; y < height; y++) rampTex.SetPixel(x, y, c);
         }
-
-        // Ramp 貼圖的物理防呆：必須是 Clamp 模式，否則邊緣光會採樣到另一端的黑影
         SaveAndConfigureTexture(rampTex, rampOutputName, true, TextureWrapMode.Clamp);
     }
 
-    // ==========================================
-    // 底層共用 API
-    // ==========================================
+    private bool CheckReadable(Texture2D tex)
+    {
+        if (tex == null) return true;
+        if (!tex.isReadable)
+        {
+            EditorUtility.DisplayDialog("錯誤", $"貼圖 {tex.name} 未開啟 Read/Write 權限！請點擊面板上的修復按鈕。", "確定");
+            return false;
+        }
+        return true;
+    }
+
+    private void FixReadable(Texture2D tex)
+    {
+        if (tex == null) return;
+        string path = AssetDatabase.GetAssetPath(tex);
+        TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+        if (importer != null)
+        {
+            importer.isReadable = true;
+            importer.sRGBTexture = false; // 強制改為資料流 (Linear)
+            importer.textureCompression = TextureImporterCompression.Uncompressed; // 拔除破壞性壓縮
+            importer.filterMode = FilterMode.Point; // 防溢色
+            importer.SaveAndReimport();
+            Debug.Log($"成功解除 {tex.name} 的壓縮限制與色彩空間阻礙。");
+        }
+    }
+
     private void SaveAndConfigureTexture(Texture2D tex, string fileName, bool isSRGB, TextureWrapMode wrapMode)
     {
         tex.Apply();
@@ -269,23 +274,10 @@ public class AbyssTextureToolkit : EditorWindow
             {
                 importer.sRGBTexture = isSRGB;
                 importer.wrapMode = wrapMode;
-                importer.mipmapEnabled = false; // Ramp 和 Mask 通常不需要 Mipmap
+                importer.mipmapEnabled = false;
                 importer.SaveAndReimport();
             }
-
             Debug.Log($"<color=green>作業完成！</color> 貼圖已儲存至: {path}");
-        }
-    }
-
-    private void EnsureTextureReadable(Texture2D tex)
-    {
-        if (tex == null) return;
-        string path = AssetDatabase.GetAssetPath(tex);
-        TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
-        if (importer != null && !importer.isReadable)
-        {
-            importer.isReadable = true;
-            importer.SaveAndReimport();
         }
     }
 }
