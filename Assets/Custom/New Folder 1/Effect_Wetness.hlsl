@@ -1,10 +1,6 @@
 #ifndef ABYSS_WETNESS_INCLUDED
 #define ABYSS_WETNESS_INCLUDED
 
-// 接收來自 WeatherManager 的全域推播
-float _GlobalRainIntensity;
-float3 _GlobalRainDirection; // 補上這個被遺忘的關鍵變數
-
 inline void ApplyWeatherWetness(inout AbyssSurfaceData surface, float localWetness)
 {
     // 1. 閥門控制：全域雨勢與局部腳本判定結合

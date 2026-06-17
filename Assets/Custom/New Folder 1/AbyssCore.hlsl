@@ -3,125 +3,120 @@
 
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-// DOTS 實例化支援（若專案採用 ECS 架構則需取消註解）
-//#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
 
-// ==============================================================================
-// 1. 統一的 CBUFFER (Constant Buffer)
-// 邏輯目的：將所有材質屬性打包至 UnityPerMaterial 區塊中。
-// 嚴格規範：這是觸發 SRP Batcher 的必要條件。若變數宣告在 CBUFFER 之外，
-// 將導致 Draw Call 無法合併，嚴重影響渲染效能。
-// ==============================================================================
-
-half4 _GlobalShadowColorBias;   // 預設 (1,1,1,1)
+half4 _GlobalShadowColorBias;   
+float _GlobalRainIntensity;
+float3 _GlobalRainDirection; 
 
 CBUFFER_START(UnityPerMaterial)
 
     // ==========================================
-    // 區塊一：向量資料 (float4 / half4)
-    // 物理規範：所有 4 維資料必須置於頂部，確保 16-Byte 暫存器完美對齊
+    // 嚴格依照 Properties 的宣告順序排列 (含 UI 群組變數)
+    // 向量 (4維) 必須優先宣告，以確保記憶體對齊
     // ==========================================
-    
-    // [空間轉換]
+
+    // --- 貼圖 ST 變數 (4 維) ---
     float4 _BaseMap_ST;         
     float4 _EmissionMap_ST;     
 
-    // [核心色彩]
+    // --- Color 變數 (4 維) ---
     half4  _BaseColor;          
     half4  _EmissionColor;      
-    half4  _AmbientColor;       
-
-    // [卡通渲染色彩]
     half4  _ShadowTint;         
+    half4  _AmbientColor;       
     half4  _RampColorLight;     
     half4  _RampColorShadow;    
     half4  _BorderColor;
-    half3 _BounceColor;
-
-    // [高光與附加特效色彩]
+    half4  _BounceColor;
     half4  _SpecularColor;      
+    half4  _AnisoColor;         
     half4  _FresnelColor;
     half4  _RimColor;  
     half4  _OutlineColor;       
-    half4  _AnisoColor;         
-    
-    // half4  _RimColor;           // [嚴厲警告：請取消註解並補回此 RimLight 變數]
-
 
     // ==========================================
-    // 區塊二：標量資料 (float / half)
-    // 物理規範：連續宣告的標量會被 GPU 自動以 4 個為一組打包，切勿與向量穿插
+    // 標量區塊 (Float / Range / Toggle)
+    // 嚴格依照 Properties 的由上往下順序
     // ==========================================
-    
-    // [底層狀態與開關] 
-    float  _Transparency_Mode;  
+
+    // 1. Render State
+    float  _group_RenderState;
     float  _CullMode;           
-    float  _UseLighting;        
-    float  _AddLightOn;         
-    float  _ReflectionOn;       
-    float  _UseOutline;         
-    float  _UseRampMode;
-    float  _UseRimLight;
-
-    // [基礎運算與環境強度]
-    half   _MainLightColorWeight;
-    half   _MainLightMultiplier;
-    half   _DiffuseImpact;
-    half   _MaxHighlightEnergy;
+    float  _Transparency_Mode;  
     half   _AlphaClipThreshold; 
-    half   _OcclusionStrength;
     half   _DitherThreshold;    
     half   _DitherScale;        
-    half   _NormalScale;        
-    half   _MinBrightness;      
-    half   _IndirectLightMultiplier; 
-    half   _AmbientIntensity;
-    half   _AddLightIntensity;  
 
-    // [卡通光影階梯 (Cel / Ramp)]
-    half   _BandThreshold;      
-    half   _BandSmoothness;     
+    // 2. Base Surface
+    float  _group_BaseSurface;
+    half   _NormalScale;        
+
+    // 3. Lighting
+    float  _group_Lighting;
+    float  _UseLighting;        
+    half   _MainLightMultiplier;
+    half   _MainLightColorWeight;
+    float  _AddLightOn;         
+    half   _AddLightIntensity;  
     half   _ReceiveShadowIntensity;
     float  _ShadowSmoothness;
-    half   _RampLightIntensity;
-    half   _RampShadowIntensity;
-    half   _BounceIntensity;
 
-    // [明暗交界線 (Border)]
-    half   _BorderThreshold;    
-    half   _BorderWidth;        
-    half   _BorderIntensity;
-    
-
-    // [物理高光與反射 (Specular & Reflection)]
-    half   _SpecularStep;       
-    half   _SpecularFeather;    
-    half   _ReflectionIntensity;
+    // 4. PBR
+    float  _group_PBR;
     half   _Smoothness;         
     half   _Metallic;           
+    float  _ReflectionOn;       
+    half   _ReflectionIntensity;
+    half   _OcclusionStrength;
+    half   _IndirectLightMultiplier; 
+    half   _MinBrightness;      
+    half   _DiffuseImpact;
+    half   _MaxHighlightEnergy;
+    half   _AmbientIntensity;
 
-    // [各項獨立特效強度 (Fresnel, Rim, Outline, MatCap, Aniso)]
+    // 5. Cel Shading
+    float  _group_CelShading;
+    float  _UseRampMode;
+    half   _RampLightIntensity;
+    half   _RampShadowIntensity;
+    half   _BandThreshold;      
+    half   _BandSmoothness;     
+    half   _BorderIntensity;
+    half   _BorderThreshold;    
+    half   _BorderWidth;        
+    half   _BounceIntensity;
+
+    // 6. Highlights
+    float  _group_Highlights;
+    float  _SpecularIntensity;    
+    half   _SpecularStep;       
+    half   _SpecularFeather;    
+    half   _AnisoPower;         
+    half   _AnisoIntensity;
+
+    // 7. Overlay
+    float  _group_OverlayEffects;
     half   _FresnelPower;       
     half   _FresnelIntensity;   
-    
+    float  _UseRimLight;
     half   _RimPower;
     half   _RimThreshold;       
     half   _RimSmoothness;      
     half   _RimShadowMask;
-
-    float  _SpecularIntensity;    
-
-    float  _OutlineWidth;       
     half   _MatCapIntensity;    
-    half   _AnisoPower;         
-    half   _AnisoIntensity;
 
-    float _LocalWetness;
+    // 8. Geometry Outline
+    float  _group_GeometryOutline;
+    float  _UseOutline;         
+    float  _OutlineWidth;       
+
+    // 9. Weather
+    float  _group_Weather;
+    float  _UseWetness;
+    float  _LocalWetness;
 
 CBUFFER_END
 
-// 紋理與採樣器分離宣告
-// 邏輯目的：允許不同紋理共用同一個取樣器 (Sampler) 以突破硬體取樣器數量上限。
 TEXTURE2D(_BaseMap);
 TEXTURE2D(_RampMap);
 TEXTURE2D(_DitherMap);
@@ -132,7 +127,7 @@ TEXTURE2D(_MaskMap);
 
 SAMPLER(sampler_BaseMap);
 SAMPLER(sampler_DitherMap);
-SAMPLER(sampler_NormalMap); // 保留獨立取樣器：法線貼圖通常需要線性 (Linear) 且無 Mipmap 過濾，與 BaseMap 可能不同。
+SAMPLER(sampler_NormalMap);
 
 // ==============================================================================
 // 2. 標準化資料總線：AbyssSurfaceData

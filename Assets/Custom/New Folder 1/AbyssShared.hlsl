@@ -65,7 +65,7 @@ Varyings vert(Attributes input)
 half4 frag(Varyings input) : SV_Target
 {
     UNITY_SETUP_INSTANCE_ID(input);
-
+    
     // ---- 1. 陰影投射 Pass ----
     #if defined(PASS_SHADOW_CASTER)
         half alpha = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a * _BaseColor.a;

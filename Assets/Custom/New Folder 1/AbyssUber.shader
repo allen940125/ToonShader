@@ -11,7 +11,7 @@ Shader "Abyss/UberShader_DOTS"
         [SubEnum(RenderState, UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode", Float) = 2.0
         [SubKeywordEnum(RenderState, Opaque, Cutout, Dither)] _Transparency_Mode("Transparency Mode", Float) = 0
         [Sub(RenderState)] _AlphaClipThreshold("Alpha Clip Threshold", Range(0.0, 1.0)) = 0.5
-        [Sub(RenderState)] _DitherMap("Dither Pattern (Blue Noise)", 2D) = "white" {}
+        [Sub(RenderState)] [NoScaleOffset] _DitherMap("Dither Pattern (Blue Noise)", 2D) = "white" {}
         [Sub(RenderState)] _DitherThreshold("Dither Threshold", Range(0, 1)) = 0.5
         [Sub(RenderState)] _DitherScale("Dither Tiling Scale", Range(1, 20)) = 10
 
@@ -22,7 +22,7 @@ Shader "Abyss/UberShader_DOTS"
         
         [Sub(BaseSurface)] [MainTexture] _BaseMap("Base Map", 2D) = "white" {}
         [Sub(BaseSurface)] [MainColor] _BaseColor("Base Color", Color) = (1,1,1,1)
-        [Sub(BaseSurface)] [Normal] _NormalMap("Normal Map", 2D) = "bump" {}
+        [Sub(BaseSurface)] [NoScaleOffset] [Normal] _NormalMap("Normal Map", 2D) = "bump" {}
         [Sub(BaseSurface)] _NormalScale("Normal Scale", Range(0.0, 2.0)) = 1.0
         [Sub(BaseSurface)] [HDR] _EmissionColor("Emission Color", Color) = (0,0,0,1)
         [Sub(BaseSurface)] _EmissionMap("Emission Map", 2D) = "white" {}
@@ -48,7 +48,7 @@ Shader "Abyss/UberShader_DOTS"
         [Main(PBR, _, off)] _group_PBR ("4. PBR & Environment (物理與環境光)", Float) = 0
         
         // 【核心新增】：導入 Mask Map (R:金屬度, G:環境遮蔽, B:自訂, A:平滑度)
-        [Sub(PBR)] _MaskMap("Mask Map (R:Met, G:AO, A:Smooth)", 2D) = "white" {}
+        [Sub(PBR)] [NoScaleOffset] _MaskMap("Mask Map (R:Met, G:AO, A:Smooth)", 2D) = "white" {}
         
         // 將這兩個變數的 UI 標籤改為 Multiplier，底層變數名稱保留以相容舊資料
         [Sub(PBR)] _Smoothness("Smoothness Multiplier", Range(0,1)) = 0.5
@@ -72,7 +72,7 @@ Shader "Abyss/UberShader_DOTS"
         [Main(CelShading, _, on)] _group_CelShading ("5. Stylized Cel Shading (卡通渲染核心)", Float) = 0
         
         [SubEnum(CelShading, Math Mode, 0, Ramp Mode, 1)] _UseRampMode("Lighting Mode", Float) = 0
-        [Sub(CelShading)] _RampMap("Ramp Map (1D)", 2D) = "white" {}
+        [Sub(CelShading)] [NoScaleOffset] _RampMap("Ramp Map (1D)", 2D) = "white" {}
         [Sub(CelShading)] _RampColorLight("Ramp Light Color", Color) = (1.0,0.95,0.85,1)
         [Sub(CelShading)] _RampLightIntensity("Ramp Light Tint Intensity", Range(0, 1)) = 1.0
         [Sub(CelShading)] _RampColorShadow("Ramp Shadow Color", Color) = (0.55,0.6,0.7,1)
@@ -114,7 +114,7 @@ Shader "Abyss/UberShader_DOTS"
         [Sub(OverlayEffects)] _RimThreshold("Rim Threshold", Range(0, 1)) = 0.5
         [Sub(OverlayEffects)] _RimSmoothness("Rim Smoothness", Range(0.001, 1)) = 0.05
         [Sub(OverlayEffects)] _RimShadowMask("Shadow Mask", Range(0, 1)) = 1.0
-        [Sub(OverlayEffects)] _MatCapMap("MatCap Map", 2D) = "black" {}
+        [Sub(OverlayEffects)] [NoScaleOffset] _MatCapMap("MatCap Map", 2D) = "black" {}
         [Sub(OverlayEffects)] _MatCapIntensity("MatCap Intensity", Range(0, 1)) = 0.0
 
         // ==========================================

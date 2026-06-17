@@ -16,6 +16,7 @@ Material:
   - _REFLECTION_ON
   - _TRANSPARENCY_MODE_OPAQUE
   - _USE_LIGHTING
+  - _WEATHER_WETNESS_ON
   m_InvalidKeywords:
   - _EMISSION_ON
   - _TRANSPARENCYMODE_OPAQUE
@@ -41,6 +42,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -73,6 +78,7 @@ Material:
     - _BorderIntensity: 1
     - _BorderThreshold: 0.5
     - _BorderWidth: 0.1
+    - _BounceIntensity: 1.2
     - _CullMode: 2
     - _DiffuseImpact: 1
     - _DitherScale: 10
@@ -80,6 +86,7 @@ Material:
     - _FresnelIntensity: 0
     - _FresnelPower: 2
     - _IndirectLightMultiplier: 1
+    - _LocalWetness: 0.119
     - _MainLightColorWeight: 0
     - _MainLightMultiplier: 1
     - _MatCapIntensity: 0
@@ -98,6 +105,7 @@ Material:
     - _RimShadowMask: 1
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
+    - _ShadowSmoothness: 0.05
     - _Smoothness: 0.5
     - _SpecularFeather: 0.05
     - _SpecularIntensity: 1
@@ -107,6 +115,7 @@ Material:
     - _UseOutline: 0
     - _UseRampMode: 0
     - _UseRimLight: 0
+    - _UseWetness: 1
     - _group_BaseSurface: 0
     - _group_CelShading: 0
     - _group_GeometryOutline: 0
@@ -115,11 +124,13 @@ Material:
     - _group_OverlayEffects: 0
     - _group_PBR: 0
     - _group_RenderState: 0
+    - _group_Weather: 0
     m_Colors:
     - _AmbientColor: {r: 0.5, g: 0.5, b: 0.6, a: 1}
     - _AnisoColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BorderColor: {r: 1, g: 0.3, b: 0.1, a: 1}
+    - _BounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
