@@ -11,6 +11,7 @@
     #include "Effect_Lighting.hlsl"
     #include "Effect_Matcap.hlsl"
     #include "Effect_AnisotropicHighlight.hlsl"
+    #include "Effect_Wetness.hlsl"
 #endif
 
 // ---- 透明度裁切（合併 Alpha Clip 與 Dither） ----
@@ -94,6 +95,10 @@ half4 frag(Varyings input) : SV_Target
         // 透明度裁切（根據枚舉關鍵字自動選擇）
         DoTransparencyClip(surface.alpha, input.screenPos.xy / input.screenPos.w);
 
+        #if defined(_WEATHER_WETNESS_ON)
+            ApplyWeatherWetness(surface, _LocalWetness);
+        #endif
+    
         // 主光源
         float4 shadowCoord = TransformWorldToShadowCoord(surface.positionWS);
         Light mainLight = GetMainLight(shadowCoord);

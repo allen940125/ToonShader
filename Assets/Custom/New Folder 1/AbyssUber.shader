@@ -125,6 +125,14 @@ Shader "Abyss/UberShader_DOTS"
         [SubToggle(GeometryOutline, _USE_OUTLINE)] _UseOutline("Enable Outline", Float) = 1
         [Sub(GeometryOutline)] _OutlineWidth("Outline Width", Range(0, 0.1)) = 0.01
         [Sub(GeometryOutline)] _OutlineColor("Outline Color", Color) = (0,0,0,1)
+        
+        // ==========================================
+        // 9. Weather System (動態天氣)
+        // ==========================================
+        [Main(Weather, _, off)] _group_Weather ("9. Weather System (動態天氣)", Float) = 0
+        
+        [SubToggle(Weather, _WEATHER_WETNESS_ON)] _UseWetness("Enable Wetness / Rain", Float) = 0
+        [Sub(Weather)] _LocalWetness("Local Wetness (Controlled by Script)", Range(0, 1)) = 1.0
     }
 
     SubShader
@@ -156,6 +164,8 @@ Shader "Abyss/UberShader_DOTS"
                 #pragma shader_feature_local _USE_LIGHTING
                 #pragma shader_feature_local _ADD_LIGHT_ON
                 #pragma shader_feature_local _REFLECTION_ON
+
+                #pragma shader_feature_local _WEATHER_WETNESS_ON
 
                 #pragma vertex vert
                 #pragma fragment frag

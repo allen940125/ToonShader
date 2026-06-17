@@ -29,6 +29,7 @@ Material:
   - _TRANSPARENCY_MODE_OPAQUE
   - _USE_LIGHTING
   - _USE_OUTLINE
+  - _WEATHER_WETNESS_ON
   m_InvalidKeywords:
   - _TRANSPARENCYMODE_OPAQUE
   - _USE_SPECULAR
@@ -193,6 +194,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 2fb8b3ae5deadd0418206e4b6a9c210f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCap2ndBlendMask:
@@ -488,6 +493,7 @@ Material:
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
+    - _LocalWetness: 0
     - _Main2ndDissolveNoiseStrength: 0.1
     - _Main2ndEnableLighting: 1
     - _Main2ndTexAlphaMode: 0
@@ -744,6 +750,7 @@ Material:
     - _UseRimShade: 0
     - _UseShadow: 1
     - _UseSpecular: 0
+    - _UseWetness: 1
     - _VertexLightStrength: 0
     - _WorkflowMode: 1
     - _ZClip: 1
@@ -761,6 +768,7 @@ Material:
     - _group_OverlayEffects: 0
     - _group_PBR: 0
     - _group_RenderState: 0
+    - _group_Weather: 0
     - _lilDirectionalLightStrength: 1
     - _lilShadowCasterBias: 0
     - _lilToonVersion: 45

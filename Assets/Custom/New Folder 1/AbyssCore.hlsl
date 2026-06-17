@@ -114,7 +114,9 @@ CBUFFER_START(UnityPerMaterial)
     float  _OutlineWidth;       
     half   _MatCapIntensity;    
     half   _AnisoPower;         
-    half   _AnisoIntensity;     
+    half   _AnisoIntensity;
+
+    float _LocalWetness;
 
 CBUFFER_END
 

@@ -108,10 +108,18 @@ public class DayNightSystemPro : MonoBehaviour
         float sunDot = sunLight != null ? Mathf.Max(Vector3.Dot(sunLight.transform.forward, Vector3.down), 0f) : 0f;
         float moonDot = moonLight != null ? Mathf.Max(Vector3.Dot(moonLight.transform.forward, Vector3.down), 0f) : 0f;
 
+        // 核心新增：向 WeatherManager 索取天氣衰減係數
+        float weatherLightAttenuation = 1.0f;
+        if (WeatherManager.Instance != null)
+        {
+            // 當雨勢 (globalRainIntensity) 從 0 變 1 時，光照強度從 1.0 衰減到 0.3 (烏雲密布)
+            weatherLightAttenuation = Mathf.Lerp(1.0f, 0.3f, WeatherManager.Instance.globalRainIntensity);
+        }
+        
         if (sunLight != null) 
         {
             // 1. 先計算出最終強度
-            float currentSunIntensity = sunIntensityCurve.Evaluate(timeOfDay) * sunIntensityMultiplier * SmoothStep(0f, 0.15f, sunDot);
+            float currentSunIntensity = sunIntensityCurve.Evaluate(timeOfDay) * sunIntensityMultiplier * SmoothStep(0f, 0.15f, sunDot) * weatherLightAttenuation;
         
             // 2. 只有當強度具有實質意義時，才啟動物件，拔除所有寫死的時間判斷
             sunLight.gameObject.SetActive(currentSunIntensity > 0.001f);
