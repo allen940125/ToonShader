@@ -735,6 +735,11 @@ Material:
     - _UseSpecular: 1
     - _UseWetness: 1
     - _VertexLightStrength: 0
+    - _WetDarkenIntensity: 0.5
+    - _WetDirContrast: 0.5
+    - _WetDirThreshold: 0
+    - _WetNormalFlatten: 0.5
+    - _WetSmoothnessMax: 0.95
     - _WorkflowMode: 1
     - _ZClip: 1
     - _ZTest: 4

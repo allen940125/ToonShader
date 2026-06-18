@@ -114,7 +114,18 @@ CBUFFER_START(UnityPerMaterial)
     float  _group_Weather;
     float  _UseWetness;
     float  _LocalWetness;
+    float  _WetDirThreshold;
+    float  _WetDirContrast;
+    float  _WetDarkenIntensity;
+    float  _WetSmoothnessMax;
 
+    float  _WetSpecularIntensity;
+    float  _WetNormalFlatten;
+
+    float  _RaindropScale;
+    float  _RaindropSpeed;
+
+    half   _GlobalPorosity;
 CBUFFER_END
 
 TEXTURE2D(_BaseMap);
@@ -124,6 +135,7 @@ TEXTURE2D(_NormalMap);
 TEXTURE2D(_MatCapMap);
 TEXTURE2D(_EmissionMap);
 TEXTURE2D(_MaskMap);
+TEXTURE2D(_RaindropMap);
 
 SAMPLER(sampler_BaseMap);
 SAMPLER(sampler_DitherMap);
@@ -142,7 +154,7 @@ struct AbyssSurfaceData
     float3 viewDirWS;   // 世界空間視角方向 (由頂點指向攝影機)
     float3 positionWS;  // 世界空間座標
     half3 emission;     // 自發光/附加光貢獻 (如 Rim Light 會累加於此)
-    float3 tangentWS;   // 世界空間切線 (供各向異性高光等依賴切線空間的特效使用)
+    float4 tangentWS;   // 世界空間切線 (供各向異性高光等依賴切線空間的特效使用)
 
     half metallic;
     half smoothness;

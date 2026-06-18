@@ -114,6 +114,7 @@ public class DayNightSystemPro : MonoBehaviour
         {
             // 當雨勢 (globalRainIntensity) 從 0 變 1 時，光照強度從 1.0 衰減到 0.3 (烏雲密布)
             weatherLightAttenuation = Mathf.Lerp(1.0f, 0.3f, WeatherManager.Instance.globalRainIntensity);
+            //Debug.Log("烏雲");
         }
         
         if (sunLight != null) 

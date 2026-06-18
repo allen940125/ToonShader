@@ -75,7 +75,7 @@ inline void InitializeSurfaceData(Varyings input, out AbyssSurfaceData surface)
     // 將切線空間 (Tangent Space) 的法線轉換至世界空間 (World Space)
     surface.normalWS = normalize(TransformTangentToWorld(tangentSpaceNormal, half3x3(tangentWS, bitangentWS, normalWS)));
 
-    surface.tangentWS = tangentWS;
+    surface.tangentWS = float4(tangentWS, input.tangentWS.w);
 }
 
 #endif

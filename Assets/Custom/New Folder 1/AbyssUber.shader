@@ -133,6 +133,22 @@ Shader "Abyss/UberShader_DOTS"
         
         [SubToggle(Weather, _WEATHER_WETNESS_ON)] _UseWetness("Enable Wetness / Rain", Float) = 0
         [Sub(Weather)] _LocalWetness("Local Wetness (Controlled by Script)", Range(0, 1)) = 1.0
+        
+        [Sub(Weather)] _WetDirThreshold("雨水迎風面判定閾值 (Direction Threshold)", Range(-1, 1)) = 0.0
+        [Sub(Weather)] _WetDirContrast("水痕邊緣銳利度 (Direction Contrast)", Range(0.01, 1.0)) = 0.5
+        [Sub(Weather)] _WetDarkenIntensity("布料最大吸水變暗度 (Darken Intensity)", Range(0.0, 1.0)) = 0.5
+        [Sub(Weather)] _WetSmoothnessMax("積水鏡面反光度 (Max Smoothness)", Range(0.0, 1.0)) = 0.95
+    
+        [Sub(Weather)] _GlobalPorosity("全局孔隙率 (1=毛衣, 0=乳膠)", Range(0, 1)) = 1.0
+        
+        // 【核心新增：獨立的水膜高光強度控制】
+        [Sub(Weather)] _WetSpecularIntensity("水膜高光強度 (Specular Intensity)", Range(0.0, 5.0)) = 1.0
+        [Sub(Weather)] _WetNormalFlatten("水膜平滑強度 (Normal Flatten)", Range(0, 1)) = 0.5
+        
+        // 【水滴物理】
+        [Sub(Weather)] [NoScaleOffset] [Normal] _RaindropMap("動態水滴法線 (Raindrop Normal)", 2D) = "bump" {}
+        [Sub(Weather)] _RaindropScale("水滴縮放 (Raindrop Scale)", Range(0.1, 10.0)) = 2.0
+        [Sub(Weather)] _RaindropSpeed("水滴流速 (Raindrop Speed)", Range(0.0, 5.0)) = 1.0
     }
 
     SubShader

@@ -1,9 +1,7 @@
 using UnityEngine;
-using System.Collections.Generic; // 必須引入此命名空間以使用 List
+using System.Collections.Generic;
 
-// 【嚴厲警告】：絕對禁止在這裡使用 [ExecuteAlways]！
-// 在 Editor 模式下頻繁 Clone 材質球會導致編輯器記憶體直接被塞爆崩潰。
-// 這是一個純粹的 Runtime (遊戲執行期) 腳本。
+// 絕對禁止在這裡加上 [ExecuteAlways]
 public class DynamicWeatherOcclusion : MonoBehaviour
 {
     [Header("--- 渲染目標設定 ---")]
@@ -18,7 +16,6 @@ public class DynamicWeatherOcclusion : MonoBehaviour
     [Header("--- 材質過渡設定 ---")]
     [SerializeField] private float wetnessTransitionSpeed = 2.0f;
 
-    // 【核心修正】：改用 List 來儲存未知數量的材質實例
     private List<Material> instancedMaterials = new List<Material>();
     
     private float currentWetness = 0f;
@@ -40,15 +37,10 @@ public class DynamicWeatherOcclusion : MonoBehaviour
             return;
         }
 
-        // 遍歷所有 Renderer
         foreach (Renderer r in targetRenderers)
         {
             if (r == null) continue;
-
-            // 【絕對鐵律】：呼叫複數的 .materials 會強制 Clone 該 Renderer 上的「所有」材質，並回傳陣列
             Material[] mats = r.materials;
-            
-            // 將這些 Clone 出來的材質全數加入清單中統一管理
             instancedMaterials.AddRange(mats);
         }
         
@@ -70,7 +62,6 @@ public class DynamicWeatherOcclusion : MonoBehaviour
 
     private void ApplyWetnessToInstancedMaterials()
     {
-        // 遍歷清單中的每一個材質實例寫入參數
         for (int i = 0; i < instancedMaterials.Count; i++)
         {
             if (instancedMaterials[i] != null)
@@ -80,7 +71,6 @@ public class DynamicWeatherOcclusion : MonoBehaviour
         }
     }
 
-    // 【絕對防線】：實例化材質的記憶體回收
     private void OnDestroy()
     {
         if (instancedMaterials != null)
@@ -114,6 +104,38 @@ public class DynamicWeatherOcclusion : MonoBehaviour
         else
         {
             targetWetness = WeatherManager.Instance.globalRainIntensity;
+        }
+    }
+
+    // ==========================================
+    // 【新增】：在 Scene 視窗可視化遮蔽射線
+    // 只有在選取該物件時才會繪製，不會干擾畫面
+    // ==========================================
+    private void OnDrawGizmosSelected()
+    {
+        // 模擬 PerformOcclusionCheck 中的數學邏輯
+        Vector3 rayOrigin = transform.position + Vector3.up * 1.5f; 
+        Vector3 rayDirection = Vector3.up;
+
+        // 向 WeatherManager 索取雨水的反方向 (如果雨斜著下，就要斜著往上找屋簷)
+        if (WeatherManager.Instance != null)
+        {
+            rayDirection = -WeatherManager.Instance.rainDirection.normalized;
+        }
+
+        // 執行一條純粹用來繪製的物理射線
+        if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, maxRayDistance, occlusionLayer))
+        {
+            // 命中遮蔽物：畫紅線並標記擊中點
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(rayOrigin, hit.point);
+            Gizmos.DrawWireSphere(hit.point, 0.1f);
+        }
+        else
+        {
+            // 無遮蔽物：畫綠線直通天際
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(rayOrigin, rayOrigin + rayDirection * maxRayDistance);
         }
     }
 }

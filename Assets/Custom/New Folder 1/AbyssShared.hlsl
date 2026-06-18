@@ -96,7 +96,7 @@ half4 frag(Varyings input) : SV_Target
         DoTransparencyClip(surface.alpha, input.screenPos.xy / input.screenPos.w);
 
         #if defined(_WEATHER_WETNESS_ON)
-            ApplyWeatherWetness(surface, _LocalWetness);
+            ApplyWeatherWetness(surface, _LocalWetness, input.uv);
         #endif
     
         // 主光源

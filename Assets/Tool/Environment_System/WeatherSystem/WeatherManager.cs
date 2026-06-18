@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[ExecuteAlways] // 必須加上這行
+[ExecuteAlways] // WeatherManager 只是計算與推播數學變數，不產生實例材質，可以安全使用 ExecuteAlways
 public class WeatherManager : Singleton<WeatherManager>
 {
     [Header("--- 降雨設定 ---")]
@@ -35,5 +35,21 @@ public class WeatherManager : Singleton<WeatherManager>
         Shader.SetGlobalVector(GlobalWindDirID, windDirection.normalized);
         Shader.SetGlobalVector(GlobalWindParamsID, new Vector4(windSpeed, windTurbulence, 0, 0));
         Shader.SetGlobalVector(Shader.PropertyToID("_GlobalRainDirection"), rainDirection);
+    }
+
+    // ==========================================
+    // 【新增】：在 Scene 視窗可視化雨水方向
+    // ==========================================
+    private void OnDrawGizmos()
+    {
+        // 畫出受風力影響的雨水下墜方向 (藍色)
+        Gizmos.color = new Color(0.2f, 0.6f, 1f, 0.8f);
+        
+        // 從物件上方 5 米處，往下畫出代表雨水方向的射線
+        Vector3 startPos = transform.position + Vector3.up * 5f;
+        Vector3 endPos = startPos + rainDirection.normalized * 5f;
+        
+        Gizmos.DrawLine(startPos, endPos);
+        Gizmos.DrawSphere(startPos, 0.1f); // 標記源頭
     }
 }

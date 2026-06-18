@@ -258,19 +258,43 @@ inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight, hal
         ComputeLighting_Ramp(surface, mainLight, indirectDiffuse, castShadowMask) : 
         ComputeLighting_MathOnly(surface, mainLight, indirectDiffuse, castShadowMask);
 
-    // 5. 高光 (Specular)
+    // 在你的 Effect_Lighting.hlsl 中，找到 5. 高光 (Specular) 區塊並進行以下替換
+
+    // ===============================================================
+    // 5. 高光 (Specular) - 【絕對解耦：基礎高光 vs 水膜高光】
+    // ===============================================================
     half3 finalSpecular = 0;
-    if (_SpecularIntensity > 0.001) 
+    float3 halfVector = normalize(mainLight.direction + surface.viewDirWS);
+    float NdotH = saturate(dot(surface.normalWS, halfVector));
+    float NdotL_spec = dot(surface.normalWS, mainLight.direction);
+    float selfShadowMask = smoothstep(0.0, 0.1, NdotL_spec); 
+
+    // (A) 基礎材質高光 (嚴格服從 _SpecularIntensity，不受平滑度綁架)
+    float baseSpecBand = smoothstep(_SpecularStep - _SpecularFeather, _SpecularStep + _SpecularFeather, NdotH);
+    half3 baseSpecular = baseSpecBand * _SpecularColor.rgb * _SpecularIntensity;
+
+    // (B) 動態水膜高光 (完全獨立，由天氣系統參數決定)
+    half3 wetSpecular = 0;
+    #if defined(_WEATHER_WETNESS_ON)
+    // 在光照階段重新計算局部濕度遮罩 (確保只在迎風受雨面產生水面高光)
+    float baseWetFactor = saturate(_GlobalRainIntensity * _LocalWetness);
+    if (baseWetFactor > 0.001) 
     {
-        float3 halfVector = normalize(mainLight.direction + surface.viewDirWS);
-        float NdotH = saturate(dot(surface.normalWS, halfVector));
-        float specBand = smoothstep(_SpecularStep - _SpecularFeather, _SpecularStep + _SpecularFeather, NdotH);
-        
-        float NdotL_spec = dot(surface.normalWS, mainLight.direction);
-        float selfShadowMask = smoothstep(0.0, 0.1, NdotL_spec); 
-        
-        finalSpecular = specBand * _SpecularColor.rgb * _SpecularIntensity * mainLight.color * selfShadowMask * castShadowMask;
+        float rainDot = dot(surface.normalWS, -_GlobalRainDirection);
+        half upwardFactor = smoothstep(_WetDirThreshold - _WetDirContrast, _WetDirThreshold + _WetDirContrast, rainDot);
+        float actualWetness = baseWetFactor * upwardFactor;
+
+        // 水膜具備極端的平滑度 (Step 逼近 1) 與銳利的邊緣 (Feather 極小)
+        float wetSpecBand = smoothstep(0.98 - 0.005, 0.98 + 0.005, NdotH);
+            
+        // 水膜反光強度由 actualWetness 驅動，無視基礎 _SpecularIntensity
+        wetSpecular = wetSpecBand * actualWetness * _WetSpecularIntensity; 
     }
+    #endif
+
+    // (C) 疊加兩種高光，並套用光色與陰影
+    finalSpecular = (baseSpecular + wetSpecular) * mainLight.color * selfShadowMask * castShadowMask;
+
 
     // 6. 卡通邊緣光 (Rim Light)
     half3 rimLight = 0;
