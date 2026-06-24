@@ -15,7 +15,6 @@ Material:
   - _ADD_LIGHT_ON
   - _TRANSPARENCY_MODE_OPAQUE
   - _USE_LIGHTING
-  - _USE_OUTLINE
   - _WEATHER_WETNESS_ON
   m_InvalidKeywords:
   - _TRANSPARENCYMODE_OPAQUE
@@ -396,6 +395,7 @@ Material:
     - _Cull: 2
     - _CullMode: 2
     - _Cutoff: 0.5
+    - _DebugViewMode: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DiffuseImpact: 1
@@ -735,7 +735,7 @@ Material:
     - _UseMatCap: 0
     - _UseMatCap2nd: 0
     - _UseNormalMap: 0
-    - _UseOutline: 1
+    - _UseOutline: 0
     - _UsePOM: 0
     - _UseParallax: 0
     - _UseRampMode: 0
@@ -763,6 +763,7 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Debug: 0
     - _group_Env: 0
     - _group_GeometryOutline: 0
     - _group_Highlights: 0

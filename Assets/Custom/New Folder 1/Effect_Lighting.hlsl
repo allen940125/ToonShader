@@ -258,8 +258,6 @@ inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight, hal
         ComputeLighting_Ramp(surface, mainLight, indirectDiffuse, castShadowMask) : 
         ComputeLighting_MathOnly(surface, mainLight, indirectDiffuse, castShadowMask);
 
-    // 在你的 Effect_Lighting.hlsl 中，找到 5. 高光 (Specular) 區塊並進行以下替換
-
     // ===============================================================
     // 5. 高光 (Specular) - 【絕對解耦：基礎高光 vs 水膜高光】
     // ===============================================================
@@ -269,9 +267,19 @@ inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight, hal
     float NdotL_spec = dot(surface.normalWS, mainLight.direction);
     float selfShadowMask = smoothstep(0.0, 0.1, NdotL_spec); 
 
-    // (A) 基礎材質高光 (嚴格服從 _SpecularIntensity，不受平滑度綁架)
-    float baseSpecBand = smoothstep(_SpecularStep - _SpecularFeather, _SpecularStep + _SpecularFeather, NdotH);
-    half3 baseSpecular = baseSpecBand * _SpecularColor.rgb * _SpecularIntensity;
+    // ===============================================================
+    // (A) 基礎材質高光 (已修復：引入 surface.smoothness 控制)
+    // 邏輯：平滑度越低 (粗糙)，SpecularStep 越接近 1.0 (導致高光範圍縮小甚至消失)
+    // 平滑度越高，則維持你設定的 _SpecularStep
+    // ===============================================================
+    float dynamicSpecStep = lerp(1.0, _SpecularStep, surface.smoothness);
+    
+    // 平滑度同時也應該影響高光的可見強度
+    float dynamicSpecIntensity = _SpecularIntensity * surface.smoothness;
+
+    float baseSpecBand = smoothstep(dynamicSpecStep - _SpecularFeather, dynamicSpecStep + _SpecularFeather, NdotH);
+    half3 baseSpecular = baseSpecBand * _SpecularColor.rgb * dynamicSpecIntensity;
+
 
     // (B) 動態水膜高光 (完全獨立，由天氣系統參數決定)
     half3 wetSpecular = 0;

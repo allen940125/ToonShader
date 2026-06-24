@@ -28,7 +28,6 @@ Material:
   - _ADD_LIGHT_ON
   - _TRANSPARENCY_MODE_OPAQUE
   - _USE_LIGHTING
-  - _USE_OUTLINE
   - _WEATHER_WETNESS_ON
   m_InvalidKeywords:
   - _TRANSPARENCYMODE_OPAQUE
@@ -91,6 +90,7 @@ Material:
     - _ShadowBorder: 0.25
     - _ShadowStrength: 0.75
     - _UseBacklight: 0
+    - _UseLighting: 1
     - _UseRim: 0
     m_Colors:
     - _OutlineLitColor: {r: 1, g: 0.19999906, b: 0, a: 0.5019608}

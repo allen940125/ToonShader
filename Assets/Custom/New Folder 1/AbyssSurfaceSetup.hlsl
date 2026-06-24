@@ -48,11 +48,20 @@ inline void InitializeSurfaceData(Varyings input, out AbyssSurfaceData surface)
     // 讀取 Mask Map (如果沒放貼圖，引擎預設回傳 1,1,1,1)
     half4 maskTex = SAMPLE_TEXTURE2D(_MaskMap, sampler_BaseMap, input.uv);
     
+    // // R通道：金屬度 (貼圖數值 * 屬性面板乘數)
+    // surface.metallic = maskTex.r * _Metallic;     
+    //
+    // // G通道：環境遮蔽 AO (純讀取，強度留到 Shared 裡做)
+    // surface.occlusion = maskTex.g;                
+    //
+    // // A通道：平滑度 (貼圖數值 * 屬性面板乘數)
+    // surface.smoothness = maskTex.a * _Smoothness;
+
     // R通道：金屬度 (貼圖數值 * 屬性面板乘數)
     surface.metallic = maskTex.r * _Metallic;     
     
     // G通道：環境遮蔽 AO (純讀取，強度留到 Shared 裡做)
-    surface.occlusion = maskTex.g;                
+    surface.occlusion = maskTex.b;                
     
     // A通道：平滑度 (貼圖數值 * 屬性面板乘數)
     surface.smoothness = maskTex.a * _Smoothness; 

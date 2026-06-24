@@ -396,6 +396,7 @@ Material:
     - _Cull: 0
     - _CullMode: 2
     - _Cutoff: 0.5
+    - _DebugViewMode: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DiffuseImpact: 1
@@ -763,6 +764,7 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Debug: 0
     - _group_Env: 0
     - _group_GeometryOutline: 0
     - _group_Highlights: 0

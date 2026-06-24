@@ -136,6 +136,59 @@ half4 frag(Varyings input) : SV_Target
         // 最終合成
         finalColor += surface.emission;
 
+        // ==========================================
+        // 【偵錯覆蓋：根據 _DebugViewMode 顯示特定數值】
+        // ==========================================
+        // 1. 先計算視角方向（RimLight 和高光都需要）
+        half3 viewDir = SafeNormalize(GetWorldSpaceViewDir(surface.positionWS));
+
+        // 2. 根據模式覆蓋 finalColor
+        if (_DebugViewMode == 1.0) // Shadow (陰影)
+        {
+            finalColor = mainLight.shadowAttenuation.xxx;
+        }
+        else if (_DebugViewMode == 2.0) // Highlight (高光)
+        {
+            half3 halfDir = SafeNormalize(mainLight.direction + viewDir);
+            half NdotH = max(0.0, dot(surface.normalWS, halfDir));
+            half spec = smoothstep(_SpecularStep - _SpecularFeather, _SpecularStep + _SpecularFeather, NdotH);
+            finalColor = _SpecularColor * spec * _SpecularIntensity;
+        }
+        else if (_DebugViewMode == 3.0) // AO (環境光遮蔽)
+        {
+            finalColor = finalAO.xxx;
+        }
+        else if (_DebugViewMode == 4.0) // RimLight (邊緣光)
+        {
+            half rim = 1.0 - max(0.0, dot(surface.normalWS, viewDir));
+            rim = pow(rim, _RimPower);
+            half rimIntensity = smoothstep(_RimThreshold - _RimSmoothness, _RimThreshold + _RimSmoothness, rim);
+            finalColor = _RimColor * rimIntensity;
+        }
+        else if (_DebugViewMode == 5.0) // Albedo (基礎色)
+        {
+            finalColor = surface.albedo;
+        }
+        else if (_DebugViewMode == 6.0) // Normal (法线)
+        {
+            // 将法线从 [-1,1] 映射到 [0,1] 以便显示
+            finalColor = surface.normalWS * 0.5 + 0.5;
+        }
+        else if (_DebugViewMode == 7.0) // Metallic (金属度)
+        {
+            finalColor = surface.metallic.xxx;
+        }
+        else if (_DebugViewMode == 8.0) // Smoothness (平滑度)
+        {
+            finalColor = surface.smoothness.xxx;
+        }
+        else if (_DebugViewMode == 9.0) // Emission (自发光)
+        {
+            // 注意：emission 可能是 HDR 值，直接输出可能会过亮，可以除以一个常数或 clamp
+            finalColor = surface.emission; // 或 saturate(surface.emission) 防止刺眼
+        }
+        // 若為 0 (None)，則不覆蓋，維持原本的渲染結果
+        
         return half4(finalColor, surface.alpha);
     #endif
 

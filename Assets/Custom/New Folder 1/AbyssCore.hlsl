@@ -7,6 +7,7 @@
 half4 _GlobalShadowColorBias;   
 float _GlobalRainIntensity;
 float3 _GlobalRainDirection; 
+int _DebugViewMode;
 
 CBUFFER_START(UnityPerMaterial)
 

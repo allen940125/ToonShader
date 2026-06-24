@@ -65,7 +65,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 55d8177292f439e4b9aff09550697b98, type: 3}
+        m_Texture: {fileID: 2800000, guid: 82bbed42f4f72284da645a11700616bd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Bump2ndMap:
@@ -328,7 +328,7 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaBoostFA: 10
     - _AlphaClip: 0
-    - _AlphaClipThreshold: 0.5
+    - _AlphaClipThreshold: 0
     - _AlphaMaskMode: 0
     - _AlphaMaskScale: 1
     - _AlphaMaskValue: 0
@@ -397,6 +397,7 @@ Material:
     - _Cull: 0
     - _CullMode: 2
     - _Cutoff: 0.5
+    - _DebugViewMode: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DiffuseImpact: 1
@@ -518,6 +519,7 @@ Material:
     - _MainGradationStrength: 0
     - _MainLightColorWeight: 1
     - _MainLightMultiplier: 1
+    - _MaskMapFormat: 0
     - _MatCap2ndApplyTransparency: 1
     - _MatCap2ndBackfaceMask: 0
     - _MatCap2ndBlend: 1
@@ -552,7 +554,7 @@ Material:
     - _MinBrightness: 0.03
     - _Mode: 0
     - _MonochromeLighting: 0
-    - _NormalScale: 0.3
+    - _NormalScale: 1
     - _OcclusionStrength: 1
     - _OffsetFactor: 0
     - _OffsetUnits: 0
@@ -763,6 +765,7 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Debug: 0
     - _group_GeometryOutline: 0
     - _group_Highlights: 0
     - _group_Lighting: 0

@@ -410,6 +410,7 @@ Material:
     - _Cull: 2
     - _CullMode: 2
     - _Cutoff: 0.5
+    - _DebugViewMode: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DiffuseImpact: 1
@@ -531,6 +532,7 @@ Material:
     - _MainGradationStrength: 0
     - _MainLightColorWeight: 1
     - _MainLightMultiplier: 1
+    - _MaskMapFormat: 0
     - _MatCap2ndApplyTransparency: 1
     - _MatCap2ndBackfaceMask: 0
     - _MatCap2ndBlend: 1
@@ -565,7 +567,7 @@ Material:
     - _MinBrightness: 0.03
     - _Mode: 0
     - _MonochromeLighting: 0
-    - _NormalScale: 0.3
+    - _NormalScale: 1
     - _OcclusionStrength: 1
     - _OffsetFactor: 0
     - _OffsetUnits: 0
@@ -776,6 +778,7 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Debug: 0
     - _group_GeometryOutline: 0
     - _group_Highlights: 0
     - _group_Lighting: 0

@@ -59,7 +59,7 @@ namespace LWGUI
         {
             editor.BeginAnimatedCheck(position, prop);
             EditorGUI.indentLevel += labelIndent;
-            using (new EditorGUI.DisabledScope((prop.flags & MaterialProperty.PropFlags.PerRendererData) != 0))
+            using (new EditorGUI.DisabledScope((prop.propertyFlags & UnityEngine.Rendering.ShaderPropertyFlags.PerRendererData) != 0))
                 editor.LwguiShaderPropertyInternal(position, prop, label);
             EditorGUI.indentLevel -= labelIndent;
             editor.EndAnimatedCheck();
@@ -85,12 +85,12 @@ namespace LWGUI
         /// </summary>
         public static void LwguiDefaultShaderPropertyInternal(this MaterialEditor editor, Rect position, MaterialProperty prop, GUIContent label)
         {
-            switch (prop.type)
+            switch (prop.propertyType)
             {
-                case MaterialProperty.PropType.Vector:
+                case UnityEngine.Rendering.ShaderPropertyType.Vector:
                     VectorPropertyInternal(position, prop, label);
                     break;
-                case MaterialProperty.PropType.Range:
+                case UnityEngine.Rendering.ShaderPropertyType.Range:
                     DoPowerRangeProperty(position, prop, label);
                     break;
                 default:

@@ -1,44 +1,44 @@
 fileFormatVersion: 2
 guid: 1f6bef778f82e314fa0fce42d94d75b6
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: M_actor_chen_cloth_02.002
-    second: {fileID: 2100000, guid: e8df45f2a4860354195ccbcf37495543, type: 2}
+    second: {fileID: 2100000, guid: e6e66c401fe15de468037827650db5ec, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: M_eyeshadow_common_01.002
-    second: {fileID: 2100000, guid: e8df45f2a4860354195ccbcf37495543, type: 2}
+    second: {fileID: 2100000, guid: e3021e8dadf6da24dbfd908c00c3f042, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: M_hairshadow_common_03.002
-    second: {fileID: 2100000, guid: e8df45f2a4860354195ccbcf37495543, type: 2}
+    second: {fileID: 2100000, guid: ffaeb7a2964c70a4fa4162f70380167c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: "\u53D1.002"
-    second: {fileID: 2100000, guid: e8df45f2a4860354195ccbcf37495543, type: 2}
+    second: {fileID: 2100000, guid: bf1a0855a666b094c8c1bd359584a035, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: "\u76EEHL.002"
-    second: {fileID: 2100000, guid: e8df45f2a4860354195ccbcf37495543, type: 2}
+    second: {fileID: 2100000, guid: ee8f15a5524bee44c8d420626e9653c5, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: "\u8033.002"
-    second: {fileID: 2100000, guid: e8df45f2a4860354195ccbcf37495543, type: 2}
+    second: {fileID: 2100000, guid: 8dafcd982da8ce343a6b5f0e6934f19e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: "\u808C.002"
-    second: {fileID: 2100000, guid: e8df45f2a4860354195ccbcf37495543, type: 2}
+    second: {fileID: 2100000, guid: fbc6fef59d6dc2f4c893dc25aa63a0fa, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,6 +91,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

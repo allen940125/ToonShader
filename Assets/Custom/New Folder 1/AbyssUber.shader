@@ -2,11 +2,14 @@ Shader "Abyss/UberShader_DOTS"
 {
     Properties
     {
+         // ==========================================
+        // 0. Debug View (侦错视图) —— 独立置顶
+        // ==========================================
+        [Main(Debug, _, off)] _group_Debug ("0. Debug View (侦错)", Float) = 0
         // ==========================================
         // 1. Render State (系統渲染狀態)
         // ==========================================
         [Main(RenderState, _, off)] _group_RenderState ("1. Render State (系統渲染狀態)", Float) = 0
-        
         // 使用 SubEnum 與 SubKeywordEnum 合併標籤，徹底解決群組脫離問題
         [SubEnum(RenderState, UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode", Float) = 2.0
         [SubKeywordEnum(RenderState, Opaque, Cutout, Dither)] _Transparency_Mode("Transparency Mode", Float) = 0
@@ -195,7 +198,7 @@ Shader "Abyss/UberShader_DOTS"
         {
             Name "Outline"
             Cull Front
-
+            Tags { "LightMode" = "AbyssOutline" } // 加入此行
             HLSLPROGRAM
                 #define PASS_OUTLINE
 
