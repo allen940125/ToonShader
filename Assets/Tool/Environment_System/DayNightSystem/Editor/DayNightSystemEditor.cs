@@ -186,19 +186,40 @@ public class DayNightSystemEditor : Editor
         script.ambientEquatorColor = CreateGradient(HexToColor("#080912"), new Color(0.88f, 0.97f, 1.31f), HexToColor("#080912"));
         script.ambientGroundColor = CreateGradient(Color.black, Color.black, Color.black);
         
-        // 【新增】全域陰影色調偏置 Gradient
-        script.globalShadowColorBias = new Gradient();
-        script.globalShadowColorBias.SetKeys(
+        // ==========================================
+        // 6. 全域陰影顏色 (Global Shadow Color)
+        // 邏輯：中午是中性灰，黃昏帶點暖紫，夜晚變成深冷藍
+        // ==========================================
+        script.globalShadowColor = new Gradient();
+        script.globalShadowColor.SetKeys(
             new GradientColorKey[]
             {
-                new GradientColorKey(new Color(0.55f, 0.62f, 0.80f), 0.00f),  // 午夜：冷藍灰
-                new GradientColorKey(new Color(0.85f, 0.88f, 0.95f), 0.25f),  // 日出：淡冷
-                new GradientColorKey(Color.white,                 0.50f),  // 正午：純白
-                new GradientColorKey(new Color(0.95f, 0.93f, 0.90f), 0.75f),  // 傍晚：微暖
-                new GradientColorKey(new Color(0.55f, 0.62f, 0.80f), 1.00f)   // 午夜：回到冷藍灰
+                new GradientColorKey(HexToColor("#1A2035"), 0.00f),  // 午夜：極深的藏青色
+                new GradientColorKey(HexToColor("#3A3545"), 0.25f),  // 清晨：帶點紫灰
+                new GradientColorKey(HexToColor("#7F7F7F"), 0.50f),  // 正午：50% 中性灰 (由底色決定最終顏色)
+                new GradientColorKey(HexToColor("#55434A"), 0.75f),  // 黃昏：暖灰偏紅紫
+                new GradientColorKey(HexToColor("#1A2035"), 1.00f)   // 午夜：極深的藏青色
             },
             defaultAlpha
         );
+
+        // ==========================================
+        // 7. 全域陰影強度曲線 (Global Shadow Strength)
+        // 邏輯：中午對比最強 (1.0)，早晚柔和，半夜因為環境已經很暗，稍微降一點避免死黑
+        // ==========================================
+        script.globalShadowStrengthCurve = new AnimationCurve();
+        script.globalShadowStrengthCurve.AddKey(new Keyframe(0f, 0.6f));   // 半夜：陰影濃度 60%
+        script.globalShadowStrengthCurve.AddKey(new Keyframe(6f, 0.4f));   // 清晨：空氣感重，陰影極弱
+        script.globalShadowStrengthCurve.AddKey(new Keyframe(12f, 0.85f)); // 正午：陽光直射，陰影極強
+        script.globalShadowStrengthCurve.AddKey(new Keyframe(17f, 0.5f));  // 黃昏：夕陽柔和
+        script.globalShadowStrengthCurve.AddKey(new Keyframe(24f, 0.6f));
+
+        // ==========================================
+        // 8. 邊緣光設定 (Rim Light)
+        // 邏輯：預設自動尋找主光源的反方向
+        // ==========================================
+        script.autoRimLightDirection = true;
+        script.customRimLightDirection = new Vector3(1f, 0f, 0f);
         
         script.timeOfDay = 12f;
         script.timeSpeed = 1f;

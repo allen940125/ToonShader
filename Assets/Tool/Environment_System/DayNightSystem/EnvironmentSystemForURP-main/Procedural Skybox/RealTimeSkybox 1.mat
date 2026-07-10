@@ -161,7 +161,7 @@ Material:
     - _SunTexScale: 10
     - _SunsetHorizonColorRamp: 1
     - _Surface: 0
-    - _TimeMapping: 0.7
+    - _TimeMapping: 0.675
     - _TwinkleSpeed: 3
     - _UseMoonTex: 1
     - _UseSunTex: 1

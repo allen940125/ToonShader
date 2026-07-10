@@ -49,10 +49,19 @@ public class DayNightSystemPro : MonoBehaviour
     public bool usePhysicalLight = true;
     public AnimationCurve sunTemperature; 
     public Gradient sunFilterColor;
-
-    [Header("--- Shader 全域陰影偏置 ---")]
-    [Tooltip("隨時間變化的陰影色調偏置。白天保持白色(1,1,1)，晚上可調成冷色。")]
+    
+    [Header("--- Shader 全域陰影 (Global Shadows) ---")]
+    [Tooltip("隨時間變化的陰影色調偏置。")]
     public Gradient globalShadowColorBias;
+    [Tooltip("真正的全域陰影顏色 (覆蓋衣服、頭髮等)")]
+    public Gradient globalShadowColor;
+    [Tooltip("全域陰影強度曲線 (例如中午影子最黑，清晨較淡)")]
+    public AnimationCurve globalShadowStrengthCurve;
+
+    [Header("--- Shader 全域邊緣光 (Global Rim Light) ---")]
+    [Tooltip("邊緣光是否自動背對主光源 (太陽/月亮)")]
+    public bool autoRimLightDirection = true;
+    public Vector3 customRimLightDirection = new Vector3(1, 0, 0);
     
     private ProbeReferenceVolume probeVolume;
 
@@ -73,8 +82,28 @@ public class DayNightSystemPro : MonoBehaviour
     private void UpdateShaderGlobals()
     {
         float timePercent = timeOfDay / 24f;
-        Color shadowBias = globalShadowColorBias.Evaluate(timePercent);
-        Shader.SetGlobalColor("_GlobalShadowColorBias", shadowBias);
+
+        // 1. 推播陰影顏色與偏置
+        Shader.SetGlobalColor("_GlobalShadowColorBias", globalShadowColorBias.Evaluate(timePercent));
+        Shader.SetGlobalColor("_GlobalShadowColor", globalShadowColor.Evaluate(timePercent));
+        Shader.SetGlobalFloat("_GlobalShadowStrength", globalShadowStrengthCurve.Evaluate(timeOfDay));
+
+        // 2. 推播二次元邊緣光方向
+        Vector3 rimDir = customRimLightDirection.normalized;
+        if (autoRimLightDirection)
+        {
+            // 判斷現在是白天還是晚上，抓取主光源的反方向作為邊緣光方向
+            bool isDay = (timeOfDay > 6f && timeOfDay < 18f);
+            Transform activeLight = isDay ? (sunLight ? sunLight.transform : null) : (moonLight ? moonLight.transform : null);
+            
+            if (activeLight != null)
+            {
+                // 邊緣光通常是背光，所以取主光源方向的反向
+                rimDir = -activeLight.forward; 
+            }
+        }
+        // 將方向傳給 Shader
+        Shader.SetGlobalVector("_RimLightDirection", new Vector4(rimDir.x, rimDir.y, rimDir.z, 0));
     }
     
     private void InitializeSystem()

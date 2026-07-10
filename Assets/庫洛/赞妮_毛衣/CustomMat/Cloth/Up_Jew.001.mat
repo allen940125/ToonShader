@@ -336,6 +336,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -390,6 +392,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.15
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -445,6 +448,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 0
     - _FresnelIntensity: 0
@@ -468,6 +473,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -619,6 +626,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -653,6 +661,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0
     - _Shadow2ndBorder: 0
     - _Shadow2ndNormalStrength: 1
@@ -684,6 +695,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.1
@@ -705,6 +717,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 2
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -778,6 +791,7 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
     - _group_Highlights: 0
@@ -826,11 +840,13 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -870,7 +886,7 @@ Material:
     - _ShadowAOShift: {r: 1, g: 0, b: 1, a: 0}
     - _ShadowAOShift2: {r: 1, g: 0, b: 1, a: 0}
     - _ShadowBorderColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShadowColor: {r: 0.93333334, g: 0.7413907, b: 0.70980394, a: 1}
+    - _ShadowColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowTint: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}

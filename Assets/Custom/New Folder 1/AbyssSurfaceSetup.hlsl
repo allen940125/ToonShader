@@ -7,8 +7,13 @@
 // inline 修飾符提示編譯器展開此函式，減少函式呼叫開銷
 inline void InitializeSurfaceData(Varyings input, out AbyssSurfaceData surface)
 {
+    // 1. 初始化結構體避免編譯警告
+    surface = (AbyssSurfaceData)0;
+    
     // 1. 空間座標與視角向量初始化
     surface.positionWS = input.positionWS;
+    surface.positionOS = input.positionOS;
+    surface.uv = input.uv; // 寫入 UV
     // 計算視角方向：攝影機世界座標減去頂點世界座標，並歸一化
     // 設相機位置是(5,8,2) 目標頂點位置是 (3,5,7)
     //(5,8,2) - (3,5,7) = (2,3,-5)，归一化得到 (0.324, 0.486, -0.811)。
@@ -24,11 +29,6 @@ inline void InitializeSurfaceData(Varyings input, out AbyssSurfaceData surface)
     // 所以方向是 朝着摄像机。这就是 viewDir 的定义。
     surface.viewDirWS = normalize(GetCameraPositionWS() - input.positionWS);
     
-    // 在 InitializeSurfaceData 內部正確處理自發光
-    float2 emissionUV = input.uv * _EmissionMap_ST.xy + _EmissionMap_ST.zw;
-    half4 emissionTex = SAMPLE_TEXTURE2D(_EmissionMap, sampler_BaseMap, emissionUV); // 可共用 BaseMap 取樣器
-    surface.emission = emissionTex.rgb * _EmissionColor.rgb;
-    
     // 2. 基礎色彩取樣
     // 透過巨集 SAMPLE_TEXTURE2D 進行貼圖取樣，並與材質屬性 _BaseColor 相乘
     // half4 是一个 向量类型，包含 4个分量，比如 (r, g, b, a)。
@@ -43,48 +43,49 @@ inline void InitializeSurfaceData(Varyings input, out AbyssSurfaceData surface)
     surface.alpha = texColor.a * _BaseColor.a;
 
     // ==========================================
-    // 【核心新增】：統一取樣 Mask Map 避免效能浪費
+    // 【核心新增】：統一取樣 Mask Map 避免效能浪費 (這是特別的MRA不是Mask)
     // ==========================================
     // 讀取 Mask Map (如果沒放貼圖，引擎預設回傳 1,1,1,1)
     half4 maskTex = SAMPLE_TEXTURE2D(_MaskMap, sampler_BaseMap, input.uv);
     
-    // // R通道：金屬度 (貼圖數值 * 屬性面板乘數)
-    // surface.metallic = maskTex.r * _Metallic;     
-    //
-    // // G通道：環境遮蔽 AO (純讀取，強度留到 Shared 裡做)
-    // surface.occlusion = maskTex.g;                
-    //
-    // // A通道：平滑度 (貼圖數值 * 屬性面板乘數)
-    // surface.smoothness = maskTex.a * _Smoothness;
-
-    // R通道：金屬度 (貼圖數值 * 屬性面板乘數)
-    surface.metallic = maskTex.r * _Metallic;     
+    // 【靜態分軌】：處理不同材質的 Mask 通道定義
+    #if defined(ABYSS_MATERIAL_CLOTH)
+        surface.metallic = saturate(maskTex.r * _Metallic);
+        surface.smoothness = saturate(maskTex.a * _Smoothness);
+        surface.occlusion = saturate((lerp(1.0, maskTex.b, _OcclusionStrength) + _AOOffset) * _AOContrast + 0.5);
+    #elif defined(ABYSS_MATERIAL_HAIR)
+        // 頭髮的 Mask 定義：R = 1 - FrontHair, G = SpecMask, B = AO
+        surface.frontHair = 1.0 - maskTex.r; 
+        surface.specMask = maskTex.g;
+        surface.occlusion = saturate(maskTex.b + _HairAOOffset);
+        surface.metallic = 0.0; // 頭髮非金屬
+    surface.smoothness = _HairEnvSmoothness;
+    #else
+        // 預設 Standard
+        surface.metallic = saturate(maskTex.r * _Metallic);
+        surface.smoothness = saturate(maskTex.a * _Smoothness);
+        surface.occlusion = lerp(1.0, maskTex.b, _OcclusionStrength);
+    #endif
     
-    // G通道：環境遮蔽 AO (純讀取，強度留到 Shared 裡做)
-    surface.occlusion = maskTex.b;                
-    
-    // A通道：平滑度 (貼圖數值 * 屬性面板乘數)
-    surface.smoothness = maskTex.a * _Smoothness; 
     // ==========================================
-    
-    // 3. 幾何向量與法線貼圖運算 (TBN 矩陣處理)
-    // 確保經過插值後的法線與切線長度仍為 1
+    // 5. 幾何向量與法線貼圖運算 (TBN 矩陣處理)
+    // ==========================================
     float3 normalWS = normalize(input.normalWS);
     float3 tangentWS = normalize(input.tangentWS.xyz);
     
-    // 取樣法線貼圖
     half4 nTex = SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, input.uv);
-    // 解包法線貼圖並套用強度縮放 (_NormalScale)
     float3 tangentSpaceNormal = UnpackNormalScale(nTex, _NormalScale);
         
-    // 構建 TBN 矩陣 (Tangent, Bitangent, Normal)
-    // 利用叉積 (cross) 求出副切線 (Bitangent)，並乘上 input.tangentWS.w 修正鏡像 UV 導致的反向問題
     float3 bitangentWS = cross(normalWS, tangentWS) * input.tangentWS.w;
-        
-    // 將切線空間 (Tangent Space) 的法線轉換至世界空間 (World Space)
     surface.normalWS = normalize(TransformTangentToWorld(tangentSpaceNormal, half3x3(tangentWS, bitangentWS, normalWS)));
-
     surface.tangentWS = float4(tangentWS, input.tangentWS.w);
+
+    // ==========================================
+    // 6. 自發光 (Emission)
+    // ==========================================
+    float2 emissionUV = input.uv * _EmissionMap_ST.xy + _EmissionMap_ST.zw;
+    half4 emissionTex = SAMPLE_TEXTURE2D(_EmissionMap, sampler_BaseMap, emissionUV); 
+    surface.emission = emissionTex.rgb * _EmissionColor.rgb;
 }
 
 #endif

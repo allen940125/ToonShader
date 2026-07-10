@@ -4,114 +4,124 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-half4 _GlobalShadowColorBias;   
+// ==========================================
+// 全域變數區 (Global Variables) - 由 C# 腳本統一推播
+// ==========================================
+half4 _GlobalShadowColorBias;
 float _GlobalRainIntensity;
 float3 _GlobalRainDirection; 
-int _DebugViewMode;
+float _GlobalDebugViewMode;
 
+float4 _HeadForward;  
+float4 _HeadPosition; 
+float4 _HeadUp;
+
+// --- 剝離出的新全域變數 ---
+half4  _GlobalShadowColor;
+half   _GlobalShadowStrength;
+half4  _GlobalAmbientColor;
+half   _GlobalAmbientIntensity;
+half   _GlobalMinBrightness;
+float4 _RimLightDirection; 
+
+// ==========================================
+// 局部材質區 (Local Properties) - 嚴格對齊 Shader 面板
+// ==========================================
 CBUFFER_START(UnityPerMaterial)
-
-    // ==========================================
-    // 嚴格依照 Properties 的宣告順序排列 (含 UI 群組變數)
-    // 向量 (4維) 必須優先宣告，以確保記憶體對齊
-    // ==========================================
-
-    // --- 貼圖 ST 變數 (4 維) ---
-    float4 _BaseMap_ST;         
-    float4 _EmissionMap_ST;     
-
-    // --- Color 變數 (4 維) ---
-    half4  _BaseColor;          
-    half4  _EmissionColor;      
-    half4  _ShadowTint;         
-    half4  _AmbientColor;       
-    half4  _RampColorLight;     
-    half4  _RampColorShadow;    
-    half4  _BorderColor;
-    half4  _BounceColor;
-    half4  _SpecularColor;      
-    half4  _AnisoColor;         
-    half4  _FresnelColor;
-    half4  _RimColor;  
-    half4  _OutlineColor;       
-
-    // ==========================================
-    // 標量區塊 (Float / Range / Toggle)
-    // 嚴格依照 Properties 的由上往下順序
-    // ==========================================
 
     // 1. Render State
     float  _group_RenderState;
-    float  _CullMode;           
-    float  _Transparency_Mode;  
-    half   _AlphaClipThreshold; 
-    half   _DitherThreshold;    
-    half   _DitherScale;        
+    float  _CullMode;
+    float  _Transparency_Mode;
+    half   _AlphaClipThreshold;
+    half   _DitherThreshold;
+    half   _DitherScale;
 
     // 2. Base Surface
     float  _group_BaseSurface;
-    half   _NormalScale;        
+    float4 _BaseMap_ST;         
+    half4  _BaseColor;
+    half   _NormalScale;
+    half4  _EmissionColor;
+    float4 _EmissionMap_ST;     
 
-    // 3. Lighting
+    // 3. Core Lighting & Shadows
     float  _group_Lighting;
-    float  _UseLighting;        
+    float  _SurfaceType;
+    float  _UseLighting;
     half   _MainLightMultiplier;
     half   _MainLightColorWeight;
-    float  _AddLightOn;         
-    half   _AddLightIntensity;  
+    float  _AddLightOn;
+    half   _AddLightIntensity;
+    half4  _ShadowTint;
+    // (已剝離 _ShadowColor 與 _ShadowStrength)
     half   _ReceiveShadowIntensity;
     float  _ShadowSmoothness;
 
-    // 4. PBR
+    // 4. PBR & Environment
     float  _group_PBR;
-    half   _Smoothness;         
-    half   _Metallic;           
-    float  _ReflectionOn;       
+    half   _Smoothness;
+    half   _Metallic;
+    float  _ReflectionOn;
     half   _ReflectionIntensity;
     half   _OcclusionStrength;
-    half   _IndirectLightMultiplier; 
-    half   _MinBrightness;      
+    half   _IndirectLightMultiplier;
+    // (已剝離 _MinBrightness, _AmbientColor, _AmbientIntensity)
     half   _DiffuseImpact;
     half   _MaxHighlightEnergy;
-    half   _AmbientIntensity;
 
-    // 5. Cel Shading
+    // 5. Stylized Cel Shading
     float  _group_CelShading;
     float  _UseRampMode;
+    half   _RampStrength;
+    half4  _RampColorLight;
     half   _RampLightIntensity;
+    half4  _RampColorShadow;
     half   _RampShadowIntensity;
-    half   _BandThreshold;      
-    half   _BandSmoothness;     
+    half   _BandThreshold;
+    half   _BandSmoothness;
+    half4  _BorderColor;
     half   _BorderIntensity;
-    half   _BorderThreshold;    
-    half   _BorderWidth;        
+    half   _BorderThreshold;
+    half   _BorderWidth;
     half   _BounceIntensity;
+    half4  _BounceColor;
 
     // 6. Highlights
     float  _group_Highlights;
-    float  _SpecularIntensity;    
-    half   _SpecularStep;       
-    half   _SpecularFeather;    
-    half   _AnisoPower;         
+    float  _SpecularIntensity;
+    half4  _SpecularColor;
+    half   _SpecularStep;
+    half   _SpecularFeather;
+    half   _AnisoPower;
+    half4  _AnisoColor;
     half   _AnisoIntensity;
 
-    // 7. Overlay
+    // 7. Overlay & Edge Effects
     float  _group_OverlayEffects;
-    half   _FresnelPower;       
-    half   _FresnelIntensity;   
     float  _UseRimLight;
-    half   _RimPower;
-    half   _RimThreshold;       
-    half   _RimSmoothness;      
-    half   _RimShadowMask;
-    half   _MatCapIntensity;    
+    // (已剝離 _RimLightDirection)
+    float  _RimPosOffset;
+    float  _RimDirSoftness;
+    float  _UseInnerRim;
+    half4  _InnerRimColor;
+    half   _InnerRimPower;
+    half   _InnerRimIntensity;
+    half   _InnerRimBias;
+    half4  _RimColor;
+    half   _RimIntensity;
+    half   _RimThreshold;
+    half   _RimSmoothness;
+    half   _RimOffsetMul;
+    half   _MatCapIntensity;
 
     // 8. Geometry Outline
     float  _group_GeometryOutline;
-    float  _UseOutline;         
-    float  _OutlineWidth;       
+    float  _UseOutline;
+    float  _OutlineWidth;
+    half4  _OutlineColor;
 
-    // 9. Weather
+    // 9. Weather System
     float  _group_Weather;
     float  _UseWetness;
     float  _LocalWetness;
@@ -119,14 +129,49 @@ CBUFFER_START(UnityPerMaterial)
     float  _WetDirContrast;
     float  _WetDarkenIntensity;
     float  _WetSmoothnessMax;
-
+    half   _GlobalPorosity;
     float  _WetSpecularIntensity;
     float  _WetNormalFlatten;
-
     float  _RaindropScale;
     float  _RaindropSpeed;
 
-    half   _GlobalPorosity;
+    // 10. Cloth Specific
+    float  _group_Cloth;
+    half   _BaseColorContrast;
+    half4  _GradientColor;
+    half   _GradientMinY;
+    half   _GradientMaxY;
+    half   _RoughnessNonMetal;
+    half   _RoughnessMetal;
+    half   _RoughnessContrast;
+    half   _AOOffset;
+    half   _AOContrast;
+    half   _SpecShininess;
+    half4  _EnvSpecularColor;
+    half   _EnvSpecularIntensity;
+    half   _EnvSmoothness;
+
+    // 12. Hair Specific
+    float  _group_Hair;
+    float4 _HairLineMap_ST;          
+    float4 _AnisoMap_ST;             
+    half4  _HairSecondColor;
+    half4  _HairTopLightColor;
+    half   _HairTopLightOffset;
+    half   _HairTopLightIntensity;
+    half   _HairAOOffset;
+    half4  _HairSpecularColor;
+    half   _HairSpecularOffset;
+    half   _HairSpecularIntensity;
+    half   _HairAnisoNoise;
+    half   _HairAnisoShininess;
+    half   _HairAnisoOffset;
+    half   _HairAnisoPosition;
+    half   _HairCutOffset;
+    half4  _HairEnvSpecularColor;
+    half   _HairEnvSpecularIntensity;
+    half   _HairEnvSmoothness;
+
 CBUFFER_END
 
 TEXTURE2D(_BaseMap);
@@ -137,6 +182,8 @@ TEXTURE2D(_MatCapMap);
 TEXTURE2D(_EmissionMap);
 TEXTURE2D(_MaskMap);
 TEXTURE2D(_RaindropMap);
+TEXTURE2D(_HairLineMap);
+TEXTURE2D(_AnisoMap);
 
 SAMPLER(sampler_BaseMap);
 SAMPLER(sampler_DitherMap);
@@ -151,15 +198,21 @@ struct AbyssSurfaceData
 {
     half3 albedo;       // 最終基礎反射率
     half  alpha;        // 不透明度
-    float3 normalWS;    // 世界空間法線 (World Space Normal)
-    float3 viewDirWS;   // 世界空間視角方向 (由頂點指向攝影機)
+    float2 uv;          // 【新增】：提供光照模組取樣特化貼圖 (如髮絲、噪點、MatCap)
+    float3 normalWS;    // 世界空間法線
+    float3 viewDirWS;   // 世界空間視角方向
     float3 positionWS;  // 世界空間座標
-    half3 emission;     // 自發光/附加光貢獻 (如 Rim Light 會累加於此)
-    float4 tangentWS;   // 世界空間切線 (供各向異性高光等依賴切線空間的特效使用)
+    float3 positionOS;  // 物件空間座標
+    half3 emission;     // 自發光
+    float4 tangentWS;   // 世界空間切線
 
-    half metallic;
-    half smoothness;
-    half occlusion;
+    half metallic;      // 金屬度
+    half smoothness;    // 平滑度
+    half occlusion;     // 環境遮蔽
+    
+    // --- 頭髮特化遮罩 ---
+    half specMask;      // 【新增】：頭髮專用高光遮罩 (決定哪裡可以產生天使環)
+    half frontHair;     // 【新增】：前後髮分層遮罩 (用來處理瀏海半透明與高光覆蓋)
 };
 
 // ==============================================================================
@@ -184,6 +237,7 @@ struct Varyings
     float4 positionHCS  : SV_POSITION; // 齊次裁剪空間座標 (Homogeneous Clip Space)
     float2 uv           : TEXCOORD0;   
     float3 positionWS   : TEXCOORD1;   // 世界空間座標
+    float3 positionOS   : TEXCOORD2;
     float3 normalWS     : NORMAL;      // 世界空間法線
     float4 tangentWS    : TANGENT;     // 世界空間切線 (xyz 為方向，w 仍為符號以供後續計算副切線)
     float4 screenPos : TEXCOORD5;

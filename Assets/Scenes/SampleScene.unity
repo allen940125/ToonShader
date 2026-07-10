@@ -3658,6 +3658,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyScaleMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -3759,6 +3763,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -3945,6 +3953,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -3999,6 +4009,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.015
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -4054,6 +4065,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 0
     - _FresnelIntensity: 0
@@ -4073,10 +4086,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -4106,6 +4134,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -4228,6 +4259,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -4245,14 +4277,18 @@ Material:
     - _RimBlur: 0.1
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -4262,6 +4298,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0
     - _Shadow2ndBorder: 0
     - _Shadow2ndNormalStrength: 1
@@ -4293,6 +4332,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
@@ -4314,6 +4354,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -4353,6 +4394,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseLocalEnv: 0
     - _UseMain2ndTex: 0
@@ -4388,9 +4430,11 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -4437,11 +4481,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _LocalBounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
@@ -4478,6 +4529,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 1, g: 0.95711833, b: 0.95283014, a: 0}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -4746,6 +4798,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &786569533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+  m_PrefabInstance: {fileID: 1696031320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &786569535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786569533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a5941706418694f9c27451b4b094d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicWeatherOcclusion
+  targetRenderers: []
+  occlusionLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  maxRayDistance: 50
+  checkInterval: 0.2
+  wetnessTransitionSpeed: 2
 --- !u!1 &787568139
 GameObject:
   m_ObjectHideFlags: 0
@@ -4941,6 +5017,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyScaleMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -5042,6 +5122,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -5224,6 +5308,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -5278,6 +5364,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -5333,6 +5420,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 0
     - _FresnelIntensity: 0
@@ -5352,10 +5441,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -5385,6 +5489,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -5506,6 +5613,7 @@ Material:
     - _RaindropSpeed: 1
     - _RampLightIntensity: 1
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
@@ -5522,14 +5630,18 @@ Material:
     - _RimBlur: 0.65
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3.5
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -5539,6 +5651,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.15
     - _Shadow2ndNormalStrength: 1
@@ -5568,6 +5683,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 0.59999996
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.1
@@ -5589,6 +5705,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -5628,6 +5745,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -5661,8 +5779,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -5706,11 +5826,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -5744,6 +5871,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.65999997, g: 0.5, b: 0.47999996, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.68, g: 0.65999997, b: 0.78999996, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -5806,7 +5934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e2afa89dbedd00d47a30e20f5137c6e5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -7.22
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e2afa89dbedd00d47a30e20f5137c6e5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6231,6 +6359,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyScaleMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -6332,6 +6464,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -6518,6 +6654,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -6572,6 +6710,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -6627,6 +6766,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 1
     - _FresnelIntensity: 0
@@ -6646,10 +6787,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -6679,6 +6835,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -6801,6 +6960,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -6818,14 +6978,18 @@ Material:
     - _RimBlur: 0.1
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -6835,6 +6999,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.45
     - _Shadow2ndNormalStrength: 1
@@ -6866,6 +7033,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
@@ -6887,6 +7055,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -6926,6 +7095,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -6960,8 +7130,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -7008,11 +7180,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -7046,6 +7225,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.7, g: 0.75, b: 0.85, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -7122,6 +7302,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -7226,6 +7410,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -7412,6 +7600,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -7466,6 +7656,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -7521,6 +7712,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 1
     - _FresnelIntensity: 0
@@ -7540,10 +7733,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -7573,6 +7781,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -7695,6 +7906,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -7712,14 +7924,18 @@ Material:
     - _RimBlur: 0.1
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -7729,6 +7945,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 0
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.45
     - _Shadow2ndNormalStrength: 1
@@ -7760,6 +7979,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
@@ -7781,6 +8001,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -7820,6 +8041,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -7854,8 +8076,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -7902,11 +8126,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -7940,6 +8171,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.7, g: 0.75, b: 0.85, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -8104,6 +8336,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyScaleMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -8205,6 +8441,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -8391,6 +8631,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -8445,6 +8687,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.015
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -8500,6 +8743,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 0
     - _FresnelIntensity: 0
@@ -8519,10 +8764,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -8552,6 +8812,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -8674,6 +8937,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -8691,14 +8955,18 @@ Material:
     - _RimBlur: 0.1
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -8708,6 +8976,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0
     - _Shadow2ndBorder: 0
     - _Shadow2ndNormalStrength: 1
@@ -8739,6 +9010,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
@@ -8760,6 +9032,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -8799,6 +9072,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseLocalEnv: 0
     - _UseMain2ndTex: 0
@@ -8834,9 +9108,11 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -8883,11 +9159,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _LocalBounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
@@ -8924,6 +9207,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 1, g: 0.95711833, b: 0.95283014, a: 0}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -8968,6 +9252,222 @@ Material:
     - _egc7: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!1001 &1087119043
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.627
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.029999983
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.08568781
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1003728538929666384, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: m_Name
+      value: untitled (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c41c231cdf755b6409a4791a12c8b38f, type: 2}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_Materials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7936e237d783d16429b6ff79cc859256, type: 2}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[0]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[6]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[12]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[38]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[47]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[66]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[69]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[74]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[77]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[108]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320507708612135183, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[111]'
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2064558449}
+  m_SourcePrefab: {fileID: 100100000, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+--- !u!1001 &1177354977
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8990230741842646011, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ffaeb7a2964c70a4fa4162f70380167c, type: 2}
+    - target: {fileID: -8990230741842646011, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: 'm_Materials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e6e66c401fe15de468037827650db5ec, type: 2}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.179
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.029999979
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_Name
+      value: Chen Sir 1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1648152501}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1177354981}
+  m_SourcePrefab: {fileID: 100100000, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+--- !u!1 &1177354978 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+  m_PrefabInstance: {fileID: 1177354977}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1177354980 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+  m_PrefabInstance: {fileID: 1177354977}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1177354981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177354978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba1d9d3aebb4b649bd1bfcc5c98b7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HairLightController
+  lightingAnchor: {fileID: 1648152501}
+  showGizmos: 1
+  gizmoLineLength: 0.5
 --- !u!1001 &1199106476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9174,6 +9674,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyScaleMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -9275,6 +9779,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -9461,6 +9969,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -9515,6 +10025,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.15
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -9570,6 +10081,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 0
     - _FresnelIntensity: 0
@@ -9589,10 +10102,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -9622,6 +10150,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -9744,6 +10275,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -9761,14 +10293,18 @@ Material:
     - _RimBlur: 0.1
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -9778,6 +10314,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0
     - _Shadow2ndBorder: 0
     - _Shadow2ndNormalStrength: 1
@@ -9809,6 +10348,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.1
@@ -9830,6 +10370,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -9869,6 +10410,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -9903,8 +10445,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -9951,11 +10495,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -9989,6 +10540,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 1, g: 0.95711833, b: 0.95283014, a: 0}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -10064,6 +10616,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -10168,6 +10724,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -10350,6 +10910,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -10404,6 +10966,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -10459,6 +11022,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 0
     - _FresnelIntensity: 0
@@ -10478,10 +11043,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -10511,6 +11091,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -10632,6 +11215,7 @@ Material:
     - _RaindropSpeed: 1
     - _RampLightIntensity: 1
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
@@ -10648,14 +11232,18 @@ Material:
     - _RimBlur: 0.65
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3.5
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -10665,6 +11253,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.15
     - _Shadow2ndNormalStrength: 1
@@ -10694,6 +11285,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 0.59999996
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.1
@@ -10715,6 +11307,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -10754,6 +11347,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -10787,8 +11381,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -10832,11 +11428,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -10870,6 +11473,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.65999997, g: 0.5, b: 0.47999996, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.68, g: 0.65999997, b: 0.78999996, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -10946,6 +11550,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -11050,6 +11658,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -11236,6 +11848,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -11290,6 +11904,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.015
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -11345,6 +11960,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 1
     - _FresnelIntensity: 0
@@ -11364,10 +11981,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -11397,6 +12029,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -11519,6 +12154,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -11536,14 +12172,18 @@ Material:
     - _RimBlur: 0.5
     - _RimBorder: 0.65
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 1
     - _RimIndirBlur: 0.029999971
     - _RimIndirBorder: 0.985
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -11553,6 +12193,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 0
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.25
     - _Shadow2ndNormalStrength: 1
@@ -11584,6 +12227,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
@@ -11605,6 +12249,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -11644,6 +12289,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseLocalEnv: 0
     - _UseMain2ndTex: 0
@@ -11679,9 +12325,11 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -11728,11 +12376,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _LocalBounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
@@ -11769,6 +12424,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.5, g: 0.46249998, b: 0.42499983, a: 1}
     - _RimIndirColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.5499999, g: 0.62, b: 0.75, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -11813,6 +12469,37 @@ Material:
     - _egc7: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!1 &1483090800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1483090801}
+  m_Layer: 0
+  m_Name: "\u982D\u9AEE\u9AD8\u5149\u865B\u64EC\u7403\u4F4D\u7F6E"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1483090801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483090800}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.4674, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1769415743}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1502761311
 GameObject:
   m_ObjectHideFlags: 0
@@ -11919,7 +12606,7 @@ Transform:
   m_GameObject: {fileID: 1502761311}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0.0015049559, w: 0.99999887}
-  m_LocalPosition: {x: -19.668, y: 2.444, z: -0.241}
+  m_LocalPosition: {x: -19.918, y: 2.445, z: -0.241}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12515,6 +13202,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyScaleMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -12616,6 +13307,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -12798,6 +13493,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -12852,6 +13549,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -12907,6 +13605,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 1
     - _FresnelIntensity: 0
@@ -12926,10 +13626,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -12959,6 +13674,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1.14
     - _LightMinLimit: 0.05
@@ -13081,6 +13799,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -13098,14 +13817,18 @@ Material:
     - _RimBlur: 0.1
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -13115,6 +13838,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.45
     - _Shadow2ndNormalStrength: 1
@@ -13146,6 +13872,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
@@ -13167,6 +13894,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -13206,6 +13934,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 0
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -13240,8 +13969,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -13288,11 +14019,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -13326,6 +14064,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.7, g: 0.75, b: 0.85, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -13482,6 +14221,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1648152500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1648152501}
+  m_Layer: 0
+  m_Name: "\u982D\u9AEE\u9AD8\u5149\u865B\u64EC\u7403\u4F4D\u7F6E"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1648152501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648152500}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.4657, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1177354980}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!21 &1680830539
 Material:
   serializedVersion: 8
@@ -13513,6 +14283,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -13617,6 +14391,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -13799,6 +14577,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -13853,6 +14633,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -13908,6 +14689,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 0
     - _FresnelIntensity: 0
@@ -13927,10 +14710,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -13960,6 +14758,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -14081,6 +14882,7 @@ Material:
     - _RaindropSpeed: 1
     - _RampLightIntensity: 1
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _ReceiveShadowIntensity: 0
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
@@ -14097,14 +14899,18 @@ Material:
     - _RimBlur: 0.65
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3.5
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -14114,6 +14920,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.15
     - _Shadow2ndNormalStrength: 1
@@ -14143,6 +14952,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 0.59999996
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
@@ -14164,6 +14974,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -14203,6 +15014,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseLocalEnv: 0
     - _UseMain2ndTex: 0
@@ -14238,9 +15050,11 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -14284,11 +15098,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _LocalBounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
@@ -14325,6 +15146,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.65999997, g: 0.5, b: 0.47999996, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.68, g: 0.65999997, b: 0.78999996, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -16203,7 +17025,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 786569535}
   m_SourcePrefab: {fileID: 100100000, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
 --- !u!1 &1710774153 stripped
 GameObject:
@@ -16310,6 +17135,106 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1769415740
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -17.599
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.02999998
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_Name
+      value: "\u9648\u5343\u8BED_houdini"
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026134587718898032, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3a56ee271f640af419c7830e8eee06e0, type: 2}
+    - target: {fileID: 7026134587718898032, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      propertyPath: 'm_Materials.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2f0c0abae1e24034c8e18f63f023b9fb, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1483090801}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1769415744}
+  m_SourcePrefab: {fileID: 100100000, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+--- !u!1 &1769415741 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+  m_PrefabInstance: {fileID: 1769415740}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1769415743 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d1234cad18394ed47b19f549e6ccd4cf, type: 3}
+  m_PrefabInstance: {fileID: 1769415740}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1769415744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769415741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba1d9d3aebb4b649bd1bfcc5c98b7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HairLightController
+  lightingAnchor: {fileID: 1483090801}
+  showGizmos: 1
+  gizmoLineLength: 0.5
 --- !u!21 &1782915104
 Material:
   serializedVersion: 8
@@ -16343,6 +17268,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -16447,6 +17376,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -16633,6 +17566,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -16687,6 +17622,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.15
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -16742,6 +17678,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 1
     - _FresnelIntensity: 0
@@ -16761,10 +17699,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -16794,6 +17747,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -16916,6 +17872,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -16933,14 +17890,18 @@ Material:
     - _RimBlur: 0.5
     - _RimBorder: 0.65
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 1
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -16950,6 +17911,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.25
     - _Shadow2ndNormalStrength: 1
@@ -16981,6 +17945,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.1
@@ -17002,6 +17967,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -17041,6 +18007,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -17075,8 +18042,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -17123,11 +18092,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -17161,6 +18137,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.5499999, g: 0.62, b: 0.75, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -18756,13 +19733,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1799464912}
   m_SourcePrefab: {fileID: 100100000, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+--- !u!1 &1799464910 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+  m_PrefabInstance: {fileID: 1799464909}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1799464912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799464910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba1d9d3aebb4b649bd1bfcc5c98b7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HairLightController
+  lightingAnchor: {fileID: 0}
+  showGizmos: 1
+  gizmoLineLength: 0.5
 --- !u!21 &1800134522
 Material:
   serializedVersion: 8
@@ -18794,6 +19794,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -18898,6 +19902,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -19080,6 +20088,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -19134,6 +20144,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -19189,6 +20200,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 1
     - _FresnelIntensity: 0
@@ -19208,10 +20221,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.7648304
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -19241,6 +20269,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -19362,6 +20393,7 @@ Material:
     - _RaindropSpeed: 1
     - _RampLightIntensity: 1
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
     - _Reflectance: 0.04
@@ -19378,14 +20410,18 @@ Material:
     - _RimBlur: 0.5
     - _RimBorder: 0.65
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 1
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -19395,6 +20431,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 0
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.25
     - _Shadow2ndNormalStrength: 1
@@ -19424,6 +20463,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.1
@@ -19445,6 +20485,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -19484,6 +20525,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -19517,8 +20559,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -19562,11 +20606,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -19600,6 +20651,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.5, g: 0.46249998, b: 0.42499983, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.5499999, g: 0.62, b: 0.75, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -19821,7 +20873,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9b3f6aabd62f6eb46a2ac2a7db878153, type: 2}
+  - {fileID: 2100000, guid: 3a56ee271f640af419c7830e8eee06e0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19901,6 +20953,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -20005,6 +21061,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -20191,6 +21251,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -20245,6 +21307,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.15
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -20300,6 +21363,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 1
     - _FresnelIntensity: 0
@@ -20319,10 +21384,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -20352,6 +21432,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -20474,6 +21557,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -20491,14 +21575,18 @@ Material:
     - _RimBlur: 0.5
     - _RimBorder: 0.65
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 1
     - _RimIndirBlur: 0.029999971
     - _RimIndirBorder: 0.985
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -20508,6 +21596,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 0
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.25
     - _Shadow2ndNormalStrength: 1
@@ -20539,6 +21630,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.1
@@ -20560,6 +21652,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -20599,6 +21692,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -20633,8 +21727,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -20681,11 +21777,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -20719,6 +21822,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.5499999, g: 0.62, b: 0.75, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -20795,6 +21899,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -20899,6 +22007,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -21085,6 +22197,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -21139,6 +22253,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.015
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -21194,6 +22309,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 0
     - _FresnelIntensity: 0
@@ -21213,10 +22330,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -21246,6 +22378,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1
     - _LightMinLimit: 0.05
@@ -21368,6 +22503,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -21385,14 +22521,18 @@ Material:
     - _RimBlur: 0.1
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -21402,6 +22542,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0
     - _Shadow2ndBorder: 0
     - _Shadow2ndNormalStrength: 1
@@ -21433,6 +22576,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
@@ -21454,6 +22598,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -21493,6 +22638,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseLocalEnv: 0
     - _UseMain2ndTex: 0
@@ -21528,9 +22674,11 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -21577,11 +22725,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _LocalBounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
@@ -21618,6 +22773,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 1, g: 0.95711833, b: 0.95283014, a: 0}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -21662,6 +22818,30 @@ Material:
     - _egc7: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!1 &2064558448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a9d3e636b979e294cbfe438e3c201a50, type: 3}
+  m_PrefabInstance: {fileID: 1087119043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2064558449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064558448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a5941706418694f9c27451b4b094d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicWeatherOcclusion
+  targetRenderers: []
+  occlusionLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  maxRayDistance: 50
+  checkInterval: 0.2
+  wetnessTransitionSpeed: 2
 --- !u!21 &2091103820
 Material:
   serializedVersion: 8
@@ -21694,6 +22874,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AnisoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -21798,6 +22982,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GlitterShapeTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -21980,6 +23168,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AAStrength: 1
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -22034,6 +23224,7 @@ Material:
     - _BacklightViewStrength: 1
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _BeforeExposureLimit: 10000
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -22089,6 +23280,8 @@ Material:
     - _EmissionUseGrad: 0
     - _EnvRimBlur: 0.35
     - _EnvRimBorder: 3
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FlipNormal: 1
     - _FresnelIntensity: 0
@@ -22108,10 +23301,25 @@ Material:
     - _GlitterShadowMask: 0
     - _GlitterUVMode: 0
     - _GlitterVRParallaxStrength: 0
+    - _GlobalDebugViewMode: 0
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.59999996
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IDMask1: 0
     - _IDMask2: 0
     - _IDMask3: 0
@@ -22141,6 +23349,9 @@ Material:
     - _IDMaskPrior7: 0
     - _IDMaskPrior8: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _Invisible: 0
     - _LightMaxLimit: 1.14
     - _LightMinLimit: 0.05
@@ -22263,6 +23474,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampPosition: 0.5
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _RampTransition: 0.05
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
@@ -22280,14 +23492,18 @@ Material:
     - _RimBlur: 0.1
     - _RimBorder: 0.5
     - _RimDirRange: 0
+    - _RimDirSoftness: 0.5
     - _RimDirStrength: 0
     - _RimEnableLighting: 1
     - _RimFresnelPower: 3
     - _RimIndirBlur: 0.1
     - _RimIndirBorder: 0.5
     - _RimIndirRange: 0
+    - _RimIntensity: 1
     - _RimMainStrength: 0
     - _RimNormalStrength: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadeBlur: 1
     - _RimShadeBorder: 0.5
@@ -22297,6 +23513,9 @@ Material:
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
     - _RimVRParallaxStrength: 1
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _Shadow2ndBlur: 0.1
     - _Shadow2ndBorder: 0.45
     - _Shadow2ndNormalStrength: 1
@@ -22328,6 +23547,7 @@ Material:
     - _ShiftBackfaceUV: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularBlur: 0
     - _SpecularBorder: 0.5
     - _SpecularFeather: 0.05
@@ -22349,6 +23569,7 @@ Material:
     - _StencilZFail: 0
     - _SubpassCutoff: 0.5
     - _Surface: 0
+    - _SurfaceType: 0
     - _TessEdge: 10
     - _TessFactorMax: 3
     - _TessShrink: 0
@@ -22388,6 +23609,7 @@ Material:
     - _UseEmission2nd: 0
     - _UseFresnel: 0
     - _UseGlitter: 0
+    - _UseInnerRim: 1
     - _UseLighting: 0
     - _UseMain2ndTex: 0
     - _UseMain3rdTex: 0
@@ -22422,8 +23644,10 @@ Material:
     - _egci: 2
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
     - _group_Debug: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -22470,11 +23694,18 @@ Material:
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
     - _EmissionColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlitterParams1: {r: 256, g: 256, b: 0.16, a: 50}
     - _GlitterParams2: {r: 0.25, g: 0, b: 0, a: 0}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
     - _Main2ndDissolveNoiseMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
@@ -22508,6 +23739,7 @@ Material:
     - _ReflectionCubeColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimIndirColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _RimShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Shadow2ndColor: {r: 0.7, g: 0.75, b: 0.85, a: 1}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
@@ -22617,7 +23849,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: affcd189cc851a341bb1a29a3b825ea6, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22658,7 +23890,7 @@ Transform:
   m_GameObject: {fileID: 2100096454}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.965, y: 2.81, z: -0.39}
+  m_LocalPosition: {x: -12.354, y: 2.297, z: -3.134}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22761,13 +23993,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 315562155350802490, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Color.b
-      value: 0.94000334
+      value: 0.93500316
       objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Color.g
-      value: 0.9700017
+      value: 0.9675016
       objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Color.r
@@ -22775,39 +24011,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Intensity
-      value: 2.00976
+      value: 1.9918463
       objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_ColorTemperature
-      value: 5244
+      value: 5131.2344
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 63.003685
+      value: 61.694782
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 63.003685
+      value: 61.694782
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 45.39906
+      value: 48.86215
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.42952344
+      value: -0.41155803
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.15232512
+      value: -0.14208686
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.83892334
+      value: 0.85095364
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.2975137
+      value: -0.2937844
       objectReference: {fileID: 0}
     - target: {fileID: 4472744084409298626, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22851,15 +24087,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4760604736102711706, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5224986
+      value: 0.5056573
       objectReference: {fileID: 0}
     - target: {fileID: 4760604736102711706, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.60290766
+      value: 0.6100454
       objectReference: {fileID: 0}
     - target: {fileID: 4760604736102711706, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.60290766
+      value: -0.6100454
       objectReference: {fileID: 0}
     - target: {fileID: 4760604736102711706, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.z
@@ -22870,40 +24106,204 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: timeOfDay
-      value: 13.8
+      value: 13.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: timeSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: useMaterialSwap
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: autoRimLightDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.ctime1
+      value: 16384
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.ctime2
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.ctime3
+      value: 49151
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.ctime4
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key0.b
+      value: 0.20784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key0.g
+      value: 0.1254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key0.r
+      value: 0.101960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key1.b
+      value: 0.27058825
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key1.g
+      value: 0.20784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key1.r
+      value: 0.22745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key2.b
+      value: 0.49803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key2.g
+      value: 0.49803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key2.r
+      value: 0.49803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key3.b
+      value: 0.2901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key3.g
+      value: 0.2627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key3.r
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key4.b
+      value: 0.20784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key4.g
+      value: 0.1254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.key4.r
+      value: 0.101960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowColor.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[1].time
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[2].time
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[3].time
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[4].time
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[0].value
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[1].value
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[2].value
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[3].value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[4].value
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[0].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[1].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[0].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[1].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
+      propertyPath: globalShadowStrengthCurve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -63.003685
+      value: -61.694782
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -63.003685
+      value: -61.694782
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -45.39906
+      value: -48.86215
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.83892334
+      value: 0.85095364
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.2975137
+      value: -0.2937844
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.42952344
+      value: 0.41155803
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.15232512
+      value: 0.14208686
       objectReference: {fileID: 0}
     - target: {fileID: 6432653318454308945, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Name
@@ -22939,6 +24339,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbyssRenderManager
   debugMode: 0
+  globalDitherMap: {fileID: 0}
+  globalRaindropMap: {fileID: 0}
 --- !u!108 &6690868993902015365 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
@@ -22988,5 +24390,8 @@ SceneRoots:
   - {fileID: 1724137069}
   - {fileID: 918520620}
   - {fileID: 1799464909}
+  - {fileID: 1177354977}
   - {fileID: 1793329636}
   - {fileID: 1696031320}
+  - {fileID: 1087119043}
+  - {fileID: 1769415740}
