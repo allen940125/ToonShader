@@ -384,6 +384,7 @@ Shader "ZMD/S_Char_Hair"
                 
                 half3 finalColor = (finalDiff + finalEnv + finalEnvSpec + finalSpec) * ao + final_rim * 1.5;
                 return half4(finalRingSpec, 1.0);
+                return half4(frontHair, frontHair, frontHair, 1);
             }
             ENDHLSL
         }

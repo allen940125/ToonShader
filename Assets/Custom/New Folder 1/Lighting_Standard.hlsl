@@ -62,10 +62,10 @@ inline half3 ComputeLighting_MathOnly(AbyssSurfaceData surface, Light mainLight,
 
     half3 finalDiffuse = surface.albedo * totalLighting;
 
-    float borderBand = smoothstep(_BorderThreshold - _BorderWidth, _BorderThreshold, halfLambert) 
-                     - smoothstep(_BorderThreshold, _BorderThreshold + _BorderWidth, halfLambert);
-    finalDiffuse += _BorderColor.rgb * borderBand * surface.albedo * finalBand * _BorderIntensity * mainLight.color;
+    finalDiffuse += ComputeShadowTerminator(surface, mainLight, halfLambert, finalBand);
 
+    finalDiffuse += ComputeSpecular(surface, mainLight, halfLambert);
+    
     return finalDiffuse;
 }
 

@@ -178,14 +178,14 @@ Material:
     - _GradientMaxY: 1
     - _GradientMinY: 0
     - _HairAOOffset: -0.15
-    - _HairAnisoNoise: 1
-    - _HairAnisoOffset: 0
-    - _HairAnisoPosition: 0.15
-    - _HairAnisoShininess: 400
-    - _HairCutOffset: 0
-    - _HairEnvSmoothness: 0.5
-    - _HairEnvSpecularIntensity: 0.5
-    - _HairSpecularIntensity: 1
+    - _HairAnisoNoise: -0.01
+    - _HairAnisoOffset: 0.58
+    - _HairAnisoPosition: 0.2
+    - _HairAnisoShininess: 648
+    - _HairCutOffset: -0.1
+    - _HairEnvSmoothness: 0.492
+    - _HairEnvSpecularIntensity: 0.73
+    - _HairSpecularIntensity: 10
     - _HairSpecularOffset: 0.4
     - _HairTopLightIntensity: 20
     - _HairTopLightOffset: -0.5
@@ -245,7 +245,7 @@ Material:
     - _UseLighting: 1
     - _UseOutline: 0
     - _UseRampMode: 1
-    - _UseRimLight: 1
+    - _UseRimLight: 0
     - _UseWetness: 0
     - _WetDarkenIntensity: 0.5
     - _WetDirContrast: 0.5
@@ -272,7 +272,7 @@ Material:
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _AnisoColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BorderColor: {r: 1, g: 0.3, b: 0.1, a: 1}
     - _BounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

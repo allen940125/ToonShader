@@ -24,6 +24,8 @@ public class HairLightController : MonoBehaviour
         Shader.SetGlobalVector(HeadPositionId, new Vector4(lightingAnchor.position.x, lightingAnchor.position.y, lightingAnchor.position.z, 1.0f));
         Shader.SetGlobalVector(HeadForwardId, new Vector4(lightingAnchor.forward.x, lightingAnchor.forward.y, lightingAnchor.forward.z, 0.0f));
         Shader.SetGlobalVector(HeadUpId, new Vector4(lightingAnchor.up.x, lightingAnchor.up.y, lightingAnchor.up.z, 0.0f));
+        
+        Debug.Log($"[資料流偵測] 真實座標: {lightingAnchor.position} | 真實朝向: {lightingAnchor.forward}");
     }
 
     // 建議改為 OnDrawGizmos，這樣即使不選取物件也能在 Scene 視窗看到輔助線，方便微調

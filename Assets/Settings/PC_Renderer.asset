@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-991325899698174730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c038bc1a0c6a284f9db3e0c2fc835aa, type: 3}
+  m_Name: StickerMaskFeature
+  m_EditorClassIdentifier: Assembly-CSharp::StickerMaskFeature
+  m_Active: 1
+  settings:
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 256
+    overrideMaterial: {fileID: 2100000, guid: 884e6a90dc5460d4fa2b259ba083604d, type: 2}
+    targetTextureName: _StickerMaskTex
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,7 +48,9 @@ MonoBehaviour:
   - {fileID: 396130136104525014}
   - {fileID: 7006077210365498895}
   - {fileID: 8474706455451170373}
-  m_RendererFeatureMap: ad6b866f10d7b46cd65c568f42567f050f96cb601a963a614576e0cc9e349c75
+  - {fileID: -991325899698174730}
+  - {fileID: 3910573082915692011}
+  m_RendererFeatureMap: ad6b866f10d7b46cd65c568f42567f050f96cb601a963a614576e0cc9e349c75f684d8b3581a3ef2ebdd64f37f254536
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -75,6 +96,26 @@ MonoBehaviour:
   fetchColorBuffer: 1
   requirements: 0
   passMaterial: {fileID: 2100000, guid: 33459f1be56c4674db3e545cb1466715, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
+--- !u!114 &3910573082915692011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: FullScreenPassRendererFeature
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.FullScreenPassRendererFeature
+  m_Active: 1
+  injectionPoint: 600
+  fetchColorBuffer: 1
+  requirements: 0
+  passMaterial: {fileID: 2100000, guid: cd6a25d1d16f2c54288609bc252ff417, type: 2}
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1

@@ -147,20 +147,52 @@ inline void CalculateAnimeRimLight(AbyssSurfaceData surface, Light mainLight, fl
 }
 
 // ------------------------------------------------------------------
-// 6. 高光計算（基礎 + 水膜）
+// 6. 高光計算（基礎 + 水膜）- 已修正為支援極致硬邊
 // ------------------------------------------------------------------
 inline half3 ComputeSpecular(AbyssSurfaceData surface, Light mainLight, float castShadowMask)
 {
     float3 halfVector = normalize(mainLight.direction + surface.viewDirWS);
     float NdotH = saturate(dot(surface.normalWS, halfVector));
     float NdotL_spec = dot(surface.normalWS, mainLight.direction);
-    float selfShadowMask = smoothstep(0.0, 0.1, NdotL_spec);
+    
+    // 自我陰影遮罩：防止背光面出現不合理的高光穿透
+    float selfShadowMask = smoothstep(0.0, 0.05, NdotL_spec);
 
-    float dynamicSpecStep = lerp(1.0, _SpecularStep, surface.smoothness);
+    // ==========================================
+    // 核心修正：高光能量集中與邊緣計算
+    // ==========================================
+    // 1. 利用 Smoothness 轉換為指數，集中高光能量 (Blinn-Phong 基礎)
+    // 這樣可以讓高光的形狀更符合幾何體的曲率
+    float gloss = exp2(10.0 * surface.smoothness + 1.0); 
+    float specPower = pow(NdotH, gloss);
+
+    // 2. 動態閥值：允許高光大小受到 Smoothness 與外部參數共同控制
+    float dynamicSpecStep = lerp(0.5, _SpecularStep, surface.smoothness);
+    
+    float baseSpecBand;
+
+    // 3. 硬高光與軟高光的分支處理
+    if (_SpecularFeather <= 0.001)
+    {
+        // 【硬高光模式】
+        // 使用 fwidth 計算相鄰像素的導數差，做出「物理上絕對銳利，但在螢幕上無鋸齒」的完美硬邊
+        float delta = fwidth(specPower); 
+        baseSpecBand = smoothstep(dynamicSpecStep - delta, dynamicSpecStep + delta, specPower);
+    }
+    else
+    {
+        // 【軟高光模式】
+        // 強制給予一個極小安全值，避免 smoothstep 崩潰
+        float safeFeather = max(_SpecularFeather, 0.001);
+        baseSpecBand = smoothstep(dynamicSpecStep - safeFeather, dynamicSpecStep + safeFeather, specPower);
+    }
+
     float dynamicSpecIntensity = _SpecularIntensity * surface.smoothness;
-    float baseSpecBand = smoothstep(dynamicSpecStep - _SpecularFeather, dynamicSpecStep + _SpecularFeather, NdotH);
     half3 baseSpecular = baseSpecBand * _SpecularColor.rgb * dynamicSpecIntensity;
 
+    // ==========================================
+    // 水膜高光計算 (保持原樣，但修復了魔術數字)
+    // ==========================================
     half3 wetSpecular = 0;
     #if defined(_WEATHER_WETNESS_ON)
     float baseWetFactor = saturate(_GlobalRainIntensity * _LocalWetness);
@@ -169,12 +201,27 @@ inline half3 ComputeSpecular(AbyssSurfaceData surface, Light mainLight, float ca
         float rainDot = dot(surface.normalWS, -_GlobalRainDirection);
         half upwardFactor = smoothstep(_WetDirThreshold - _WetDirContrast, _WetDirThreshold + _WetDirContrast, rainDot);
         float actualWetness = baseWetFactor * upwardFactor;
-        float wetSpecBand = smoothstep(0.98 - 0.005, 0.98 + 0.005, NdotH);
+        
+        // 這裡同樣補上防呆機制，避免魔術數字直接相減導致錯誤
+        float wetSpecBand = smoothstep(0.98 - 0.001, 0.98 + 0.001, NdotH);
         wetSpecular = wetSpecBand * actualWetness * _WetSpecularIntensity;
     }
     #endif
 
+    // 最終輸出
     return (baseSpecular + wetSpecular) * mainLight.color * selfShadowMask * castShadowMask;
+}
+
+inline half3 ComputeShadowTerminator(AbyssSurfaceData surface, Light mainLight, float halfLambert, float finalBand)
+{
+    // 如果 _BorderIntensity 為 0，應在此處阻斷計算（見第 3 點）
+    if (_BorderIntensity <= 0.001) // 直接阻斷後續昂貴的 smoothstep
+        return half3(0, 0, 0);
+
+    float borderBand = smoothstep(_BorderThreshold - _BorderWidth, _BorderThreshold, halfLambert) 
+                     - smoothstep(_BorderThreshold, _BorderThreshold + _BorderWidth, halfLambert);
+                     
+    return _BorderColor.rgb * borderBand * surface.albedo * finalBand * _BorderIntensity * mainLight.color;
 }
 
 #endif

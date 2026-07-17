@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_hairshadow_common_03.002
-  m_Shader: {fileID: 4800000, guid: 8f9c64ddd68cb6f4299d67db5bc4d484, type: 3}
+  m_Shader: {fileID: 4800000, guid: 9d3d5fd4874517c4eb474448696f4eb3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -177,14 +177,14 @@ Material:
     - _GradientMaxY: 1
     - _GradientMinY: 0
     - _HairAOOffset: 0
-    - _HairAnisoNoise: 1
+    - _HairAnisoNoise: -0.01
     - _HairAnisoOffset: 0
     - _HairAnisoPosition: 0.15
-    - _HairAnisoShininess: 400
+    - _HairAnisoShininess: 648
     - _HairCutOffset: 0
     - _HairEnvSmoothness: 0.5
     - _HairEnvSpecularIntensity: 0.5
-    - _HairSpecularIntensity: 1
+    - _HairSpecularIntensity: 147.46
     - _HairSpecularOffset: 0.5
     - _HairTopLightIntensity: 10
     - _HairTopLightOffset: 0

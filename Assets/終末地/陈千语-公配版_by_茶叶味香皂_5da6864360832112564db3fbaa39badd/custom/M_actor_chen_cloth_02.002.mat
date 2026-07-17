@@ -226,7 +226,7 @@ Material:
     - _RimThreshold: 0.5
     - _RoughnessContrast: 1
     - _RoughnessMetal: 0
-    - _RoughnessNonMetal: -0.228
+    - _RoughnessNonMetal: 0
     - _ShadowSmoothness: 0.05
     - _ShadowStrength: 0.5
     - _Smoothness: 1
