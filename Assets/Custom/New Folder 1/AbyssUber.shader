@@ -27,7 +27,6 @@ Shader "Abyss/UberShader_DOTS"
         // 3. Core Lighting & Shadows (光照與陰影核心)
         // ==========================================
         [Main(Lighting, _, on)] _group_Lighting ("3. Core Lighting & Shadows", Float) = 0
-        [Enum(Standard, 0, Skin, 1, Hair, 2, Cloth, 3, Eye, 4)] _SurfaceType("Surface Type", Float) = 0
         [SubToggle(Lighting, _USE_LIGHTING)] _UseLighting("Enable Lighting", Float) = 1
         [Sub(Lighting)] _MainLightMultiplier("Local Main Light Multiplier", Range(0, 5)) = 1.0
         [Sub(Lighting)] _MainLightColorWeight("Main Light Color Weight", Range(0, 1)) = 1.0
@@ -151,6 +150,33 @@ Shader "Abyss/UberShader_DOTS"
         [Sub(Cloth)] [HDR] _EnvSpecularColor("环境高光颜色", Color) = (1,1,1,1)
         [Sub(Cloth)] _EnvSpecularIntensity("环境高光强度", Range(0, 2)) = 0.5
         [Sub(Cloth)] _EnvSmoothness("环境粗糙度偏移", Range(0, 1)) = 0.5
+        
+        // ==========================================
+        // 11. Face Specific (臉部專屬特化區塊)
+        // ==========================================
+        [Main(Face, _, off)] _group_Face ("11. Face Specific (臉部特化參數)", Float) = 0
+        [SubToggle(Face, _FACE_SIMPLE_MODE)] _FaceSimpleMode ("Simple Mode", Float) = 0
+        
+        [Sub(Face)] [NoScaleOffset] _FaceColorMask ("Color Mask (R:2nd, G:Jaw, B:SelfShadow, A:Spec)", 2D) = "white" {}
+        [Sub(Face)] [NoScaleOffset] _FaceSDF ("SDF Map", 2D) = "white" {}
+        [Sub(Face)] [NoScaleOffset] _FaceLipSpecMask ("Lip Specular Mask", 2D) = "white" {}
+        [Sub(Face)] [NoScaleOffset] _FaceDiffuseRamp ("Face Diffuse Ramp (NPR)", 2D) = "white" {}
+        
+        [Sub(Face)] [HDR] _FaceSecondColor ("Second Color", Color) = (1, 1, 1, 1)
+        [Sub(Face)] [HDR] _FaceDarkColor ("Dark Color", Color) = (0.5, 0.5, 0.5, 1)
+        [Sub(Face)] _FaceRampStrength ("NPR Ramp Strength", Range(0, 1)) = 1.0
+        
+        [Sub(Face)] [HDR] _FaceShadowColor ("Shadow Color", Color) = (0.5, 0.5, 0.5, 1)
+        [Sub(Face)] _FaceShadowStrength ("Shadow Strength", Range(0, 1)) = 1.0
+        [Sub(Face)] _FaceSoftShadow ("Soft Shadow", Range(0, 1)) = 0.2
+        
+        [Sub(Face)] [HDR] _FaceSpecularColor ("Specular Color", Color) = (1, 1, 1, 1)
+        [Sub(Face)] _FaceSpecularIntensity ("Specular Intensity", Range(0, 8)) = 4
+        [Sub(Face)] _FaceAO_Offset ("AO Offset", Range(-1, 1)) = 0
+        
+        [HideInInspector] _HeadForward ("HeadForward", Vector) = (0, 0, 1, 0)
+        [HideInInspector] _HeadRight ("HeadRight", Vector) = (1, 0, 0, 0)
+        [HideInInspector] _HeadUp ("HeadUp", Vector) = (0, 1, 0, 0)
         
         // ==========================================
         // 12. Hair Specific (頭髮專屬特化區塊)

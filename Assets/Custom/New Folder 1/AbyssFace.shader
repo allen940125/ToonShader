@@ -1,4 +1,4 @@
-Shader "Abyss/Character/Cloth"
+Shader "Abyss/Character/Face"
 {
     Properties
     {
@@ -235,11 +235,14 @@ Shader "Abyss/Character/Cloth"
                 #pragma shader_feature_local _USE_LIGHTING
                 #pragma shader_feature_local _ADD_LIGHT_ON
                 #pragma shader_feature_local _REFLECTION_ON
+
                 #pragma shader_feature_local _WEATHER_WETNESS_ON
 
-                // 【核心靜態指派】：發放布料身分證
-                #define ABYSS_MATERIAL_CLOTH
-
+                // 【臉部系統變數切換】
+                #pragma shader_feature_local _FACE_SIMPLE_MODE
+                #define ABYSS_MATERIAL_FACE
+                
+                // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_forward
                 #pragma fragment frag_forward
                 
@@ -260,6 +263,7 @@ Shader "Abyss/Character/Cloth"
                 #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
                 #pragma shader_feature_local _USE_OUTLINE
 
+                // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_outline
                 #pragma fragment frag_outline
 
@@ -281,6 +285,7 @@ Shader "Abyss/Character/Cloth"
 
                 #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
 
+                // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_shadow
                 #pragma fragment frag_shadow
                 
@@ -304,6 +309,7 @@ Shader "Abyss/Character/Cloth"
 
                 #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
 
+                // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_depth
                 #pragma fragment frag_depth
                 

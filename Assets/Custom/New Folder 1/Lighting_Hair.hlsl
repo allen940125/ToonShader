@@ -87,7 +87,7 @@ inline half3 ComputeLighting_Hair(AbyssSurfaceData surface, Light mainLight, hal
     // 將所有直接與間接光相加後，整體乘上 occlusion (AO)
     half3 finalColor = (finalDiffuse + ambient + envSpec + finalSpec) * surface.occlusion + (final_rim * 1.5);
 
-    return finalSpec;
+    return finalColor;
 }
 
 #endif

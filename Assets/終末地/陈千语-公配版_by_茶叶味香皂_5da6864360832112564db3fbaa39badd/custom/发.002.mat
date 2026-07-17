@@ -245,7 +245,7 @@ Material:
     - _UseLighting: 1
     - _UseOutline: 0
     - _UseRampMode: 1
-    - _UseRimLight: 0
+    - _UseRimLight: 1
     - _UseWetness: 0
     - _WetDarkenIntensity: 0.5
     - _WetDirContrast: 0.5
@@ -272,7 +272,7 @@ Material:
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _AnisoColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}
     - _BorderColor: {r: 1, g: 0.3, b: 0.1, a: 1}
     - _BounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -283,7 +283,7 @@ Material:
     - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSecondColor: {r: 0.9098039, g: 0.9098039, b: 0.9137255, a: 1}
     - _HairSpecularColor: {r: 0.5568628, g: 0.59607846, b: 0.69803923, a: 1}
-    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 0.9870443, g: 1, b: 0.9686274, a: 1}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RampColorLight: {r: 1, g: 0.95, b: 0.85, a: 1}

@@ -7,6 +7,7 @@
 // 2. 包含各种表面的具体漫反射算法
 #include "Lighting_Standard.hlsl"   
 #include "Lighting_Cloth.hlsl"
+#include "Lighting_Face.hlsl"
 // #include "Lighting_Skin.hlsl"
 #include "Lighting_Hair.hlsl"
 
@@ -49,6 +50,9 @@ inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight, hal
     #elif defined(ABYSS_MATERIAL_HAIR)
         directLighting = ComputeLighting_Hair(surface, mainLight, indirectDiffuse, castShadowMask); // 暫時 fallback
 
+    #elif defined(ABYSS_MATERIAL_FACE)
+        directLighting = ComputeLighting_Face(surface, mainLight, indirectDiffuse, castShadowMask); // 暫時 fallback
+    
     #elif defined(ABYSS_MATERIAL_EYE)
         directLighting = ComputeLighting_Standard(surface, mainLight, indirectDiffuse, castShadowMask); // 暫時 fallback
 

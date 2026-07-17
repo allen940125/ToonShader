@@ -15,6 +15,7 @@ float _GlobalDebugViewMode;
 float4 _HeadForward;  
 float4 _HeadPosition; 
 float4 _HeadUp;
+float4 _HeadRight;
 
 // --- 剝離出的新全域變數 ---
 half4  _GlobalShadowColor;
@@ -47,7 +48,6 @@ CBUFFER_START(UnityPerMaterial)
 
     // 3. Core Lighting & Shadows
     float  _group_Lighting;
-    float  _SurfaceType;
     float  _UseLighting;
     half   _MainLightMultiplier;
     half   _MainLightColorWeight;
@@ -151,6 +151,21 @@ CBUFFER_START(UnityPerMaterial)
     half   _EnvSpecularIntensity;
     half   _EnvSmoothness;
 
+    // ==========================================
+    // 11. Face Specific (臉部專屬特化區塊)
+    // ==========================================
+    float  _group_Face;
+    float  _FaceSimpleMode;
+    half4  _FaceSecondColor;
+    half4  _FaceDarkColor;
+    half   _FaceRampStrength;
+    half4  _FaceShadowColor;
+    half   _FaceShadowStrength;
+    half   _FaceSoftShadow;
+    half4  _FaceSpecularColor;
+    half   _FaceSpecularIntensity;
+    half   _FaceAO_Offset;
+
     // 12. Hair Specific
     float  _group_Hair;
     float4 _HairLineMap_ST;          
@@ -184,6 +199,12 @@ TEXTURE2D(_MaskMap);
 TEXTURE2D(_RaindropMap);
 TEXTURE2D(_HairLineMap);
 TEXTURE2D(_AnisoMap);
+
+// 【新增】：臉部特化專用貼圖
+TEXTURE2D(_FaceColorMask);
+TEXTURE2D(_FaceSDF);
+TEXTURE2D(_FaceLipSpecMask);
+TEXTURE2D(_FaceDiffuseRamp);
 
 SAMPLER(sampler_BaseMap);
 SAMPLER(sampler_DitherMap);
