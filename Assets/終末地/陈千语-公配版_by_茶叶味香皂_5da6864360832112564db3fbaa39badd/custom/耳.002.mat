@@ -28,6 +28,7 @@ Material:
   - _ADD_LIGHT_ON
   - _REFLECTION_ON
   - _TRANSPARENCY_MODE_OPAQUE
+  - _USE_LIGHTING
   - _WEATHER_WETNESS_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -74,19 +75,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FaceColorMask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 4f98d0bb808dba149b474ea279f99e5f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FaceDiffuseRamp:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7dcfe788baad9d244a095e73981f2ec5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FaceLipSpecMask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 023357b6ac06f71468bafe7effcea08d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FaceSDF:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ebc2ccb6250dff449bbc288530f240d8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HairLineMap:
@@ -126,7 +127,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RampMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7dcfe788baad9d244a095e73981f2ec5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SkinFaceDiffuseRamp:
+        m_Texture: {fileID: 2800000, guid: 7dcfe788baad9d244a095e73981f2ec5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -185,11 +190,12 @@ Material:
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
     - _FaceAO_Offset: 0
-    - _FaceRampStrength: 1
-    - _FaceShadowStrength: 1
+    - _FaceRampStrength: 0.6
+    - _FaceShadowStrength: 0.6
     - _FaceSimpleMode: 0
-    - _FaceSoftShadow: 0.2
-    - _FaceSpecularIntensity: 4
+    - _FaceSoftShadow: 0.4
+    - _FaceSpecularIntensity: 1
+    - _FresnelBias: 0
     - _FresnelIntensity: 0
     - _FresnelPower: 2
     - _GlobalPorosity: 1
@@ -250,6 +256,11 @@ Material:
     - _RoughnessNonMetal: 0
     - _ShadowSmoothness: 0.05
     - _ShadowStrength: 0.5
+    - _SkinFaceAO_Offset: 0
+    - _SkinFaceMode: 1
+    - _SkinFaceRampStrength: 1
+    - _SkinFaceShadowStrength: 1
+    - _SkinSpecShininess: 32
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecShininess: 32
@@ -264,9 +275,9 @@ Material:
     - _Transparency_Mode: 0
     - _UVSec: 0
     - _UseInnerRim: 1
-    - _UseLighting: 0
+    - _UseLighting: 1
     - _UseOutline: 0
-    - _UseRampMode: 0
+    - _UseRampMode: 1
     - _UseRimLight: 1
     - _UseWetness: 1
     - _WetDarkenIntensity: 0.5
@@ -290,6 +301,7 @@ Material:
     - _group_OverlayEffects: 0
     - _group_PBR: 0
     - _group_RenderState: 0
+    - _group_SkinFace: 0
     - _group_Weather: 0
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
@@ -300,9 +312,9 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceDarkColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceSecondColor: {r: 0.93333334, g: 0.85882354, b: 0.84313726, a: 1}
+    - _FaceShadowColor: {r: 1, g: 0.8901961, b: 0.8745098, a: 1}
     - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
@@ -320,6 +332,9 @@ Material:
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _ShadowTint: {r: 0.9333333, g: 0.7411765, b: 0.7098039, a: 1}
+    - _SkinFaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _SkinFaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _SkinSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -5082,6 +5082,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GlitterColorTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -5392,6 +5408,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 0
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -5757,6 +5779,7 @@ Material:
     - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -5806,6 +5829,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -5816,6 +5843,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
@@ -6569,6 +6599,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GlitterColorTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -6875,6 +6921,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 0
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -7233,6 +7285,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -7279,6 +7332,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -7289,6 +7346,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -7911,6 +7971,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GlitterColorTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -8221,6 +8297,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 1
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -8584,6 +8666,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -8633,6 +8716,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -8643,6 +8730,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -8854,6 +8944,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -9167,6 +9273,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 1
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -9530,6 +9642,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -9579,6 +9692,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -9589,6 +9706,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -9885,6 +10005,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -10198,6 +10334,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 0
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -10563,6 +10705,7 @@ Material:
     - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -10612,6 +10755,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -10622,6 +10769,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
@@ -10876,6 +11026,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4604596808190663764, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2034439095512163834, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
       propertyPath: m_Name
       value: Chen Sir 1 (1)
@@ -10894,9 +11052,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1177354981}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1177354983}
   m_SourcePrefab: {fileID: 100100000, guid: 1f6bef778f82e314fa0fce42d94d75b6, type: 3}
 --- !u!1 &1177354978 stripped
 GameObject:
@@ -10923,21 +11078,6 @@ MonoBehaviour:
   lightingAnchor: {fileID: 1648152501}
   showGizmos: 1
   gizmoLineLength: 0.5
---- !u!114 &1177354983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1177354978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8fa64f9d0e7944b83c5c658c00e99c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AbyssRenderManager
-  debugMode: 0
-  globalDitherMap: {fileID: 0}
-  globalRaindropMap: {fileID: 0}
 --- !u!1001 &1199106476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11241,6 +11381,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -11554,6 +11710,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 0
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -11917,6 +12079,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -11966,6 +12129,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -11976,6 +12143,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -12186,6 +12356,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -12495,6 +12681,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 0
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -12853,6 +13045,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -12899,6 +13092,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -12909,6 +13106,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -13120,6 +13320,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -13433,6 +13649,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 1
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -13798,6 +14020,7 @@ Material:
     - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -13847,6 +14070,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -13857,6 +14084,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
@@ -14772,6 +15002,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GlitterColorTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -15078,6 +15324,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 1
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -15441,6 +15693,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -15490,6 +15743,10 @@ Material:
     - _EmissionColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -15500,6 +15757,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -15856,6 +16116,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GlitterColorTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -16162,6 +16438,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 0
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -16523,6 +16805,7 @@ Material:
     - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -16569,6 +16852,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -16579,6 +16866,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
@@ -18845,6 +19135,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GlitterColorTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -19155,6 +19461,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 1
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -19518,6 +19830,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -19567,6 +19880,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -19577,6 +19894,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -21371,6 +21691,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GlitterColorTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -21677,6 +22013,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 1
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -22035,6 +22377,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -22081,6 +22424,10 @@ Material:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -22091,6 +22438,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -22530,6 +22880,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GlitterColorTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -22840,6 +23206,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 1
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -23203,6 +23575,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -23252,6 +23625,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -23262,6 +23639,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -23473,6 +23853,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -23786,6 +24182,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 0
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -24151,6 +24553,7 @@ Material:
     - _group_Cloth: 0
     - _group_Debug: 0
     - _group_Env: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -24200,6 +24603,10 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -24210,6 +24617,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _LocalAmbientColor: {r: 1, g: 1, b: 1, a: 1}
@@ -24448,6 +24858,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -24757,6 +25183,12 @@ Material:
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FlipNormal: 1
     - _FresnelIntensity: 0
     - _FresnelPower: 2
@@ -25120,6 +25552,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -25169,6 +25602,10 @@ Material:
     - _EmissionColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
     - _EmissionMap_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GlitterAtras: {r: 1, g: 1, b: 0, a: 0}
     - _GlitterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -25179,6 +25616,9 @@ Material:
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HeadForward: {r: 0, g: 0, b: 1, a: 0}
+    - _HeadRight: {r: 1, g: 0, b: 0, a: 0}
+    - _HeadUp: {r: 0, g: 1, b: 0, a: 0}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDirectionOverride: {r: 0.001, g: 0.002, b: 0.001, a: 0}
     - _Main2ndDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -25364,7 +25804,7 @@ Transform:
   m_GameObject: {fileID: 2100096454}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.826, y: 2.609, z: 0.034}
+  m_LocalPosition: {x: -13.826, y: 2.609, z: -2.316}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25473,51 +25913,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.96200436
       objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Color.g
-      value: 0.99999696
+      value: 0.98100215
       objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Color.r
-      value: 0.9999954
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Intensity
-      value: 0.65250003
+      value: 2.0925188
       objectReference: {fileID: 0}
     - target: {fileID: 1856886144551630733, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_ColorTemperature
-      value: 6000
+      value: 5668.963
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 70.71068
+      value: 67.58477
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 70.71068
+      value: 67.58477
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 29.404057
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6532815
+      value: 0.5108947
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.27059805
+      value: 0.19877881
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6532815
+      value: -0.7794275
       objectReference: {fileID: 0}
     - target: {fileID: 3007458431091494094, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.27059805
+      value: 0.30325952
       objectReference: {fileID: 0}
     - target: {fileID: 4472744084409298626, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25561,15 +26001,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4760604736102711706, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70710677
+      value: 0.594121
       objectReference: {fileID: 0}
     - target: {fileID: 4760604736102711706, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5
+      value: 0.5687795
       objectReference: {fileID: 0}
     - target: {fileID: 4760604736102711706, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5
+      value: -0.5687795
       objectReference: {fileID: 0}
     - target: {fileID: 4760604736102711706, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.z
@@ -25585,7 +26025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: timeOfDay
-      value: 12
+      value: 13.14
       objectReference: {fileID: 0}
     - target: {fileID: 4942246731151181485, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: timeSpeed
@@ -25753,31 +26193,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -70.71068
+      value: -67.58477
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -70.71068
+      value: -67.58477
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -29.404057
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6532815
+      value: 0.7794275
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.27059805
+      value: -0.30325946
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6532815
+      value: 0.5108947
       objectReference: {fileID: 0}
     - target: {fileID: 6027441796551556303, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.27059805
+      value: 0.19877882
       objectReference: {fileID: 0}
     - target: {fileID: 6432653318454308945, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: m_Name
@@ -25785,7 +26225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7922705520976157485, guid: c054b90dda129744cba534729d448eb5, type: 3}
       propertyPath: globalRainIntensity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

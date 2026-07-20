@@ -103,7 +103,7 @@ inline half3 ComputeLighting_Face(AbyssSurfaceData surface, Light mainLight, hal
     
     // 計算最終 SDF 陰影遮罩 (與全域陰影取交集)
     half sdfShadow = min(saturate(lerp(frontShadow, backShadow, channelBlend)), unityShadow);
-    half3 sdfRamp = SAMPLE_TEXTURE2D(_FaceDiffuseRamp, sampler_BaseMap, half2(sdfShadow, 0.5)).rgb;
+    half3 sdfRamp = SAMPLE_TEXTURE2D(_RampMap, sampler_BaseMap, half2(sdfShadow, 0.5)).rgb;
 
     // SDF 亮部混合
     half3 baseSdfLight = baseDiffuseLight * sdfShadow;
@@ -118,7 +118,7 @@ inline half3 ComputeLighting_Face(AbyssSurfaceData surface, Light mainLight, hal
         // 計算標準 Lambert (用於下巴、頸部等非 SDF 區域)
         half NdotL = dot(normalWS, mainLight.direction);
         half halfLambert = min(saturate((NdotL * 0.5 + 0.5) + 0.2), unityShadow);
-        half3 ramp = SAMPLE_TEXTURE2D(_FaceDiffuseRamp, sampler_BaseMap, half2(halfLambert, 0.5)).rgb;
+        half3 ramp = SAMPLE_TEXTURE2D(_RampMap, sampler_BaseMap, half2(halfLambert, 0.5)).rgb;
 
         half3 baseLambertLight = baseDiffuseLight * halfLambert;
         half3 softLightRamp = FaceBlendSoftLight(baseLambertLight, ramp);

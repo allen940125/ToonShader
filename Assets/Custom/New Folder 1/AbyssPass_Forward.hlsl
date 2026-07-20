@@ -136,6 +136,22 @@ half4 frag_forward(Varyings input) : SV_Target
             case 12: // MainLightDistanceAttenuation
                 finalColor = mainLight.distanceAttenuation.xxx;
                 break;
+
+            // ==========================================
+            // 新增：環境光與反射 Debug
+            // ==========================================
+            case 13: // Indirect Diffuse (球諧函數 SH / Light Probe 採樣)
+                // 檢視場景全域照明 (GI) 對模型暗部的基礎染色
+                finalColor = GetIndirectDiffuse(surface.positionWS, surface.normalWS, surface.viewDirWS);
+                break;
+                
+            case 14: // Raw Environment Reflection (原始天空盒 / Reflection Probe 採樣)
+                // 直接輸出物理環境反射，這將直接暴露導致你金屬變藍/變白的元兇
+                half3 reflectDir = reflect(-surface.viewDirWS, surface.normalWS);
+                half perceptualRoughness = 1.0 - surface.smoothness;
+                // 強制讀取未經 Fresnel 或固有色相乘的原始反射訊號
+                finalColor = GlossyEnvironmentReflection(reflectDir, surface.positionWS, perceptualRoughness, 1.0h);
+                break;
         }
     }
 

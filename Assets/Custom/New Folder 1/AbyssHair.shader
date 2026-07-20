@@ -173,10 +173,6 @@ Shader "Abyss/Character/Hair"
         [Sub(Face)] _FaceSpecularIntensity ("Specular Intensity", Range(0, 8)) = 4
         [Sub(Face)] _FaceAO_Offset ("AO Offset", Range(-1, 1)) = 0
         
-        [HideInInspector] _HeadForward ("HeadForward", Vector) = (0, 0, 1, 0)
-        [HideInInspector] _HeadRight ("HeadRight", Vector) = (1, 0, 0, 0)
-        [HideInInspector] _HeadUp ("HeadUp", Vector) = (0, 1, 0, 0)
-        
         // ==========================================
         // 12. Hair Specific (頭髮專屬特化區塊)
         // ==========================================

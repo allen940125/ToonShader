@@ -133,23 +133,23 @@ Shader "Abyss/Character/Cloth"
         [Sub(Weather)] _RaindropScale("Raindrop Scale", Range(0.1, 10.0)) = 2.0
         [Sub(Weather)] _RaindropSpeed("Raindrop Speed", Range(0.0, 5.0)) = 1.0
         
-        // ==========================================
+// ==========================================
         // 10. Cloth Specific (布料專屬特化區塊)
         // ==========================================
-        [Main(Cloth, _, on)] _group_Cloth ("10. Cloth Specific", Float) = 0
-        [Sub(Cloth)] _BaseColorContrast("Base Color Contrast", Range(0.5, 2)) = 1.0
-        [Sub(Cloth)] _GradientColor("Gradient Color", Color) = (1, 1, 1, 1)
-        [Sub(Cloth)] _GradientMinY("Gradient Min Y", Float) = 0.0
-        [Sub(Cloth)] _GradientMaxY("Gradient Max Y", Float) = 1.0
-        [Sub(Cloth)] _RoughnessNonMetal("非金属粗糙度", Range(-1, 1)) = 0
-        [Sub(Cloth)] _RoughnessMetal("金属粗糙度", Range(-1, 1)) = 0
-        [Sub(Cloth)] _RoughnessContrast("粗糙度对比度", Range(0, 2)) = 1.0
-        [Sub(Cloth)] _AOOffset("AO Offset", Range(-1, 1)) = 0
-        [Sub(Cloth)] _AOContrast("AO Contrast", Range(0, 2)) = 1.0
-        [Sub(Cloth)] _SpecShininess("Shininess", Range(2, 500)) = 32
-        [Sub(Cloth)] [HDR] _EnvSpecularColor("环境高光颜色", Color) = (1,1,1,1)
-        [Sub(Cloth)] _EnvSpecularIntensity("环境高光强度", Range(0, 2)) = 0.5
-        [Sub(Cloth)] _EnvSmoothness("环境粗糙度偏移", Range(0, 1)) = 0.5
+        [Main(Cloth, _, on)] _group_Cloth ("10. Cloth Specific (布料專屬特化)", Float) = 0
+        [Sub(Cloth)] _BaseColorContrast("Base Color Contrast (基礎顏色對比度)", Range(0.5, 2)) = 1.0
+        [Sub(Cloth)] _GradientColor("Gradient Color (漸變顏色)", Color) = (1, 1, 1, 1)
+        [Sub(Cloth)] _GradientMinY("Gradient Min Y (漸變最低高度 Y)", Float) = 0.0
+        [Sub(Cloth)] _GradientMaxY("Gradient Max Y (漸變最高高度 Y)", Float) = 1.0
+        [Sub(Cloth)] _RoughnessNonMetal("Non-Metal Roughness Adjust (非金屬粗糙度偏移)", Range(-1, 1)) = 0
+        [Sub(Cloth)] _RoughnessMetal("Metal Roughness Adjust (金屬粗糙度偏移)", Range(-1, 1)) = 0
+        [Sub(Cloth)] _RoughnessContrast("Roughness Contrast (粗糙度對比度)", Range(0, 2)) = 1.0
+        [Sub(Cloth)] _AOOffset("AO Offset (環境遮蔽偏移)", Range(-1, 1)) = 0
+        [Sub(Cloth)] _AOContrast("AO Contrast (環境遮蔽對比度)", Range(0, 2)) = 1.0
+        [Sub(Cloth)] _SpecShininess("Specular Shininess (高光集中度)", Range(2, 500)) = 32
+        [Sub(Cloth)] [HDR] _EnvSpecularColor("Env Specular Color (環境高光顏色)", Color) = (1,1,1,1)
+        [Sub(Cloth)] _EnvSpecularIntensity("Env Specular Intensity (環境高光強度)", Range(0, 2)) = 0.5
+        [Sub(Cloth)] _EnvSmoothness("Env Smoothness Offset (環境平滑度偏移)", Range(0, 1)) = 0.5
         
         // ==========================================
         // 11. Face Specific (臉部專屬特化區塊)
@@ -173,10 +173,6 @@ Shader "Abyss/Character/Cloth"
         [Sub(Face)] [HDR] _FaceSpecularColor ("Specular Color", Color) = (1, 1, 1, 1)
         [Sub(Face)] _FaceSpecularIntensity ("Specular Intensity", Range(0, 8)) = 4
         [Sub(Face)] _FaceAO_Offset ("AO Offset", Range(-1, 1)) = 0
-        
-        [HideInInspector] _HeadForward ("HeadForward", Vector) = (0, 0, 1, 0)
-        [HideInInspector] _HeadRight ("HeadRight", Vector) = (1, 0, 0, 0)
-        [HideInInspector] _HeadUp ("HeadUp", Vector) = (0, 1, 0, 0)
         
         // ==========================================
         // 12. Hair Specific (頭髮專屬特化區塊)

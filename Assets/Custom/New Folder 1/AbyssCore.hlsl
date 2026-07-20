@@ -204,11 +204,12 @@ TEXTURE2D(_AnisoMap);
 TEXTURE2D(_FaceColorMask);
 TEXTURE2D(_FaceSDF);
 TEXTURE2D(_FaceLipSpecMask);
-TEXTURE2D(_FaceDiffuseRamp);
 
 SAMPLER(sampler_BaseMap);
 SAMPLER(sampler_DitherMap);
 SAMPLER(sampler_NormalMap);
+SAMPLER(sampler_FaceSDF);
+
 
 // ==============================================================================
 // 2. 標準化資料總線：AbyssSurfaceData
