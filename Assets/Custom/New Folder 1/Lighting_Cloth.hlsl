@@ -50,7 +50,7 @@ inline half3 ComputeLighting_Cloth(AbyssSurfaceData surface, Light mainLight, ha
         // 如果這個像素被其他物件的陰影遮住 (castShadowMask 接近 0)，
         // 強制讓它去取樣 Ramp 貼圖最左邊的暗部顏色，避免「身在陰影中卻亮著光」的破綻。
         float rampUV = min(halfLambert, castShadowMask);
-        half3 stylizedRamp = SAMPLE_TEXTURE2D(_RampMap, sampler_BaseMap, float2(rampUV, 0.5)).rgb;
+        half3 stylizedRamp = SAMPLE_TEXTURE2D(_RampMap, sampler_LinearClamp, float2(rampUV, 0.5)).rgb;
 
         // 準備被混合的底色 (包含主光顏色)
         half3 blendBase = baseColor * mainLight.color;

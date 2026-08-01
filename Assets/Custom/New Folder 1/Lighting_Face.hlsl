@@ -36,8 +36,8 @@ inline half3 ComputeLighting_Face(AbyssSurfaceData surface, Light mainLight, hal
     // ==========================================
     // 2. 陰影強度與全域混合
     // ==========================================
-    half finalShadowStrength = _FaceShadowStrength;
-    half3 coloredShadow = lerp(_FaceShadowColor.rgb, half3(1.0, 1.0, 1.0), castShadowMask);
+    half finalShadowStrength = _SkinShadowStrength;
+    half3 coloredShadow = lerp(_SkinShadowColor.rgb, half3(1.0, 1.0, 1.0), castShadowMask);
     half3 perObjectShadow = lerp(half3(1.0, 1.0, 1.0), castShadowMask.xxx, finalShadowStrength) * coloredShadow;
 
     // 定義主陰影閥值
@@ -48,37 +48,35 @@ inline half3 ComputeLighting_Face(AbyssSurfaceData surface, Light mainLight, hal
     // ==========================================
     #ifndef _FACE_SIMPLE_MODE
     
-        // 讀取臉部專用 ColorMask (R:第二顏色, G:下巴陰影, B:自我陰影, A:高光)
-        half4 colorMask = SAMPLE_TEXTURE2D(_FaceColorMask, sampler_BaseMap, surface.uv);
+    half4 colorMask = SAMPLE_TEXTURE2D(_FaceColorMask, sampler_BaseMap, surface.uv);
+    half ao = saturate(surface.alpha + _SkinAO_Offset);
         
-        // 注意：原 ZMD 邏輯使用 baseMap.a 作為 AO。此處對齊系統，使用 surface.alpha 代表該資訊
-        half ao = saturate(surface.alpha + _FaceAO_Offset);
-        
-        half secondColorMask = max(colorMask.r, colorMask.g);
-        half jawShadow = colorMask.g;
-        half selfShadowMask = colorMask.b;
-        half specMask = colorMask.a;
+    half secondColorMask = max(colorMask.r, colorMask.g);
+    half jawShadow = colorMask.g;
+    half selfShadowMask = colorMask.b;
+    half specMask = colorMask.a;
 
-        // 計算自陰影遮罩與視角偏移
-        half viewSdfDot = dot(viewDirWS, headForwardDir);
-        half faceViewBlend = smoothstep(0.0, 0.5, viewSdfDot); 
-        half blendedSelfShadowMask = lerp((1.0 - selfShadowMask), (1.0 - jawShadow), faceViewBlend);
+    // 【修正 1】：解除註解，恢復 ZMD 的動態視角遮罩邏輯
+    // 這能確保攝影機轉到側面時，不該出現的陰影會平滑消失
+    half viewSdfDot = dot(viewDirWS, headForwardDir);
+    half faceViewBlend = smoothstep(0.0, 0.5, viewSdfDot); 
+    half blendedSelfShadowMask = lerp((1.0 - selfShadowMask), (1.0 - jawShadow), faceViewBlend);
         
-        half3 shadowAtten = max(perObjectShadow, blendedSelfShadowMask);
+    half3 shadowAtten = max(perObjectShadow, blendedSelfShadowMask);
 
-        // 擴散光與副色混合
-        half3 secondCol = surface.albedo * _FaceSecondColor.rgb;
-        half3 diffuse = lerp(surface.albedo, secondCol, secondColorMask) * _FaceDarkColor.rgb;
+    half3 secondCol = surface.albedo * _SkinSecondColor.rgb;
+    half3 diffuse = lerp(surface.albedo, secondCol, secondColorMask) * _SkinDarkColor.rgb;
 
     #else
         
-        // 簡單模式：跳過遮罩與 AO
-        half3 diffuse = surface.albedo * _FaceDarkColor.rgb;
+    half3 diffuse = surface.albedo * _SkinDarkColor.rgb;
     
     #endif
 
     // 區分暗部與亮部的基礎光能量
-    half3 diffuseDark = diffuse * indirectDiffuse * 1.5;
+    half3 flatAmbient = SampleSH(half3(0, 0, 0));
+    
+    half3 diffuseDark = diffuse * flatAmbient * 1.5;
     half3 baseDiffuseLight = diffuse * mainLight.color;
 
     // ==========================================
@@ -101,14 +99,20 @@ inline half3 ComputeLighting_Face(AbyssSurfaceData surface, Light mainLight, hal
 
     half channelBlend = smoothstep(softShadow, -softShadow, sdf_dot);
     
-    // 計算最終 SDF 陰影遮罩 (與全域陰影取交集)
-    half sdfShadow = min(saturate(lerp(frontShadow, backShadow, channelBlend)), unityShadow);
-    half3 sdfRamp = SAMPLE_TEXTURE2D(_RampMap, sampler_BaseMap, half2(sdfShadow, 0.5)).rgb;
+    // 【修正】：先算出原始的 SDF 遮罩 (0.0 ~ 1.0)
+    half rawSdfShadow = saturate(lerp(frontShadow, backShadow, channelBlend));
+    
+    // 【修正】：讓 SDF 陰影與實體陰影一樣，嚴格受到 _SkinShadowStrength 的控制
+    half controlledSdfShadow = lerp(1.0, rawSdfShadow, finalShadowStrength);
+    
+    // 計算最終陰影遮罩 (SDF 與 實體陰影完美融合，兩者濃度一致)
+    half sdfShadow = min(controlledSdfShadow, unityShadow);
+    half3 sdfRamp = SAMPLE_TEXTURE2D(_RampMap, sampler_LinearClamp, half2(sdfShadow, 0.5)).rgb;
 
     // SDF 亮部混合
     half3 baseSdfLight = baseDiffuseLight * sdfShadow;
     half3 softLightSdfRamp = FaceBlendSoftLight(baseSdfLight, sdfRamp);
-    half3 sdfLight = lerp(baseSdfLight, softLightSdfRamp, _FaceRampStrength);
+    half3 sdfLight = lerp(baseSdfLight, softLightSdfRamp, _RampStrength);
 
     // ==========================================
     // 5. 輸出整合 (含 Lambert 回退與高光)
@@ -118,11 +122,11 @@ inline half3 ComputeLighting_Face(AbyssSurfaceData surface, Light mainLight, hal
         // 計算標準 Lambert (用於下巴、頸部等非 SDF 區域)
         half NdotL = dot(normalWS, mainLight.direction);
         half halfLambert = min(saturate((NdotL * 0.5 + 0.5) + 0.2), unityShadow);
-        half3 ramp = SAMPLE_TEXTURE2D(_RampMap, sampler_BaseMap, half2(halfLambert, 0.5)).rgb;
+        half3 ramp = SAMPLE_TEXTURE2D(_RampMap, sampler_LinearClamp, half2(halfLambert, 0.5)).rgb;
 
         half3 baseLambertLight = baseDiffuseLight * halfLambert;
         half3 softLightRamp = FaceBlendSoftLight(baseLambertLight, ramp);
-        half3 lambertLight = lerp(baseLambertLight, softLightRamp, _FaceRampStrength);
+        half3 lambertLight = lerp(baseLambertLight, softLightRamp, _RampStrength);
 
         // 依據 jawShadow 遮罩，在 SDF 與 Lambert 間過渡
         half3 diffuseLight = lerp(sdfLight, lambertLight, jawShadow);
@@ -133,7 +137,7 @@ inline half3 ComputeLighting_Face(AbyssSurfaceData surface, Light mainLight, hal
         half lightHM = lerp(halfMask, 1.0 - halfMask, LOR);
         half NdotV = max(0, dot(headForwardDir, viewDirWS));
         
-        half fresnel = _FaceSpecularIntensity * saturate(NdotV - 0.75);
+        half fresnel = _SpecularIntensity * saturate(NdotV - 0.75);
         half lipSpecMaskOffset = dot(viewDirWS, headRightDir) * 0.05;
         half2 lipSpecMaskUV = half2(surface.uv.x + lipSpecMaskOffset, surface.uv.y);
         
@@ -141,8 +145,8 @@ inline half3 ComputeLighting_Face(AbyssSurfaceData surface, Light mainLight, hal
         lipSpecMask *= 1.0 - step(sdf_dot, 0.0);
         
         specMask = specMask * lightHM * fresnel * saturate(sdf_dot) + lipSpecMask;
-        half3 final_spec = _FaceSpecularColor.rgb * mainLight.color * specMask * shadowAtten;
-
+        half3 final_spec = _SpecularColor.rgb * mainLight.color * specMask * shadowAtten;
+        //return sdfRamp;
         return final_diff + final_spec;
         
     #else

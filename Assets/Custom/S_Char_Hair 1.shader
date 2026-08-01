@@ -59,9 +59,9 @@ Shader "ZMD/S_Char_Face"
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
             #pragma multi_compile _ _SHADOWS_SOFT
             #pragma shader_feature_local _SIMPLE_MODE
-
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/GlobalSamplers.hlsl"
+            
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/GlobalSamplers.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderVariablesFunctions.hlsl"
@@ -115,6 +115,7 @@ Shader "ZMD/S_Char_Face"
             CBUFFER_END
 
             #define S_CHAR_FORWARD_PASS
+            #include "S_Char_Utils.hlsl"
 
             Varyings vert (Attributes v)
             {
@@ -159,8 +160,11 @@ Shader "ZMD/S_Char_Face"
                 
                 #ifndef _SIMPLE_MODE
                 // 阴影
-                half3 screenShadow = saturate(SamplePerObjectScreenSpaceShadowmap(i.perObjectShadowCoord));
+                // 註解掉 ZMD 的平滑陰影採樣
+                // half3 screenShadow = saturate(SamplePerObjectScreenSpaceShadowmap(i.perObjectShadowCoord));
                 
+                // 強制退回與你目前專案一模一樣的 URP 基礎物理陰影
+                half3 screenShadow = mainLight.shadowAttenuation.xxx;
                 half finalShadowStrength = _Global_ShadowStrength * _ShadowStrength;
                 half3 coloredShadow = lerp(_ShadowColor.rgb, half3(1.0, 1.0, 1.0), screenShadow.x);
                 half3 perObjectShadow = lerp(half3(1.0, 1.0, 1.0), screenShadow, finalShadowStrength) * coloredShadow;
@@ -318,7 +322,8 @@ Shader "ZMD/S_Char_Face"
             HLSLPROGRAM
             #pragma vertex SChar_OutlineVert
             #pragma fragment SChar_OutlineFrag
-            
+
+            #include "S_Char_Utils.hlsl"
             ENDHLSL
         }
         
@@ -330,7 +335,8 @@ Shader "ZMD/S_Char_Face"
             HLSLPROGRAM
             #pragma vertex SChar_ShadowVert
             #pragma fragment SChar_ShadowFrag
-            
+
+            #include "S_Char_Utils.hlsl"
             ENDHLSL
         }
     }

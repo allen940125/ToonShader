@@ -84,6 +84,9 @@ Properties
             
             float4 frag(Varyings input) : SV_Target
             {
+                //float mask = SAMPLE_TEXTURE2D(_StickerMaskTex, sampler_StickerMaskTex, input.uv).r;
+                //return float4(mask, mask, mask, 1);
+                
                 float4 originalColor = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_BlitTexture, input.uv);
                 float centerMask = SAMPLE_TEXTURE2D(_StickerMaskTex, sampler_StickerMaskTex, input.uv).r;
 

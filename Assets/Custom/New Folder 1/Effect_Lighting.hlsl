@@ -8,7 +8,7 @@
 #include "Lighting_Standard.hlsl"   
 #include "Lighting_Cloth.hlsl"
 #include "Lighting_Face.hlsl"
-// #include "Lighting_Skin.hlsl"
+#include "Lighting_Skin.hlsl"
 #include "Lighting_Hair.hlsl"
 
 // ---------------------------------------------------------------
@@ -45,7 +45,7 @@ inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight, hal
         directLighting = ComputeLighting_Cloth(surface, mainLight, indirectDiffuse, castShadowMask);
         
     #elif defined(ABYSS_MATERIAL_SKIN)
-        directLighting = ComputeLighting_Standard(surface, mainLight, indirectDiffuse, castShadowMask); // 暫時 fallback
+        directLighting = ComputeLighting_Skin(surface, mainLight, indirectDiffuse, castShadowMask); // 暫時 fallback
         
     #elif defined(ABYSS_MATERIAL_HAIR)
         directLighting = ComputeLighting_Hair(surface, mainLight, indirectDiffuse, castShadowMask); // 暫時 fallback

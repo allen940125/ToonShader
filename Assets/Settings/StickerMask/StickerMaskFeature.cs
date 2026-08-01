@@ -55,6 +55,8 @@ public class StickerMaskFeature : ScriptableRendererFeature
             UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
             UniversalLightData lightData = frameData.Get<UniversalLightData>();
 
+            UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
+            
             TextureDesc desc = new TextureDesc(
                 cameraData.cameraTargetDescriptor.width,
                 cameraData.cameraTargetDescriptor.height
@@ -73,13 +75,25 @@ public class StickerMaskFeature : ScriptableRendererFeature
             using (var builder = renderGraph.AddRasterRenderPass<PassData>("StickerMaskPass", out var passData))
             {
                 builder.SetRenderAttachment(maskTexture, 0);
+                // 【核心修正】強制作為 Depth Attachment 綁定當前攝影機的場景深度
+                // 確保 Mask 的渲染嚴格遵守場景遮擋，消滅 X-Ray 透視亂畫的問題
+                if (resourceData.activeDepthTexture.IsValid())
+                {
+                    builder.SetRenderAttachmentDepth(resourceData.activeDepthTexture, AccessFlags.Read);
+                }
+
                 builder.AllowPassCulling(false);
+                builder.SetGlobalTextureAfterPass(maskTexture, Shader.PropertyToID(settings.targetTextureName));
 
                 // 【修正核心】使用 Render Graph 專用 API 延長貼圖生命週期並註冊為全域變數
                 builder.SetGlobalTextureAfterPass(maskTexture, Shader.PropertyToID(settings.targetTextureName));
 
                 DrawingSettings drawSettings = RenderingUtils.CreateDrawingSettings(
                     new ShaderTagId("UniversalForward"), renderingData, cameraData, lightData, cameraData.defaultOpaqueSortFlags);
+                drawSettings.SetShaderPassName(1, new ShaderTagId("UniversalForwardOnly"));
+                drawSettings.SetShaderPassName(2, new ShaderTagId("LightweightForward"));
+                drawSettings.SetShaderPassName(3, new ShaderTagId("SRPDefaultUnlit")); // 捕捉 SG Unlit 的關鍵
+                
                 drawSettings.overrideMaterial = settings.overrideMaterial;
                 FilteringSettings filterSettings = new FilteringSettings(RenderQueueRange.opaque, settings.layerMask);
                 

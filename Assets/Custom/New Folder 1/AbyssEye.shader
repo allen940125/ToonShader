@@ -1,4 +1,4 @@
-Shader "Abyss/Character/Skin"
+Shader "Abyss/Character/Eye"
 {
     Properties
     {
@@ -156,7 +156,7 @@ Shader "Abyss/Character/Skin"
     
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
+        Tags { "RenderType" = "Transparent" "Queue" = "Transparent+1" "RenderPipeline" = "UniversalPipeline" }
 
         // ---- Pass 1: Forward ----
         Pass

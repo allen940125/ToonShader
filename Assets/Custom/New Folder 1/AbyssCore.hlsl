@@ -155,16 +155,21 @@ CBUFFER_START(UnityPerMaterial)
     // 11. Face Specific (臉部專屬特化區塊)
     // ==========================================
     float  _group_Face;
+    float  _group_Skin;
+
+    half4  _SkinSecondColor;
+    half4  _SkinDarkColor;
+    half4  _SkinShadowColor;
+    half   _SkinShadowStrength;
+    half   _SkinAO_Offset;
+
     float  _FaceSimpleMode;
-    half4  _FaceSecondColor;
-    half4  _FaceDarkColor;
-    half   _FaceRampStrength;
-    half4  _FaceShadowColor;
-    half   _FaceShadowStrength;
     half   _FaceSoftShadow;
-    half4  _FaceSpecularColor;
-    half   _FaceSpecularIntensity;
-    half   _FaceAO_Offset;
+
+    half   _FresnelBias;        // Skin 專屬
+    half   _FresnelIntensity;   // Skin 專屬
+    half   _FresnelPower;       // Skin 專屬
+    half   _SkinSpecShininess;      // Skin 專屬
 
     // 12. Hair Specific
     float  _group_Hair;

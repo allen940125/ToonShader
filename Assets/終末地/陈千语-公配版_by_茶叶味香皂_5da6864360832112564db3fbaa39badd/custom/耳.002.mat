@@ -38,7 +38,7 @@ Material:
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties: _FaceLipSpecMask
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -154,6 +154,7 @@ Material:
     m_Floats:
     - _AOContrast: 1
     - _AOOffset: 0
+    - _AO_Offset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -238,8 +239,8 @@ Material:
     - _RaindropSpeed: 1
     - _RampLightIntensity: 1
     - _RampShadowIntensity: 1
-    - _RampStrength: 1
-    - _ReceiveShadowIntensity: 1
+    - _RampStrength: 0.6
+    - _ReceiveShadowIntensity: 0.7
     - _ReceiveShadows: 1
     - _ReflectionIntensity: 1
     - _ReflectionOn: 1
@@ -256,17 +257,20 @@ Material:
     - _RoughnessNonMetal: 0
     - _ShadowSmoothness: 0.05
     - _ShadowStrength: 0.5
+    - _SkinAO_Offset: 0.1
     - _SkinFaceAO_Offset: 0
     - _SkinFaceMode: 1
     - _SkinFaceRampStrength: 1
     - _SkinFaceShadowStrength: 1
+    - _SkinShadowStrength: 0.5
     - _SkinSpecShininess: 32
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
+    - _SoftShadow: 0.2
     - _SpecShininess: 32
     - _SpecularFeather: 0.1
     - _SpecularHighlights: 1
-    - _SpecularIntensity: 0.2
+    - _SpecularIntensity: 1
     - _SpecularStep: 0.8
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
@@ -310,6 +314,7 @@ Material:
     - _BorderColor: {r: 1, g: 0.3, b: 0.1, a: 1}
     - _BounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FaceDarkColor: {r: 1, g: 1, b: 1, a: 1}
@@ -330,11 +335,14 @@ Material:
     - _RampColorLight: {r: 1, g: 0.95, b: 0.85, a: 1}
     - _RampColorShadow: {r: 0.54999995, g: 0.6, b: 0.7, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _ShadowTint: {r: 0.9333333, g: 0.7411765, b: 0.7098039, a: 1}
+    - _SkinDarkColor: {r: 0.8980392, g: 0.7176471, b: 0.6627451, a: 1}
     - _SkinFaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _SkinFaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _SkinSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SkinSecondColor: {r: 0.9333333, g: 0.8588235, b: 0.8431373, a: 1}
+    - _SkinShadowColor: {r: 1, g: 0.8901961, b: 0.8745098, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -28,6 +28,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AnisoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 432cc5b8a6150474d9ee2444ae2616c2, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -53,6 +57,26 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -110,6 +134,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AOContrast: 1
+    - _AOOffset: 0
     - _AddLightIntensity: 1
     - _AddLightOn: 1
     - _AddPrecomputedVelocity: 0
@@ -121,6 +147,7 @@ Material:
     - _AnisoPower: 64
     - _BandSmoothness: 0.05
     - _BandThreshold: 0.5
+    - _BaseColorContrast: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BorderIntensity: 1
@@ -140,14 +167,39 @@ Material:
     - _DitherThreshold: 0.5
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _EnvSmoothness: 0.5
+    - _EnvSpecularIntensity: 0.5
     - _EnvironmentReflections: 1
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FresnelIntensity: 0
     - _FresnelPower: 2
     - _GlobalPorosity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.7648304
     - _GlossyReflections: 1
+    - _GradientMaxY: 1
+    - _GradientMinY: 0
+    - _HairAOOffset: 0
+    - _HairAnisoNoise: 1
+    - _HairAnisoOffset: 0
+    - _HairAnisoPosition: 0.15
+    - _HairAnisoShininess: 400
+    - _HairCutOffset: 0
+    - _HairEnvSmoothness: 0.5
+    - _HairEnvSpecularIntensity: 0.5
+    - _HairSpecularIntensity: 1
+    - _HairSpecularOffset: 0.5
+    - _HairTopLightIntensity: 10
+    - _HairTopLightOffset: 0
     - _IndirectLightMultiplier: 1
+    - _InnerRimBias: 0
+    - _InnerRimIntensity: 1
+    - _InnerRimPower: 3
     - _LocalWetness: 1
     - _MainLightColorWeight: 1
     - _MainLightMultiplier: 1
@@ -165,17 +217,26 @@ Material:
     - _RaindropSpeed: 1
     - _RampLightIntensity: 1
     - _RampShadowIntensity: 1
+    - _RampStrength: 1
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
     - _ReflectionIntensity: 1
     - _ReflectionOn: 1
+    - _RimDirSoftness: 0.5
+    - _RimIntensity: 1
+    - _RimOffsetMul: 0.01
+    - _RimPosOffset: 0
     - _RimPower: 3
     - _RimShadowMask: 1
     - _RimSmoothness: 0.05
     - _RimThreshold: 0.5
+    - _RoughnessContrast: 1
+    - _RoughnessMetal: 0
+    - _RoughnessNonMetal: 0
     - _ShadowSmoothness: 0.05
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SpecShininess: 32
     - _SpecularFeather: 0.1
     - _SpecularHighlights: 1
     - _SpecularIntensity: 0.2
@@ -185,6 +246,7 @@ Material:
     - _Surface: 0
     - _Transparency_Mode: 0
     - _UVSec: 0
+    - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseOutline: 0
     - _UseRampMode: 0
@@ -201,7 +263,10 @@ Material:
     - _ZWrite: 1
     - _group_BaseSurface: 0
     - _group_CelShading: 0
+    - _group_Cloth: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
+    - _group_Hair: 0
     - _group_Highlights: 0
     - _group_Lighting: 0
     - _group_OverlayEffects: 0
@@ -216,7 +281,18 @@ Material:
     - _BounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
+    - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RampColorLight: {r: 1, g: 0.95, b: 0.85, a: 1}
     - _RampColorShadow: {r: 0.54999995, g: 0.6, b: 0.7, a: 1}

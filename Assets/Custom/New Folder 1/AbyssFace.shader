@@ -132,77 +132,25 @@ Shader "Abyss/Character/Face"
         [Sub(Weather)] _WetNormalFlatten("Normal Flatten", Range(0, 1)) = 0.5
         [Sub(Weather)] _RaindropScale("Raindrop Scale", Range(0.1, 10.0)) = 2.0
         [Sub(Weather)] _RaindropSpeed("Raindrop Speed", Range(0.0, 5.0)) = 1.0
-        
-        // ==========================================
-        // 10. Cloth Specific (布料專屬特化區塊)
-        // ==========================================
-        [Main(Cloth, _, on)] _group_Cloth ("10. Cloth Specific", Float) = 0
-        [Sub(Cloth)] _BaseColorContrast("Base Color Contrast", Range(0.5, 2)) = 1.0
-        [Sub(Cloth)] _GradientColor("Gradient Color", Color) = (1, 1, 1, 1)
-        [Sub(Cloth)] _GradientMinY("Gradient Min Y", Float) = 0.0
-        [Sub(Cloth)] _GradientMaxY("Gradient Max Y", Float) = 1.0
-        [Sub(Cloth)] _RoughnessNonMetal("非金属粗糙度", Range(-1, 1)) = 0
-        [Sub(Cloth)] _RoughnessMetal("金属粗糙度", Range(-1, 1)) = 0
-        [Sub(Cloth)] _RoughnessContrast("粗糙度对比度", Range(0, 2)) = 1.0
-        [Sub(Cloth)] _AOOffset("AO Offset", Range(-1, 1)) = 0
-        [Sub(Cloth)] _AOContrast("AO Contrast", Range(0, 2)) = 1.0
-        [Sub(Cloth)] _SpecShininess("Shininess", Range(2, 500)) = 32
-        [Sub(Cloth)] [HDR] _EnvSpecularColor("环境高光颜色", Color) = (1,1,1,1)
-        [Sub(Cloth)] _EnvSpecularIntensity("环境高光强度", Range(0, 2)) = 0.5
-        [Sub(Cloth)] _EnvSmoothness("环境粗糙度偏移", Range(0, 1)) = 0.5
-        
-        // ==========================================
-        // 10. Face Specific (臉部專屬特化區塊)
-        // ==========================================
-        [Main(Face, _, off)] _group_Face ("10. Face Specific (臉部特化參數)", Float) = 0
-        [SubToggle(Face, _FACE_SIMPLE_MODE)] _FaceSimpleMode ("Simple Mode", Float) = 0
 
-        // 臉部專屬貼圖 (Texture 不進入 CBUFFER)
+        // ==========================================
+        // 11. Face Specific (臉部專屬特化區塊)
+        // ==========================================
+        [Main(Face, _, off)] _group_Face ("11. Face Specific (臉部特化參數)", Float) = 0
+        [SubToggle(Face, _FACE_SIMPLE_MODE)] _FaceSimpleMode ("Simple Mode", Float) = 0
+        
         [Sub(Face)] [NoScaleOffset] _FaceColorMask ("Color Mask (R:2nd, G:Jaw, B:SelfShadow, A:Spec)", 2D) = "white" {}
         [Sub(Face)] [NoScaleOffset] _FaceSDF ("SDF Map", 2D) = "white" {}
         [Sub(Face)] [NoScaleOffset] _FaceLipSpecMask ("Lip Specular Mask", 2D) = "white" {}
+        
+        [Sub(Face)] [HDR] _SkinSecondColor ("Second Color", Color) = (0.9333333, 0.8588235, 0.8431373, 1)
+        [Sub(Face)] [HDR] _SkinDarkColor ("Dark Color", Color) = (1, 1, 1, 1)
+        
+        [Sub(Face)] [HDR] _SkinShadowColor ("Shadow Color", Color) = (1, 0.8901961, 0.8745098, 1)
+        [Sub(Face)] _SkinShadowStrength ("Shadow Strength", Range(0, 1)) = 1.0
+        [Sub(Face)] _FaceSoftShadow ("Soft Shadow", Range(0, 1)) = 0.2
 
-        // 共用變數 (顯示名稱為 Face 專屬，變數名稱與 Skin 統一)
-        [Sub(Face)] [HDR] _SecondColor ("Face Second Color (副色/面紋)", Color) = (1, 1, 1, 1)
-        [Sub(Face)] [HDR] _DarkColor ("Dark Color (暗部基底色)", Color) = (0.5, 0.5, 0.5, 1)
-        [Sub(Face)] _RampStrength ("NPR Ramp Strength", Range(0, 1)) = 1.0
-        
-        [Sub(Face)] [HDR] _ShadowColor ("Shadow Color", Color) = (0.5, 0.5, 0.5, 1)
-        [Sub(Face)] _ShadowStrength ("Shadow Strength", Range(0, 1)) = 1.0
-        [Sub(Face)] _SoftShadow ("Soft Shadow (SDF 羽化度)", Range(0, 1)) = 0.2 // 臉部專屬純數值
-        
-        [Sub(Face)] [HDR] _SpecularColor ("Face Specular Color", Color) = (1, 1, 1, 1)
-        [Sub(Face)] _SpecularIntensity ("Face Specular Intensity", Range(0, 8)) = 4
-        [Sub(Face)] _AO_Offset ("Face AO Offset", Range(-1, 1)) = 0
-        
-        // ==========================================
-        // 12. Hair Specific (頭髮專屬特化區塊)
-        // ==========================================
-        [Main(Hair, _, off)] _group_Hair ("12. Hair Specific (頭髮特化參數)", Float) = 0
-        
-        [Sub(Hair)] [NoScaleOffset] _HairLineMap ("HairLine Map (髮絲紋理)", 2D) = "white" {}
-        [Sub(Hair)] [NoScaleOffset] _AnisoMap ("Aniso Noise Map (高光噪點)", 2D) = "white" {}
-        
-        [Sub(Hair)] [HDR] _HairSecondColor ("Second Color (髮絲副色)", Color) = (1, 1, 1, 1)
-        [Sub(Hair)] [HDR] _HairTopLightColor ("Top Light Color (頂光顏色)", Color) = (1, 1, 1, 1)
-        [Sub(Hair)] _HairTopLightOffset ("Top Light Offset", Range(-1, 1)) = 0
-        [Sub(Hair)] _HairTopLightIntensity ("Top Light Intensity", Range(0, 100)) = 10
-        
-        [Sub(Hair)] _HairAOOffset ("AO Offset", Range(-1, 1)) = 0
-        
-        [Sub(Hair)] [HDR] _HairSpecularColor ("Specular Color (天使環顏色)", Color) = (1, 1, 1, 1)
-        [Sub(Hair)] _HairSpecularOffset ("Specular Offset (高光範圍偏移)", Range(0, 1)) = 0.5
-        [Sub(Hair)] _HairSpecularIntensity ("Specular Intensity", Float) = 1
-        
-        [Sub(Hair)] _HairAnisoNoise ("Aniso Noise Strength", Float) = 1
-        [Sub(Hair)] _HairAnisoShininess ("Aniso Shininess", Range(0, 1000)) = 400
-        [Sub(Hair)] _HairAnisoOffset ("Aniso Offset (天使環高度)", Float) = 0
-        [Sub(Hair)] _HairAnisoPosition ("Aniso Position", Float) = 0.15
-        [Sub(Hair)] _HairCutOffset ("Cut Offset (斷層高光偏移)", Float) = 0
-        
-        [Sub(Hair)] [HDR] _HairEnvSpecularColor ("Env Specular Color", Color) = (1, 1, 1, 1)
-        [Sub(Hair)] _HairEnvSpecularIntensity ("Env Specular Intensity", Range(0, 2)) = 0.5
-        [Sub(Hair)] _HairEnvSmoothness ("Env Smoothness", Range(0, 1)) = 0.5
+        [Sub(Face)] _SkinAO_Offset ("AO Offset", Range(-1, 1)) = 0
     }
     
     SubShader
