@@ -83,8 +83,8 @@ namespace UnityEngine.Rendering.Universal
         private class PassData
         {
             public PerObjectScreenSpaceShadowsPass pass;
-            public UniversalCameraData cameraData;
-            public UniversalResourceData resourceData;
+            public TextureHandle cameraDepthTarget; // 提前抓好的深度圖把手
+            public Matrix4x4 gpuVPInverse;          // 提前算好的逆矩陣
         }
 
         // 全新 Unity 6.4 進入點：RecordRenderGraph
@@ -120,27 +120,36 @@ namespace UnityEngine.Rendering.Universal
                 m_ResolvedScreenSpaceShadowMapTexture = null;
             }
 
+            // --- 【核心修正 1】：在宣告期提前算好逆矩陣與取得深度圖 ---
+            Matrix4x4 viewMatrix = cameraData.GetViewMatrix();
+            Matrix4x4 projectionMatrix = cameraData.GetProjectionMatrix();
+            Matrix4x4 gpuVP = GL.GetGPUProjectionMatrix(projectionMatrix, false) * viewMatrix;
+
             // --- 建立相容舊版 CommandBuffer 的 UnsafePass ---
             using (var builder = renderGraph.AddUnsafePass<PassData>("PerObjectScreenSpaceShadow", out var passData))
             {
                 passData.pass = this;
-                passData.cameraData = cameraData;
-                passData.resourceData = resourceData;
+                passData.cameraDepthTarget = resourceData.activeDepthTexture; // 提前儲存
+                passData.gpuVPInverse = gpuVP.inverse;                        // 提前儲存
                 
-                // 強制執行，防止被 RenderGraph 誤判剔除
                 builder.AllowPassCulling(false);
 
-                // 將執行權限交回給 CommandBuffer
+                // 【核心修正 2】：必須向管線宣告我們要讀寫這張深度圖
+                if (passData.cameraDepthTarget.IsValid())
+                {
+                    builder.UseTexture(passData.cameraDepthTarget, AccessFlags.ReadWrite);
+                }
+
                 builder.SetRenderFunc((PassData data, UnsafeGraphContext context) =>
                 {
                     CommandBuffer cmd = CommandBufferHelpers.GetNativeCommandBuffer(context.cmd);
-                    data.pass.ExecuteLegacy(cmd, data.cameraData, data.resourceData);
+                    data.pass.ExecuteLegacy(cmd, data); // 參數簡化，只傳遞 data
                 });
             }
         }
 
         // 將你原本的 Execute 改名為 ExecuteLegacy，並由 RenderGraph 呼叫
-        private void ExecuteLegacy(CommandBuffer cmd, UniversalCameraData cameraData, UniversalResourceData resourceData)
+        private void ExecuteLegacy(CommandBuffer cmd, PassData data)
         {
             using (new ProfilingScope(cmd, s_ProfilingSampler))
             {
@@ -149,17 +158,17 @@ namespace UnityEngine.Rendering.Universal
 
                 bool didDraw = false;
                 
-                // 【核心修正】：Unity 6.4 取得相機深度的最新做法 (取代舊的 cameraDepthTargetHandle)
-                RTHandle cameraDepthTarget = resourceData.activeDepthTexture;
+                // 直接使用宣告期取得的資料，不再向 resourceData 索取
+                if (data.cameraDepthTarget.IsValid())
+                {
+                    cmd.SetRenderTarget(m_ScreenSpaceShadowMapTexture, data.cameraDepthTarget);
+                }
+                else
+                {
+                    cmd.SetRenderTarget(m_ScreenSpaceShadowMapTexture);
+                }
                 
-                cmd.SetRenderTarget(m_ScreenSpaceShadowMapTexture, cameraDepthTarget);
                 cmd.ClearRenderTarget(false, true, Color.white);
-
-                // 【核心修正】：將 renderingData.cameraData 簡化為直接呼叫 cameraData
-                Matrix4x4 viewMatrix = cameraData.GetViewMatrix();
-                Matrix4x4 projectionMatrix = cameraData.GetProjectionMatrix();
-                Matrix4x4 gpuVP = GL.GetGPUProjectionMatrix(projectionMatrix, false) * viewMatrix;
-                cmd.SetGlobalMatrix("UNITY_MATRIX_I_VP", gpuVP.inverse);
 
                 int envVolumePassIndex = m_ShadowMaterial.FindPass("PerObjectShadowVolume_Env");
                 int envAllVolumePassIndex = m_ShadowMaterial.FindPass("PerObjectShadowVolume_EnvAll");

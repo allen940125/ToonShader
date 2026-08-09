@@ -17,8 +17,9 @@ namespace UnityEngine.Rendering.Universal
         private class PassData
         {
             public PerObjectTransparentDepthPass pass;
-            public RendererListHandle rendererList;  // 【核心變更】：Unity 6 繪製物件的專用 Handle
-            public RTHandle cameraDepthTarget;
+            public RendererListHandle rendererList1; // 第一枚代幣
+            public RendererListHandle rendererList2; // 第二枚代幣
+            public TextureHandle cameraDepthTarget;
         }
 
         // ==============================================================
@@ -43,26 +44,35 @@ namespace UnityEngine.Rendering.Universal
 
             RenderingUtils.ReAllocateIfNeeded(ref m_TransparentDepthTexture, descriptor, FilterMode.Point, TextureWrapMode.Clamp, name: "_PerObjectTransparentDepthTexture");
 
-            // --- 2. 【核心變更】：向 Render Graph 註冊要繪製的物件清單 (RendererList) ---
+            // --- 2. 向 Render Graph 註冊兩張獨立的繪製清單 ---
             SortingCriteria sortingCriteria = SortingCriteria.CommonTransparent;
             DrawingSettings drawingSettings = CreateDrawingSettings(s_ShaderTagId, renderingData, cameraData, lightData, sortingCriteria);
             FilteringSettings filteringSettings = new FilteringSettings(RenderQueueRange.transparent);
             
             RendererListParams rlParams = new RendererListParams(renderingData.cullResults, drawingSettings, filteringSettings);
-            RendererListHandle rendererList = renderGraph.CreateRendererList(rlParams);
+            
+            // 【核心修正】：為兩次 Draw 申請兩枚獨立的代幣
+            RendererListHandle rendererList1 = renderGraph.CreateRendererList(rlParams);
+            RendererListHandle rendererList2 = renderGraph.CreateRendererList(rlParams);
 
             // --- 3. 建立 UnsafePass ---
             using (var builder = renderGraph.AddUnsafePass<PassData>("PerObjectTransparentDepth", out var passData))
             {
                 passData.pass = this;
-                passData.rendererList = rendererList;
-                passData.cameraDepthTarget = resourceData.activeDepthTexture; // 抓取主攝影機的深度圖
+                passData.rendererList1 = rendererList1;
+                passData.rendererList2 = rendererList2;
+                passData.cameraDepthTarget = resourceData.activeDepthTexture; 
                 
-                // 必須宣告使用這個 RendererList，否則 GPU 會剔除它
-                builder.UseRendererList(rendererList);
+                // 【核心修正】：必須向系統宣告這兩枚代幣都會被使用
+                builder.UseRendererList(rendererList1);
+                builder.UseRendererList(rendererList2);
                 builder.AllowPassCulling(false);
 
-                // 移交執行權
+                if (passData.cameraDepthTarget.IsValid())
+                {
+                    builder.UseTexture(passData.cameraDepthTarget, AccessFlags.Write);
+                }
+
                 builder.SetRenderFunc((PassData data, UnsafeGraphContext context) =>
                 {
                     CommandBuffer cmd = CommandBufferHelpers.GetNativeCommandBuffer(context.cmd);
@@ -78,21 +88,18 @@ namespace UnityEngine.Rendering.Universal
         {
             using (new ProfilingScope(cmd, s_ProfilingSampler))
             {
-                // 第一次繪製：畫到我們專屬的透明深度圖上
+                // 第一次繪製：消耗第一枚代幣
                 cmd.SetRenderTarget(m_TransparentDepthTexture);
                 cmd.ClearRenderTarget(true, true, Color.black);
-                
-                // 【核心變更】：Unity 6 中只能透過 context.cmd 呼叫 DrawRendererList
-                context.cmd.DrawRendererList(data.rendererList);
+                context.cmd.DrawRendererList(data.rendererList1); // 使用 rendererList1
 
-                // 全域廣播變數，讓 Eye Shader 可以讀取
                 cmd.SetGlobalTexture(s_TransparentDepthTextureID, m_TransparentDepthTexture.nameID);
 
-                // 第二次繪製：忠實還原你原始腳本的邏輯，將透明深度再次寫回主攝影機深度圖
-                if (data.cameraDepthTarget != null)
+                // 第二次繪製：消耗第二枚代幣
+                if (data.cameraDepthTarget.IsValid())
                 {
                     cmd.SetRenderTarget(data.cameraDepthTarget);
-                    context.cmd.DrawRendererList(data.rendererList);
+                    context.cmd.DrawRendererList(data.rendererList2); // 使用 rendererList2
                 }
             }
         }

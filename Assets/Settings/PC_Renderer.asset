@@ -1,5 +1,109 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4160301050765166445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948e01a14d927ea48bdf6e8444b472b4, type: 3}
+  m_Name: PerObjectShadowFeature
+  m_EditorClassIdentifier: Assembly-CSharp::UnityEngine.Rendering.Universal.PerObjectShadowFeature
+  m_Active: 1
+  maxShadowObjects: 16
+  drawDistance: 100
+  useColliderBounds: 1
+  shadowCasterPassTiming: 0
+  screenSpacePassTiming: 1
+  environmentShadow:
+    enabled: 1
+    shadowMapResolution: 2048
+    shadowType: 1
+    useRamp: 0
+    rampIntensity: 1
+    shadowGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: -1
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    bakedRampTex: {fileID: 0}
+    pcfQuality: 1
+    depthBias: 1
+    normalBias: 1
+    farPlaneScale: 5
+  selfShadow:
+    enabled: 1
+    shadowMapResolution: 1024
+    shadowType: 1
+    useRamp: 0
+    rampIntensity: 1
+    shadowGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: -1
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    bakedRampTex: {fileID: 0}
+    pcfQuality: 1
+    depthBias: 1
+    normalBias: 1
+    minPitch: 30
+    maxPitch: 35
+    farPlaneScale: 0.5
+    followCamera: 1
+    followCameraOrthoSizeScale: 1
 --- !u!114 &-991325899698174730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +173,8 @@ MonoBehaviour:
   - {fileID: 8474706455451170373}
   - {fileID: 3910573082915692011}
   - {fileID: -248842559729091628}
-  m_RendererFeatureMap: ad6b866f10d7b46cd65c568f42567f050f96cb601a963a614576e0cc9e349c75ebdd64f37f254536d43b59a602ef8bfc
+  - {fileID: -4160301050765166445}
+  m_RendererFeatureMap: ad6b866f10d7b46cd65c568f42567f050f96cb601a963a614576e0cc9e349c75ebdd64f37f254536d43b59a602ef8bfc9338758e3ca443c6
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
