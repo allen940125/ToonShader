@@ -134,38 +134,49 @@ Shader "Abyss/Character/Eye"
         [Sub(Weather)] _RaindropSpeed("Raindrop Speed", Range(0.0, 5.0)) = 1.0
         
         // ==========================================
-        // 10. Skin Specific (皮膚專屬特化區塊)
+        // 10. Eye Specific (眼球專屬特化區塊)
         // ==========================================
-        [Main(Skin, _, off)] _group_Skin ("10. Skin Specific (皮膚特化參數)", Float) = 0
-
-        // 共用變數
-        [Sub(Skin)] [HDR] _SkinSecondColor ("Fresnel Tint (邊緣透光色)", Color) = (1, 1, 1, 1)
-        [Sub(Skin)] [HDR] _SkinDarkColor ("Dark Color (暗部基底色)", Color) = (0.5, 0.5, 0.5, 1)
+        [Main(Eye, _, off)] _group_Eye ("10. Eye Specific (眼球特化參數)", Float) = 0
         
-        [Sub(Skin)] [HDR] _SkinShadowColor ("Shadow Color", Color) = (0.5, 0.5, 0.5, 1)
-        [Sub(Skin)] _SkinShadowStrength ("Shadow Strength", Range(0, 1)) = 1.0
+        [Sub(Eye)] _SphereMaskRange ("SphereMask Range (球體遮罩範圍)", Range(0, 5)) = 1.0
+        [Sub(Eye)] _Parallax ("Parallax (視差偏移深度)", Range(0, 0.1)) = 0.02
 
-        // 皮膚專屬變數
-        [Sub(Skin)] _FresnelBias ("Fresnel Bias", Range(0, 1)) = 0
-        [Sub(Skin)] _FresnelIntensity ("Fresnel Intensity", Range(0, 5)) = 1
-        [Sub(Skin)] _FresnelPower ("Fresnel Power", Range(1, 10)) = 3
-        [Sub(Skin)] _SpecShininess ("Specular Shininess (高光範圍)", Range(2, 100)) = 32
-
-        [Sub(Skin)] _SkinAO_Offset ("Skin AO Offset", Range(-1, 1)) = 0 // 共用變數
+        [Sub(Eye)] _MatCapIntensity1 ("MatCap Intensity", Range(0, 5)) = 1.0
+        
+        // 供後續實作頭髮遮擋用的參數 (先保留宣告，以防報錯)
+        [Sub(Eye)] _HairDepthFade ("Hair Depth Fade", Range(0, 1)) = 0.5
+        [Sub(Eye)] _HairOcclusionColor ("Hair Occlusion Color", Color) = (0, 0, 0, 1)
+        [Sub(Eye)] _HairOcclusionAlpha ("Hair Occlusion Alpha", Range(0, 1)) = 0.5
+        [Sub(Eye)] _StencilEyebrowRef ("Stencil Eyebrow Ref (Bitmask)", Float) = 128
     }
     
     SubShader
     {
+        // 定義透明渲染佇列
         Tags { "RenderType" = "Transparent" "Queue" = "Transparent+1" "RenderPipeline" = "UniversalPipeline" }
 
-        // ---- Pass 1: Forward ----
+        // ---- 唯一的 Pass：Forward ----
         Pass
         {
             Name "ForwardLit"
             Tags { "LightMode" = "UniversalForward" }
-            Cull [_CullMode]
             
-            HLSLPROGRAM
+            // 開啟透明混合，關閉深度寫入
+            Blend SrcAlpha OneMinusSrcAlpha
+            ZWrite Off
+            Cull [_CullMode]
+
+            // 加入眼球與眉毛層級的 Stencil 遮罩
+            Stencil
+            {
+                Ref [_StencilEyebrowRef] 
+                ReadMask [_StencilEyebrowRef]
+                WriteMask [_StencilEyebrowRef]
+                Comp NotEqual
+                Pass Replace
+            }
+            
+           HLSLPROGRAM
                 #pragma target 3.5
                 #pragma multi_compile_instancing
 
@@ -175,91 +186,19 @@ Shader "Abyss/Character/Eye"
                 #pragma multi_compile_fragment _ _SHADOWS_SOFT
                 #pragma multi_compile _ LIGHTMAP_ON
                 #pragma multi_compile _ PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
-                #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
 
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
+                // 【必須補回的編譯巨集橋樑】
                 #pragma shader_feature_local _USE_LIGHTING
                 #pragma shader_feature_local _ADD_LIGHT_ON
-                #pragma shader_feature_local _REFLECTION_ON
+                // (如果你的眼球需要受天氣系統影響，也可將 _WEATHER_WETNESS_ON 補回)
 
-                #pragma shader_feature_local _WEATHER_WETNESS_ON
-
-                // 【系統變數切換】
-                #define ABYSS_MATERIAL_SKIN
+                #define ABYSS_MATERIAL_EYE
                 
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_forward
                 #pragma fragment frag_forward
                 
-                #include "AbyssPass_Forward.hlsl"
+                #include "AbyssPass_Eye_Forward.hlsl"
             ENDHLSL
-        }
-
-        // ---- Pass 2: Outline ----
-        Pass
-        {
-            Name "Outline"
-            Cull Front
-            Tags { "LightMode" = "AbyssOutline" }
-            HLSLPROGRAM
-                #pragma target 3.5
-                #pragma multi_compile_instancing
-
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
-                #pragma shader_feature_local _USE_OUTLINE
-
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
-                #pragma vertex vert_outline
-                #pragma fragment frag_outline
-
-                #include "AbyssPass_Outline.hlsl"
-            ENDHLSL
-        }
-
-        // ---- Pass 3: ShadowCaster ----
-        Pass
-        {
-            Name "ShadowCaster"
-            Tags { "LightMode" = "ShadowCaster" }
-            ColorMask 0
-            Cull Back
-            
-            HLSLPROGRAM
-                #pragma target 3.5
-                #pragma multi_compile_instancing
-
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
-
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
-                #pragma vertex vert_shadow
-                #pragma fragment frag_shadow
-                
-                #include "AbyssPass_Shadow.hlsl"
-            ENDHLSL
-        }
-
-        // ---- Pass 4: DepthOnly ----
-        Pass
-        {
-            Name "DepthNormals"
-            Tags { "LightMode" = "DepthNormals" }
-            Cull [_CullMode]
-            
-            ZWrite On
-            ZTest LEqual
-            
-           HLSLPROGRAM
-                #pragma target 3.5
-                #pragma multi_compile_instancing
-
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
-
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
-                #pragma vertex vert_depth
-                #pragma fragment frag_depth
-                
-                #include "AbyssPass_Depth.hlsl"
-           ENDHLSL
         }
     }
 

@@ -50,6 +50,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FaceColorMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceDiffuseRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceLipSpecMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceSDF:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _HairLineMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -101,6 +117,12 @@ Material:
     - _DitherThreshold: 0.5
     - _EnvSmoothness: 0.5
     - _EnvSpecularIntensity: 0.5
+    - _FaceAO_Offset: 0
+    - _FaceRampStrength: 1
+    - _FaceShadowStrength: 1
+    - _FaceSimpleMode: 0
+    - _FaceSoftShadow: 0.2
+    - _FaceSpecularIntensity: 4
     - _FresnelIntensity: 0
     - _FresnelPower: 2
     - _GlobalPorosity: 1
@@ -175,6 +197,7 @@ Material:
     - _group_CelShading: 0
     - _group_Cloth: 0
     - _group_Debug: 0
+    - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
     - _group_Highlights: 0
@@ -186,11 +209,15 @@ Material:
     m_Colors:
     - _AmbientColor: {r: 0.5, g: 0.5, b: 0.6, a: 1}
     - _AnisoColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.91194963, g: 0.5821565, b: 0.5821565, a: 1}
+    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
     - _BorderColor: {r: 1, g: 0.3, b: 0.1, a: 1}
     - _BounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _FaceSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
@@ -198,7 +225,7 @@ Material:
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _InnerRimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 1, g: 0, b: 0, a: 1}
     - _RampColorLight: {r: 1, g: 0.95, b: 0.85, a: 1}
     - _RampColorShadow: {r: 0.54999995, g: 0.6, b: 0.7, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}

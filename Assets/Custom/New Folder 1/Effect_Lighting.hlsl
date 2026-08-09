@@ -10,6 +10,7 @@
 #include "Lighting_Face.hlsl"
 #include "Lighting_Skin.hlsl"
 #include "Lighting_Hair.hlsl"
+#include "Lighting_Eye.hlsl"
 
 // ---------------------------------------------------------------
 // 主光照组合函数（中央调度）
@@ -54,7 +55,7 @@ inline half3 ComputeFinalLighting(AbyssSurfaceData surface, Light mainLight, hal
         directLighting = ComputeLighting_Face(surface, mainLight, indirectDiffuse, castShadowMask); // 暫時 fallback
     
     #elif defined(ABYSS_MATERIAL_EYE)
-        directLighting = ComputeLighting_Standard(surface, mainLight, indirectDiffuse, castShadowMask); // 暫時 fallback
+        directLighting = ComputeLighting_Eye(surface, mainLight, indirectDiffuse, castShadowMask); // 暫時 fallback
 
     #else
         // 預設 Standard (若外殼沒寫任何巨集，自動套用此標準光照)

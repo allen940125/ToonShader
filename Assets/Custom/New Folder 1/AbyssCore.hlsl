@@ -192,6 +192,17 @@ CBUFFER_START(UnityPerMaterial)
     half   _HairEnvSpecularIntensity;
     half   _HairEnvSmoothness;
 
+    // ==========================================
+    // 13. Eye Specific (眼球專屬特化區塊)
+    // ==========================================
+    float  _group_Eye;
+    half   _SphereMaskRange;
+    half   _Parallax;
+    float  _HairDepthFade;
+    half4  _HairOcclusionColor;
+    float  _HairOcclusionAlpha;
+    float  _StencilEyebrowRef;
+
 CBUFFER_END
 
 TEXTURE2D(_BaseMap);

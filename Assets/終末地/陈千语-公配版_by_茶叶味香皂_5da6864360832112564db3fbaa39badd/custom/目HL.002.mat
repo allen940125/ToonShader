@@ -8,15 +8,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: "\u76EEHL.002"
-  m_Shader: {fileID: 4800000, guid: 8f9c64ddd68cb6f4299d67db5bc4d484, type: 3}
+  m_Shader: {fileID: 4800000, guid: fe8cbc1692b60f544bd79a670d7a6f9b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ADD_LIGHT_ON
+  - _USE_LIGHTING
+  m_InvalidKeywords:
   - _REFLECTION_ON
   - _TRANSPARENCY_MODE_OPAQUE
-  - _USE_LIGHTING
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -89,6 +89,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCapMap:
+        m_Texture: {fileID: 2800000, guid: d48b659f3d0afec449c1b05521cbe73d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatCapMap1:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -176,6 +180,7 @@ Material:
     - _FaceSimpleMode: 0
     - _FaceSoftShadow: 0.2
     - _FaceSpecularIntensity: 4
+    - _FresnelBias: 0
     - _FresnelIntensity: 0
     - _FresnelPower: 2
     - _GlobalPorosity: 1
@@ -190,8 +195,10 @@ Material:
     - _HairAnisoPosition: 0.15
     - _HairAnisoShininess: 400
     - _HairCutOffset: 0
+    - _HairDepthFade: 0.5
     - _HairEnvSmoothness: 0.5
     - _HairEnvSpecularIntensity: 0.5
+    - _HairOcclusionAlpha: 0.5
     - _HairSpecularIntensity: 1
     - _HairSpecularOffset: 0.5
     - _HairTopLightIntensity: 10
@@ -203,7 +210,8 @@ Material:
     - _LocalWetness: 1
     - _MainLightColorWeight: 1
     - _MainLightMultiplier: 1
-    - _MatCapIntensity: 0
+    - _MatCapIntensity: 1
+    - _MatCapIntensity1: 1
     - _MaxHighlightEnergy: 1.3
     - _Metallic: 0
     - _MinBrightness: 0.1
@@ -234,6 +242,8 @@ Material:
     - _RoughnessMetal: 0
     - _RoughnessNonMetal: 0
     - _ShadowSmoothness: 0.05
+    - _SkinAO_Offset: 0
+    - _SkinShadowStrength: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecShininess: 32
@@ -241,8 +251,10 @@ Material:
     - _SpecularHighlights: 1
     - _SpecularIntensity: 0.2
     - _SpecularStep: 0.8
+    - _SphereMaskRange: 1.34
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
+    - _StencilEyebrowRef: 128
     - _Surface: 0
     - _Transparency_Mode: 0
     - _UVSec: 0
@@ -264,6 +276,7 @@ Material:
     - _group_BaseSurface: 0
     - _group_CelShading: 0
     - _group_Cloth: 0
+    - _group_Eye: 0
     - _group_Face: 0
     - _group_GeometryOutline: 0
     - _group_Hair: 0
@@ -272,6 +285,7 @@ Material:
     - _group_OverlayEffects: 0
     - _group_PBR: 0
     - _group_RenderState: 0
+    - _group_Skin: 0
     - _group_Weather: 0
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
@@ -289,6 +303,7 @@ Material:
     - _FresnelColor: {r: 0, g: 1, b: 1, a: 1}
     - _GradientColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairEnvSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HairOcclusionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HairSecondColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairSpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _HairTopLightColor: {r: 1, g: 1, b: 1, a: 1}
@@ -298,6 +313,9 @@ Material:
     - _RampColorShadow: {r: 0.54999995, g: 0.6, b: 0.7, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowTint: {r: 0.9333333, g: 0.7411765, b: 0.7098039, a: 1}
+    - _SkinDarkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _SkinSecondColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SkinShadowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
