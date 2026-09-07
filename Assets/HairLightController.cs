@@ -27,7 +27,7 @@ public class HeadLightingController : MonoBehaviour
         Shader.SetGlobalVector(HeadUpId, new Vector4(lightingAnchor.up.x, lightingAnchor.up.y, lightingAnchor.up.z, 0.0f));
         Shader.SetGlobalVector(HeadRightId, new Vector4(lightingAnchor.right.x, lightingAnchor.right.y, lightingAnchor.right.z, 0.0f));
         
-        Debug.Log($"[資料流偵測] 真實座標: {lightingAnchor.position} | 真實朝向: {lightingAnchor.forward}");
+        //Debug.Log($"[資料流偵測] 真實座標: {lightingAnchor.position} | 真實朝向: {lightingAnchor.forward}");
 
     }
 

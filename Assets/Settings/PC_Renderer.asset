@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948e01a14d927ea48bdf6e8444b472b4, type: 3}
   m_Name: PerObjectShadowFeature
   m_EditorClassIdentifier: Assembly-CSharp::UnityEngine.Rendering.Universal.PerObjectShadowFeature
-  m_Active: 1
+  m_Active: 0
   maxShadowObjects: 16
   drawDistance: 100
   useColliderBounds: 1
@@ -174,7 +174,8 @@ MonoBehaviour:
   - {fileID: 3910573082915692011}
   - {fileID: -248842559729091628}
   - {fileID: -4160301050765166445}
-  m_RendererFeatureMap: ad6b866f10d7b46cd65c568f42567f050f96cb601a963a614576e0cc9e349c75ebdd64f37f254536d43b59a602ef8bfc9338758e3ca443c6
+  - {fileID: 6540827797091686539}
+  m_RendererFeatureMap: ad6b866f10d7b46cd65c568f42567f050f96cb601a963a614576e0cc9e349c75ebdd64f37f254536d43b59a602ef8bfc9338758e3ca443c68b98a6063ab0c55a
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -243,6 +244,21 @@ MonoBehaviour:
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
+--- !u!114 &6540827797091686539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1edbe97ff2917a84f9a0d4942a865ac0, type: 3}
+  m_Name: CharacterShadowMap
+  m_EditorClassIdentifier: ToonCharacterShadow::ToonCharacterShadow.CharacterShadowMap
+  m_Active: 1
+  config: {fileID: 11400000, guid: dd9492f06eeb65641b16d4a9ff8b8afb, type: 2}
+  urpData: {fileID: 11400000}
 --- !u!114 &7006077210365498895
 MonoBehaviour:
   m_ObjectHideFlags: 0
