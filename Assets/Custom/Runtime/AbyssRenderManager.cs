@@ -20,6 +20,7 @@ public class AbyssRenderManager : MonoBehaviour
         MainLightDistanceAttenuation = 12,
         IndirectDiffuse = 13,
         RawEnvironmentReflection = 14,
+        PerShadow = 15,
     }
 
     [Header("--- 全域除錯 (Global Debug) ---")]

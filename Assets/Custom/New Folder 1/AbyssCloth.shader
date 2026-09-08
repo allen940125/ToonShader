@@ -150,7 +150,6 @@ Shader "Abyss/Character/Cloth"
         [Sub(Cloth)] [HDR] _EnvSpecularColor("Env Specular Color (環境高光顏色)", Color) = (1,1,1,1)
         [Sub(Cloth)] _EnvSpecularIntensity("Env Specular Intensity (環境高光強度)", Range(0, 2)) = 0.5
         [Sub(Cloth)] _EnvSmoothness("Env Smoothness Offset (環境平滑度偏移)", Range(0, 1)) = 0.5
-        
     }
     
     SubShader
@@ -175,6 +174,8 @@ Shader "Abyss/Character/Cloth"
                 #pragma multi_compile _ LIGHTMAP_ON
                 #pragma multi_compile _ PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
                 #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
+                
+                #pragma multi_compile _ _HIGH_CHAR_SOFTSHADOW _MEDIUM_CHAR_SOFTSHADOW
 
                 #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
                 #pragma shader_feature_local _USE_LIGHTING
@@ -255,7 +256,84 @@ Shader "Abyss/Character/Cloth"
                 #include "AbyssPass_Depth.hlsl"
            ENDHLSL
         }
-    }
+        
+        // ---- Pass 5: Character Depth (角色局部陰影專用) ----
+        Pass
+        {
+            Name "CharacterDepth"
+            Tags{"LightMode" = "CharacterDepth"}
+            ZWrite On ZTest LEqual Cull Off BlendOp Max
 
+            HLSLPROGRAM
+            #pragma target 3.5
+            
+            // 閃避 struct 名稱衝突，讓 SRP Batcher 成功對齊
+            #define Attributes AbyssAttributes
+            #define Varyings AbyssVaryings
+            #include "AbyssCore.hlsl"
+            #undef Attributes
+            #undef Varyings
+
+            #pragma vertex CharShadowVertex
+            #pragma fragment CharShadowFragment
+            
+            // 既然你直接改了原檔，路徑就維持 Packages 不變！
+            #include "New Folder/CharacterShadowDepthPass.hlsl"
+            //#include "Packages/com.unity.tooncharactershadow/Shaders/CharacterShadowDepthPass.hlsl"
+            ENDHLSL
+        }
+
+        // ---- Pass 6: Transparent Shadow ----
+        Pass
+        {
+            Name "TransparentShadow"
+            Tags {"LightMode" = "TransparentShadow"}
+            ZWrite Off ZTest Off Cull Off Blend One One BlendOp Max
+
+            HLSLPROGRAM
+            #pragma target 3.5
+            #pragma shader_feature_local _TRANSPARENCY_MODE_CUTOUT
+
+            // 閃避 struct 名稱衝突
+            #define Attributes AbyssAttributes
+            #define Varyings AbyssVaryings
+            #include "AbyssCore.hlsl"
+            #undef Attributes
+            #undef Varyings
+
+            #pragma vertex TransparentShadowVert
+            #pragma fragment TransparentShadowFragment
+
+            #include "New Folder/TransparentShadowPass.hlsl"
+            //#include "Packages/com.unity.tooncharactershadow/Shaders/TransparentShadowPass.hlsl"
+            ENDHLSL
+        }
+
+        // ---- Pass 7: Transparent Alpha Sum ----
+        Pass
+        {
+            Name "TransparentAlphaSum"
+            Tags {"LightMode" = "TransparentAlphaSum"}
+            ZWrite Off ZTest Off Cull Off Blend One One BlendOp Add
+
+            HLSLPROGRAM
+            #pragma target 3.5
+            #pragma shader_feature_local _TRANSPARENCY_MODE_CUTOUT
+
+            // 閃避 struct 名稱衝突
+            #define Attributes AbyssAttributes
+            #define Varyings AbyssVaryings
+            #include "AbyssCore.hlsl"
+            #undef Attributes
+            #undef Varyings
+
+            #pragma vertex TransparentAlphaSumVert
+            #pragma fragment TransparentAlphaSumFragment
+
+            #include "New Folder/TransparentShadowPass.hlsl"
+            //#include "Packages/com.unity.tooncharactershadow/Shaders/TransparentShadowPass.hlsl"
+            ENDHLSL
+        }
+    }
     CustomEditor "LWGUI.LWGUI"
 }

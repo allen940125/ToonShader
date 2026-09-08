@@ -10,6 +10,8 @@
 #include "Effect_Matcap.hlsl"
 #include "Effect_AnisotropicHighlight.hlsl"
 #include "Effect_Wetness.hlsl"
+// 【新增】：引入角色局部陰影套件核心
+#include "Packages/com.unity.tooncharactershadow/Shaders/DeclareCharacterShadowTexture.hlsl"
 
 Varyings vert_forward(Attributes input)
 {
@@ -47,6 +49,17 @@ half4 frag_forward(Varyings input) : SV_Target
 
     float4 shadowCoord = TransformWorldToShadowCoord(surface.positionWS);
     Light mainLight = GetMainLight(shadowCoord);
+
+    // =======================================================
+    // 【新增】：角色局部陰影合併 (Per-Object Shadow)
+    // =======================================================
+    // 透過套件 API 取得物件專屬陰影 (0 = 有陰影, 1 = 無陰影)
+    // 注意：套件回傳的數值越大代表陰影越深，所以要用 1.0 減去它來轉換為光照衰減
+    half localCharShadow = 1.0 - SampleCharacterAndTransparentShadow(surface.positionWS, surface.alpha);
+    
+    // 將 URP 全域陰影與局部陰影合併，取兩者最暗的值 (min)
+    mainLight.shadowAttenuation = min(mainLight.shadowAttenuation, localCharShadow);
+    // =======================================================
 
     // AO 融合系統
     float2 screenUV = input.screenPos.xy / input.screenPos.w;
@@ -151,6 +164,14 @@ half4 frag_forward(Varyings input) : SV_Target
                 half perceptualRoughness = 1.0 - surface.smoothness;
                 // 強制讀取未經 Fresnel 或固有色相乘的原始反射訊號
                 finalColor = GlossyEnvironmentReflection(reflectDir, surface.positionWS, perceptualRoughness, 1.0h);
+                break;
+            // ==========================================
+            // 【新增】：角色局部陰影 Debug 視角
+            // ==========================================
+            case 15: 
+                // 直接輸出我們在上面算出來的 localCharShadow 
+                //(白 = 受光 / 沒被遮蔽，黑 = 處於角色局部陰影中)
+                finalColor = localCharShadow.xxx;
                 break;
         }
     }
