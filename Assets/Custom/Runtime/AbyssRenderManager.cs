@@ -6,7 +6,7 @@ public class AbyssRenderManager : MonoBehaviour
     public enum DebugViewMode
     {
         None = 0,
-        Shadow = 1,
+        CSMShadow = 1,
         Highlight = 2,
         AO = 3,
         RimLight = 4,
@@ -21,6 +21,8 @@ public class AbyssRenderManager : MonoBehaviour
         IndirectDiffuse = 13,
         RawEnvironmentReflection = 14,
         PerShadow = 15,
+        FinishShadow = 16,
+        FinishShadowAndGI = 17,
     }
 
     [Header("--- 全域除錯 (Global Debug) ---")]

@@ -1,4 +1,4 @@
-Shader "Abyss/Character/Face"
+Shader "Abyss/Character/Eye"
 {
     Properties
     {
@@ -28,6 +28,11 @@ Shader "Abyss/Character/Face"
         // ==========================================
         [Main(Lighting, _, on)] _group_Lighting ("3. Core Lighting & Shadows", Float) = 0
         [SubToggle(Lighting, _USE_LIGHTING)] _UseLighting("Enable Lighting", Float) = 1
+        // 角色局部陰影開關
+        [SubToggle(Lighting, _USE_CHAR_SHADOW)] _UseCharShadow("Enable Per-Object Shadow", Float) = 0
+        // 消除 CSM 陰影破圖的兩個神仙參數
+        [Sub(Lighting)] _CharGlobalShadowBias ("Character Global Shadow Bias", Range(-1, 1)) = 0.1
+        [Sub(Lighting)] _CSMSampleBias ("CSM Sample Lightward Bias", Range(0, 0.5)) = 0.0
         [Sub(Lighting)] _MainLightMultiplier("Local Main Light Multiplier", Range(0, 5)) = 1.0
         [Sub(Lighting)] _MainLightColorWeight("Main Light Color Weight", Range(0, 1)) = 1.0
         [SubToggle(Lighting, _ADD_LIGHT_ON)] _AddLightOn("Enable Additional Lights", Float) = 1
@@ -132,39 +137,51 @@ Shader "Abyss/Character/Face"
         [Sub(Weather)] _WetNormalFlatten("Normal Flatten", Range(0, 1)) = 0.5
         [Sub(Weather)] _RaindropScale("Raindrop Scale", Range(0.1, 10.0)) = 2.0
         [Sub(Weather)] _RaindropSpeed("Raindrop Speed", Range(0.0, 5.0)) = 1.0
-
+        
         // ==========================================
-        // 11. Face Specific (臉部專屬特化區塊)
+        // 10. Eye Specific (眼球專屬特化區塊)
         // ==========================================
-        [Main(Face, _, off)] _group_Face ("11. Face Specific (臉部特化參數)", Float) = 0
-        [SubToggle(Face, _FACE_SIMPLE_MODE)] _FaceSimpleMode ("Simple Mode", Float) = 0
+        [Main(Eye, _, off)] _group_Eye ("10. Eye Specific (眼球特化參數)", Float) = 0
         
-        [Sub(Face)] [NoScaleOffset] _FaceColorMask ("Color Mask (R:2nd, G:Jaw, B:SelfShadow, A:Spec)", 2D) = "white" {}
-        [Sub(Face)] [NoScaleOffset] _FaceSDF ("SDF Map", 2D) = "white" {}
-        [Sub(Face)] [NoScaleOffset] _FaceLipSpecMask ("Lip Specular Mask", 2D) = "white" {}
-        
-        [Sub(Face)] [HDR] _SkinSecondColor ("Second Color", Color) = (0.9333333, 0.8588235, 0.8431373, 1)
-        [Sub(Face)] [HDR] _SkinDarkColor ("Dark Color", Color) = (1, 1, 1, 1)
-        
-        [Sub(Face)] [HDR] _SkinShadowColor ("Shadow Color", Color) = (1, 0.8901961, 0.8745098, 1)
-        [Sub(Face)] _SkinShadowStrength ("Shadow Strength", Range(0, 1)) = 1.0
-        [Sub(Face)] _FaceSoftShadow ("Soft Shadow", Range(0, 1)) = 0.2
+        [Sub(Eye)] _SphereMaskRange ("SphereMask Range (球體遮罩範圍)", Range(0, 5)) = 1.0
+        [Sub(Eye)] _Parallax ("Parallax (視差偏移深度)", Range(0, 0.1)) = 0.02
 
-        [Sub(Face)] _SkinAO_Offset ("AO Offset", Range(-1, 1)) = 0
+        [Sub(Eye)] _MatCapIntensity1 ("MatCap Intensity", Range(0, 5)) = 1.0
+        
+        // 供後續實作頭髮遮擋用的參數 (先保留宣告，以防報錯)
+        [Sub(Eye)] _HairDepthFade ("Hair Depth Fade", Range(0, 1)) = 0.5
+        [Sub(Eye)] _HairOcclusionColor ("Hair Occlusion Color", Color) = (0, 0, 0, 1)
+        [Sub(Eye)] _HairOcclusionAlpha ("Hair Occlusion Alpha", Range(0, 1)) = 0.5
+        [Sub(Eye)] _StencilEyebrowRef ("Stencil Eyebrow Ref (Bitmask)", Float) = 128
     }
     
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
+        // 定義透明渲染佇列
+        Tags { "RenderType" = "Transparent" "Queue" = "Transparent+1" "RenderPipeline" = "UniversalPipeline" }
 
-        // ---- Pass 1: Forward ----
+        // ---- 唯一的 Pass：Forward ----
         Pass
         {
             Name "ForwardLit"
             Tags { "LightMode" = "UniversalForward" }
-            Cull [_CullMode]
             
-            HLSLPROGRAM
+            // 開啟透明混合，關閉深度寫入
+            Blend SrcAlpha OneMinusSrcAlpha
+            ZWrite Off
+            Cull [_CullMode]
+
+            // 加入眼球與眉毛層級的 Stencil 遮罩
+            Stencil
+            {
+                Ref [_StencilEyebrowRef] 
+                ReadMask [_StencilEyebrowRef]
+                WriteMask [_StencilEyebrowRef]
+                Comp NotEqual
+                Pass Replace
+            }
+            
+           HLSLPROGRAM
                 #pragma target 3.5
                 #pragma multi_compile_instancing
 
@@ -174,92 +191,24 @@ Shader "Abyss/Character/Face"
                 #pragma multi_compile_fragment _ _SHADOWS_SOFT
                 #pragma multi_compile _ LIGHTMAP_ON
                 #pragma multi_compile _ PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
-                #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
-
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
+                // 角色局部陰影邊緣柔和度 (視需求加入)
+                #pragma multi_compile _ _HIGH_CHAR_SOFTSHADOW _MEDIUM_CHAR_SOFTSHADOW
+                
+                // 註冊開關巨集
+                #pragma shader_feature_local _USE_CHAR_SHADOW
+                
+                // 【必須補回的編譯巨集橋樑】
                 #pragma shader_feature_local _USE_LIGHTING
                 #pragma shader_feature_local _ADD_LIGHT_ON
-                #pragma shader_feature_local _REFLECTION_ON
+                // (如果你的眼球需要受天氣系統影響，也可將 _WEATHER_WETNESS_ON 補回)
 
-                #pragma shader_feature_local _WEATHER_WETNESS_ON
-
-                // 【臉部系統變數切換】
-                #pragma shader_feature_local _FACE_SIMPLE_MODE
-                #define ABYSS_MATERIAL_FACE
+                #define ABYSS_MATERIAL_EYE
                 
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_forward
                 #pragma fragment frag_forward
                 
-                #include "AbyssPass_Forward.hlsl"
+                #include "Passes/AbyssPass_Eye_Forward.hlsl"
             ENDHLSL
-        }
-
-        // ---- Pass 2: Outline ----
-        Pass
-        {
-            Name "Outline"
-            Cull Front
-            Tags { "LightMode" = "AbyssOutline" }
-            HLSLPROGRAM
-                #pragma target 3.5
-                #pragma multi_compile_instancing
-
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
-                #pragma shader_feature_local _USE_OUTLINE
-
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
-                #pragma vertex vert_outline
-                #pragma fragment frag_outline
-
-                #include "AbyssPass_Outline.hlsl"
-            ENDHLSL
-        }
-
-        // ---- Pass 3: ShadowCaster ----
-        Pass
-        {
-            Name "ShadowCaster"
-            Tags { "LightMode" = "ShadowCaster" }
-            ColorMask 0
-            Cull Back
-            
-            HLSLPROGRAM
-                #pragma target 3.5
-                #pragma multi_compile_instancing
-
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
-
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
-                #pragma vertex vert_shadow
-                #pragma fragment frag_shadow
-                
-                #include "AbyssPass_Shadow.hlsl"
-            ENDHLSL
-        }
-
-        // ---- Pass 4: DepthOnly ----
-        Pass
-        {
-            Name "DepthNormals"
-            Tags { "LightMode" = "DepthNormals" }
-            Cull [_CullMode]
-            
-            ZWrite On
-            ZTest LEqual
-            
-           HLSLPROGRAM
-                #pragma target 3.5
-                #pragma multi_compile_instancing
-
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
-
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
-                #pragma vertex vert_depth
-                #pragma fragment frag_depth
-                
-                #include "AbyssPass_Depth.hlsl"
-           ENDHLSL
         }
     }
 

@@ -1,9 +1,9 @@
 #ifndef ABYSS_PASS_OUTLINE_INCLUDED
 #define ABYSS_PASS_OUTLINE_INCLUDED
 
-#include "AbyssCore.hlsl"
-#include "AbyssPass_Utilities.hlsl"
-#include "Effect_Outline.hlsl"
+#include "Core/AbyssCore.hlsl"
+#include "Core/AbyssPass_Utilities.hlsl"
+#include "Effects/Effect_Outline.hlsl"
 
 Varyings vert_outline(Attributes input)
 {

@@ -23,7 +23,12 @@ half   _GlobalShadowStrength;
 half4  _GlobalAmbientColor;
 half   _GlobalAmbientIntensity;
 half   _GlobalMinBrightness;
-float4 _RimLightDirection; 
+float4 _RimLightDirection;
+
+// ==========================================
+// 全域變數區 (Global Variables) - 由 C# 腳本統一推播
+// ==========================================
+float _CharShadowIsOrtho; // 【新增】：接收 C# 推播的相機模式
 
 // ==========================================
 // 局部材質區 (Local Properties) - 嚴格對齊 Shader 面板
@@ -49,6 +54,9 @@ CBUFFER_START(UnityPerMaterial)
     // 3. Core Lighting & Shadows
     float  _group_Lighting;
     float  _UseLighting;
+    float _CharGlobalShadowBias;
+    float _CSMSampleBias;
+    float _CSMNormalBias;
     half   _MainLightMultiplier;
     half   _MainLightColorWeight;
     float  _AddLightOn;

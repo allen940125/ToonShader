@@ -33,6 +33,7 @@ Material:
   - _IS_TRANSCLIPPING_OFF
   - _OUTLINE_NML
   - _SHADINGGRADEMAP
+  - _SHOWSHADOWONLY_ON
   - _USE_CHAR_SHADOW_ON
   - _USE_GLOBAL_SHADOW_ON
   m_LightmapFlags: 4
@@ -481,7 +482,7 @@ Material:
     - _SecondShadeVisible: 1
     - _Set_SystemShadowsToBase: 1
     - _ShadeColor_Step: 0
-    - _ShowShadowOnly: 0
+    - _ShowShadowOnly: 1
     - _Smoothness: 0.1414215
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0

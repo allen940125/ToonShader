@@ -1,10 +1,10 @@
 #ifndef ABYSS_PASS_EYE_FORWARD_INCLUDED
 #define ABYSS_PASS_EYE_FORWARD_INCLUDED
 
-#include "AbyssCore.hlsl"
-#include "AbyssSurfaceSetup.hlsl"
-#include "AbyssPass_Utilities.hlsl"
-#include "Effect_Lighting.hlsl" 
+#include "Core/AbyssCore.hlsl"
+#include "Core/AbyssSurfaceSetup.hlsl"
+#include "Core/AbyssPass_Utilities.hlsl"
+#include "Lighting/Effect_Lighting.hlsl" 
 
 // 【修正】：頂部不再需要宣告任何變數，全部交由 AbyssCore.hlsl 統一管理
 

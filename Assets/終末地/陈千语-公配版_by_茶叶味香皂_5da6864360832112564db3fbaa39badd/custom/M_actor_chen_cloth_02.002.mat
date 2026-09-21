@@ -27,6 +27,7 @@ Material:
   m_ValidKeywords:
   - _ADD_LIGHT_ON
   - _TRANSPARENCY_MODE_CUTOUT
+  - _USE_CHAR_SHADOW
   - _USE_LIGHTING
   - _WEATHER_WETNESS_ON
   m_InvalidKeywords: []
@@ -50,6 +51,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ClippingMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -168,10 +173,13 @@ Material:
     - _BorderWidth: 0.1
     - _BounceIntensity: 1.2
     - _BumpScale: 1
+    - _CSMNormalBias: 0
+    - _CSMSampleBias: 0
+    - _CharGlobalShadowBias: 0.1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
-    - _CullMode: 2
+    - _CullMode: 0
     - _Cutoff: 0.5
     - _DebugViewMode: 0
     - _DetailAlbedoMapScale: 1
@@ -263,6 +271,7 @@ Material:
     - _SurfaceType: 3
     - _Transparency_Mode: 1
     - _UVSec: 0
+    - _UseCharShadow: 1
     - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseOutline: 0

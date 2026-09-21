@@ -1,4 +1,4 @@
-Shader "Abyss/UberShader_DOTS"
+Shader "Abyss/Character/Cloth"
 {
     Properties
     {
@@ -28,6 +28,12 @@ Shader "Abyss/UberShader_DOTS"
         // ==========================================
         [Main(Lighting, _, on)] _group_Lighting ("3. Core Lighting & Shadows", Float) = 0
         [SubToggle(Lighting, _USE_LIGHTING)] _UseLighting("Enable Lighting", Float) = 1
+        // 角色局部陰影開關
+        [SubToggle(Lighting, _USE_CHAR_SHADOW)] _UseCharShadow("Enable Per-Object Shadow", Float) = 0
+        // 消除 CSM 陰影破圖的兩個神仙參數
+        [Sub(Lighting)] _CharGlobalShadowBias ("Character Global Shadow Bias", Range(-1, 1)) = 0.1
+        [Sub(Lighting)] _CSMSampleBias ("CSM Sample Lightward Bias", Range(0, 0.5)) = 0.0
+        [Sub(Lighting)] _CSMNormalBias ("_CSM Normal Lightward Bias", Range(0, 0.5)) = 0.0
         [Sub(Lighting)] _MainLightMultiplier("Local Main Light Multiplier", Range(0, 5)) = 1.0
         [Sub(Lighting)] _MainLightColorWeight("Main Light Color Weight", Range(0, 1)) = 1.0
         [SubToggle(Lighting, _ADD_LIGHT_ON)] _AddLightOn("Enable Additional Lights", Float) = 1
@@ -136,72 +142,20 @@ Shader "Abyss/UberShader_DOTS"
         // ==========================================
         // 10. Cloth Specific (布料專屬特化區塊)
         // ==========================================
-        [Main(Cloth, _, on)] _group_Cloth ("10. Cloth Specific", Float) = 0
-        [Sub(Cloth)] _BaseColorContrast("Base Color Contrast", Range(0.5, 2)) = 1.0
-        [Sub(Cloth)] _GradientColor("Gradient Color", Color) = (1, 1, 1, 1)
-        [Sub(Cloth)] _GradientMinY("Gradient Min Y", Float) = 0.0
-        [Sub(Cloth)] _GradientMaxY("Gradient Max Y", Float) = 1.0
-        [Sub(Cloth)] _RoughnessNonMetal("非金属粗糙度", Range(-1, 1)) = 0
-        [Sub(Cloth)] _RoughnessMetal("金属粗糙度", Range(-1, 1)) = 0
-        [Sub(Cloth)] _RoughnessContrast("粗糙度对比度", Range(0, 2)) = 1.0
-        [Sub(Cloth)] _AOOffset("AO Offset", Range(-1, 1)) = 0
-        [Sub(Cloth)] _AOContrast("AO Contrast", Range(0, 2)) = 1.0
-        [Sub(Cloth)] _SpecShininess("Shininess", Range(2, 500)) = 32
-        [Sub(Cloth)] [HDR] _EnvSpecularColor("环境高光颜色", Color) = (1,1,1,1)
-        [Sub(Cloth)] _EnvSpecularIntensity("环境高光强度", Range(0, 2)) = 0.5
-        [Sub(Cloth)] _EnvSmoothness("环境粗糙度偏移", Range(0, 1)) = 0.5
-        
-        // ==========================================
-        // 11. Face Specific (臉部專屬特化區塊)
-        // ==========================================
-        [Main(Face, _, off)] _group_Face ("11. Face Specific (臉部特化參數)", Float) = 0
-        [SubToggle(Face, _FACE_SIMPLE_MODE)] _FaceSimpleMode ("Simple Mode", Float) = 0
-        
-        [Sub(Face)] [NoScaleOffset] _FaceColorMask ("Color Mask (R:2nd, G:Jaw, B:SelfShadow, A:Spec)", 2D) = "white" {}
-        [Sub(Face)] [NoScaleOffset] _FaceSDF ("SDF Map", 2D) = "white" {}
-        [Sub(Face)] [NoScaleOffset] _FaceLipSpecMask ("Lip Specular Mask", 2D) = "white" {}
-        [Sub(Face)] [NoScaleOffset] _FaceDiffuseRamp ("Face Diffuse Ramp (NPR)", 2D) = "white" {}
-        
-        [Sub(Face)] [HDR] _FaceSecondColor ("Second Color", Color) = (1, 1, 1, 1)
-        [Sub(Face)] [HDR] _FaceDarkColor ("Dark Color", Color) = (0.5, 0.5, 0.5, 1)
-        [Sub(Face)] _FaceRampStrength ("NPR Ramp Strength", Range(0, 1)) = 1.0
-        
-        [Sub(Face)] [HDR] _FaceShadowColor ("Shadow Color", Color) = (0.5, 0.5, 0.5, 1)
-        [Sub(Face)] _FaceShadowStrength ("Shadow Strength", Range(0, 1)) = 1.0
-        [Sub(Face)] _FaceSoftShadow ("Soft Shadow", Range(0, 1)) = 0.2
-        
-        [Sub(Face)] [HDR] _FaceSpecularColor ("Specular Color", Color) = (1, 1, 1, 1)
-        [Sub(Face)] _FaceSpecularIntensity ("Specular Intensity", Range(0, 8)) = 4
-        [Sub(Face)] _FaceAO_Offset ("AO Offset", Range(-1, 1)) = 0
-        
-        // ==========================================
-        // 12. Hair Specific (頭髮專屬特化區塊)
-        // ==========================================
-        [Main(Hair, _, off)] _group_Hair ("12. Hair Specific (頭髮特化參數)", Float) = 0
-        
-        [Sub(Hair)] [NoScaleOffset] _HairLineMap ("HairLine Map (髮絲紋理)", 2D) = "white" {}
-        [Sub(Hair)] [NoScaleOffset] _AnisoMap ("Aniso Noise Map (高光噪點)", 2D) = "white" {}
-        
-        [Sub(Hair)] [HDR] _HairSecondColor ("Second Color (髮絲副色)", Color) = (1, 1, 1, 1)
-        [Sub(Hair)] [HDR] _HairTopLightColor ("Top Light Color (頂光顏色)", Color) = (1, 1, 1, 1)
-        [Sub(Hair)] _HairTopLightOffset ("Top Light Offset", Range(-1, 1)) = 0
-        [Sub(Hair)] _HairTopLightIntensity ("Top Light Intensity", Range(0, 100)) = 10
-        
-        [Sub(Hair)] _HairAOOffset ("AO Offset", Range(-1, 1)) = 0
-        
-        [Sub(Hair)] [HDR] _HairSpecularColor ("Specular Color (天使環顏色)", Color) = (1, 1, 1, 1)
-        [Sub(Hair)] _HairSpecularOffset ("Specular Offset (高光範圍偏移)", Range(0, 1)) = 0.5
-        [Sub(Hair)] _HairSpecularIntensity ("Specular Intensity", Float) = 1
-        
-        [Sub(Hair)] _HairAnisoNoise ("Aniso Noise Strength", Float) = 1
-        [Sub(Hair)] _HairAnisoShininess ("Aniso Shininess", Range(0, 1000)) = 400
-        [Sub(Hair)] _HairAnisoOffset ("Aniso Offset (天使環高度)", Float) = 0
-        [Sub(Hair)] _HairAnisoPosition ("Aniso Position", Float) = 0.15
-        [Sub(Hair)] _HairCutOffset ("Cut Offset (斷層高光偏移)", Float) = 0
-        
-        [Sub(Hair)] [HDR] _HairEnvSpecularColor ("Env Specular Color", Color) = (1, 1, 1, 1)
-        [Sub(Hair)] _HairEnvSpecularIntensity ("Env Specular Intensity", Range(0, 2)) = 0.5
-        [Sub(Hair)] _HairEnvSmoothness ("Env Smoothness", Range(0, 1)) = 0.5
+        [Main(Cloth, _, on)] _group_Cloth ("10. Cloth Specific (布料專屬特化)", Float) = 0
+        [Sub(Cloth)] _BaseColorContrast("Base Color Contrast (基礎顏色對比度)", Range(0.5, 2)) = 1.0
+        [Sub(Cloth)] _GradientColor("Gradient Color (漸變顏色)", Color) = (1, 1, 1, 1)
+        [Sub(Cloth)] _GradientMinY("Gradient Min Y (漸變最低高度 Y)", Float) = 0.0
+        [Sub(Cloth)] _GradientMaxY("Gradient Max Y (漸變最高高度 Y)", Float) = 1.0
+        [Sub(Cloth)] _RoughnessNonMetal("Non-Metal Roughness Adjust (非金屬粗糙度偏移)", Range(-1, 1)) = 0
+        [Sub(Cloth)] _RoughnessMetal("Metal Roughness Adjust (金屬粗糙度偏移)", Range(-1, 1)) = 0
+        [Sub(Cloth)] _RoughnessContrast("Roughness Contrast (粗糙度對比度)", Range(0, 2)) = 1.0
+        [Sub(Cloth)] _AOOffset("AO Offset (環境遮蔽偏移)", Range(-1, 1)) = 0
+        [Sub(Cloth)] _AOContrast("AO Contrast (環境遮蔽對比度)", Range(0, 2)) = 1.0
+        [Sub(Cloth)] _SpecShininess("Specular Shininess (高光集中度)", Range(2, 500)) = 32
+        [Sub(Cloth)] [HDR] _EnvSpecularColor("Env Specular Color (環境高光顏色)", Color) = (1,1,1,1)
+        [Sub(Cloth)] _EnvSpecularIntensity("Env Specular Intensity (環境高光強度)", Range(0, 2)) = 0.5
+        [Sub(Cloth)] _EnvSmoothness("Env Smoothness Offset (環境平滑度偏移)", Range(0, 1)) = 0.5
     }
     
     SubShader
@@ -226,19 +180,28 @@ Shader "Abyss/UberShader_DOTS"
                 #pragma multi_compile _ LIGHTMAP_ON
                 #pragma multi_compile _ PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
                 #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
+                
+                // 角色局部陰影邊緣柔和度 (視需求加入)
+                #pragma multi_compile _ _HIGH_CHAR_SOFTSHADOW _MEDIUM_CHAR_SOFTSHADOW
+                
+                // 註冊開關巨集
+                #pragma shader_feature_local _USE_CHAR_SHADOW
 
                 #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
                 #pragma shader_feature_local _USE_LIGHTING
                 #pragma shader_feature_local _ADD_LIGHT_ON
                 #pragma shader_feature_local _REFLECTION_ON
-
                 #pragma shader_feature_local _WEATHER_WETNESS_ON
 
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
+                // 【核心靜態指派】：發放布料身分證
+                #pragma shader_feature_local _USE_CHAR_SHADOW
+                
+                #define ABYSS_MATERIAL_CLOTH
+
                 #pragma vertex vert_forward
                 #pragma fragment frag_forward
                 
-                #include "AbyssPass_Forward.hlsl"
+                #include "Passes/AbyssPass_Forward.hlsl"
             ENDHLSL
         }
 
@@ -255,11 +218,10 @@ Shader "Abyss/UberShader_DOTS"
                 #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
                 #pragma shader_feature_local _USE_OUTLINE
 
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_outline
                 #pragma fragment frag_outline
 
-                #include "AbyssPass_Outline.hlsl"
+                #include "Passes/AbyssPass_Outline.hlsl"
             ENDHLSL
         }
 
@@ -277,11 +239,10 @@ Shader "Abyss/UberShader_DOTS"
 
                 #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
 
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_shadow
                 #pragma fragment frag_shadow
                 
-                #include "AbyssPass_Shadow.hlsl"
+                #include "Passes/AbyssPass_Shadow.hlsl"
             ENDHLSL
         }
 
@@ -301,14 +262,90 @@ Shader "Abyss/UberShader_DOTS"
 
                 #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
 
-                // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_depth
                 #pragma fragment frag_depth
                 
-                #include "AbyssPass_Depth.hlsl"
+                #include "Passes/AbyssPass_Depth.hlsl"
            ENDHLSL
         }
-    }
+        
+        // ---- Pass 5: Character Depth (角色局部陰影專用) ----
+        Pass
+        {
+            Name "CharacterDepth"
+            Tags{"LightMode" = "CharacterDepth"}
+            ZWrite On ZTest LEqual Cull Off BlendOp Max
 
+            HLSLPROGRAM
+            #pragma target 3.5
+            
+            // 閃避 struct 名稱衝突，讓 SRP Batcher 成功對齊
+            #define Attributes AbyssAttributes
+            #define Varyings AbyssVaryings
+            #include "Core/AbyssCore.hlsl"
+            #undef Attributes
+            #undef Varyings
+
+            #pragma vertex CharShadowVertex
+            #pragma fragment CharShadowFragment
+            
+            // 既然你直接改了原檔，路徑就維持 Packages 不變！
+            #include "ThirdParty/CharacterShadowDepthPass.hlsl"
+            //#include "Packages/com.unity.tooncharactershadow/Shaders/CharacterShadowDepthPass.hlsl"
+            ENDHLSL
+        }
+
+        // ---- Pass 6: Transparent Shadow ----
+        Pass
+        {
+            Name "TransparentShadow"
+            Tags {"LightMode" = "TransparentShadow"}
+            ZWrite Off ZTest Off Cull Off Blend One One BlendOp Max
+
+            HLSLPROGRAM
+            #pragma target 3.5
+            #pragma shader_feature_local _TRANSPARENCY_MODE_CUTOUT
+
+            // 閃避 struct 名稱衝突
+            #define Attributes AbyssAttributes
+            #define Varyings AbyssVaryings
+            #include "Core/AbyssCore.hlsl"
+            #undef Attributes
+            #undef Varyings
+
+            #pragma vertex TransparentShadowVert
+            #pragma fragment TransparentShadowFragment
+
+            #include "ThirdParty/TransparentShadowPass.hlsl"
+            //#include "Packages/com.unity.tooncharactershadow/Shaders/TransparentShadowPass.hlsl"
+            ENDHLSL
+        }
+
+        // ---- Pass 7: Transparent Alpha Sum ----
+        Pass
+        {
+            Name "TransparentAlphaSum"
+            Tags {"LightMode" = "TransparentAlphaSum"}
+            ZWrite Off ZTest Off Cull Off Blend One One BlendOp Add
+
+            HLSLPROGRAM
+            #pragma target 3.5
+            #pragma shader_feature_local _TRANSPARENCY_MODE_CUTOUT
+
+            // 閃避 struct 名稱衝突
+            #define Attributes AbyssAttributes
+            #define Varyings AbyssVaryings
+            #include "Core/AbyssCore.hlsl"
+            #undef Attributes
+            #undef Varyings
+
+            #pragma vertex TransparentAlphaSumVert
+            #pragma fragment TransparentAlphaSumFragment
+
+            #include "ThirdParty/TransparentShadowPass.hlsl"
+            //#include "Packages/com.unity.tooncharactershadow/Shaders/TransparentShadowPass.hlsl"
+            ENDHLSL
+        }
+    }
     CustomEditor "LWGUI.LWGUI"
 }

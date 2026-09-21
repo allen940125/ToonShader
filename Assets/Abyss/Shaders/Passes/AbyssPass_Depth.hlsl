@@ -1,8 +1,8 @@
 #ifndef ABYSS_PASS_DEPTH_INCLUDED
 #define ABYSS_PASS_DEPTH_INCLUDED
 
-#include "AbyssCore.hlsl"
-#include "AbyssPass_Utilities.hlsl"
+#include "Core/AbyssCore.hlsl"
+#include "Core/AbyssPass_Utilities.hlsl"
 
 Varyings vert_depth(Attributes input)
 {
