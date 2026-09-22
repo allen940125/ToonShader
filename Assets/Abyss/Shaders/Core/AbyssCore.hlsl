@@ -25,6 +25,10 @@ half   _GlobalAmbientIntensity;
 half   _GlobalMinBrightness;
 float4 _RimLightDirection;
 
+// 接收來自 DayNightSystemPro 的全域廣播
+float _GlobalAmbientMinLight;
+float _GlobalDarkColorMinLimit;
+
 // ==========================================
 // 全域變數區 (Global Variables) - 由 C# 腳本統一推播
 // ==========================================

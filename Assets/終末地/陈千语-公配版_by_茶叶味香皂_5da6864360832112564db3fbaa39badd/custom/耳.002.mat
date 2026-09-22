@@ -163,6 +163,7 @@ Material:
     - _AlphaClipThreshold: 0.5
     - _AlphaToMask: 0
     - _AmbientIntensity: 1
+    - _AmbientMinLight: 0.6
     - _AnisoIntensity: 0
     - _AnisoPower: 64
     - _BandSmoothness: 0.05
@@ -182,6 +183,7 @@ Material:
     - _Cull: 2
     - _CullMode: 2
     - _Cutoff: 0.5
+    - _DarkColorMinLimit: 0.2
     - _DebugViewMode: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -224,6 +226,7 @@ Material:
     - _InnerRimBias: 0
     - _InnerRimIntensity: 1
     - _InnerRimPower: 3
+    - _LipSpecParallax: 0.05
     - _LocalWetness: 0
     - _MainLightColorWeight: 1
     - _MainLightMultiplier: 1

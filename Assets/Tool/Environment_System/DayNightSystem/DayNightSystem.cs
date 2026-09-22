@@ -50,6 +50,13 @@ public class DayNightSystemPro : MonoBehaviour
     public AnimationCurve sunTemperature; 
     public Gradient sunFilterColor;
     
+    [Header("--- Shader NPR 安全下限保護 (NPR Safety Limits) ---")]
+    [Tooltip("環境光最低亮度限制 (例如：中午 0.6，半夜 0.2)")]
+    public AnimationCurve ambientMinLightCurve = new AnimationCurve(new Keyframe(0, 0.2f), new Keyframe(12, 0.6f), new Keyframe(24, 0.2f));
+
+    [Tooltip("暗部底色最低限制 (例如：中午 0.2，半夜 0.05)")]
+    public AnimationCurve darkColorMinLimitCurve = new AnimationCurve(new Keyframe(0, 0.05f), new Keyframe(12, 0.2f), new Keyframe(24, 0.05f));
+    
     [Header("--- Shader 全域陰影 (Global Shadows) ---")]
     [Tooltip("隨時間變化的陰影色調偏置。")]
     public Gradient globalShadowColorBias;
@@ -88,6 +95,10 @@ public class DayNightSystemPro : MonoBehaviour
         Shader.SetGlobalColor("_GlobalShadowColor", globalShadowColor.Evaluate(timePercent));
         Shader.SetGlobalFloat("_GlobalShadowStrength", globalShadowStrengthCurve.Evaluate(timeOfDay));
 
+        // 2. 推播 NPR 安全下限 (隨時間動態變化，夜晚允許更暗)
+        Shader.SetGlobalFloat("_GlobalAmbientMinLight", ambientMinLightCurve.Evaluate(timeOfDay));
+        Shader.SetGlobalFloat("_GlobalDarkColorMinLimit", darkColorMinLimitCurve.Evaluate(timeOfDay));
+        
         // 2. 推播二次元邊緣光方向
         Vector3 rimDir = customRimLightDirection.normalized;
         if (autoRimLightDirection)

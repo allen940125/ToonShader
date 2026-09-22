@@ -138,6 +138,7 @@ Shader "Abyss/Character/Skin"
         [Sub(Weather)] _RaindropScale("Raindrop Scale", Range(0.1, 10.0)) = 2.0
         [Sub(Weather)] _RaindropSpeed("Raindrop Speed", Range(0.0, 5.0)) = 1.0
         
+        
         // ==========================================
         // 10. Skin Specific (皮膚專屬特化區塊)
         // ==========================================

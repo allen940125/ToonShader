@@ -8,7 +8,7 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
 
 // ------------------------------------------------------------------
-// 1. 間接漫反射 (GI / Ambient)
+// 1. 間接漫反射 (GI / Ambient) - 統一處理亮度下限
 // ------------------------------------------------------------------
 inline half3 GetIndirectDiffuse(float3 positionWS, float3 normalWS, float3 viewDirWS)
 {
@@ -19,11 +19,19 @@ inline half3 GetIndirectDiffuse(float3 positionWS, float3 normalWS, float3 viewD
     #if defined(PROBE_VOLUMES_L1) || defined(PROBE_VOLUMES_L2)
     EvaluateAdaptiveProbeVolume(positionWS, normalWS, viewDirWS, screenPos, renderingLayer, envLight);
     #else
-    envLight = SampleSH(normalWS);
+    envLight = SampleSH(normalWS); // 使用傳入的法線取樣，確保各個表面有正確的立體感
     #endif
 
-    envLight *= _IndirectLightMultiplier;
-    return max(envLight, _GlobalMinBrightness);
+    // 取代純黑環境光，抓取 L0 頻段的基礎亮度來計算下限
+    float3 rawBaseAmbient = SampleSH(float3(0, 0, 0));
+    float ambientLum = max(Luminance(rawBaseAmbient), _GlobalAmbientMinLight); 
+    
+    // 如果取樣出來的 envLight 亮度低於下限，強制提亮
+    float currentLum = max(Luminance(envLight), 0.001);
+    float boostFactor = max(ambientLum / currentLum, 1.0);
+    
+    envLight *= boostFactor * _IndirectLightMultiplier;
+    return envLight;
 }
 
 // ------------------------------------------------------------------

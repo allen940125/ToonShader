@@ -137,7 +137,7 @@ Shader "Abyss/Character/Face"
         [Sub(Weather)] _WetNormalFlatten("Normal Flatten", Range(0, 1)) = 0.5
         [Sub(Weather)] _RaindropScale("Raindrop Scale", Range(0.1, 10.0)) = 2.0
         [Sub(Weather)] _RaindropSpeed("Raindrop Speed", Range(0.0, 5.0)) = 1.0
-
+        
         // ==========================================
         // 11. Face Specific (臉部專屬特化區塊)
         // ==========================================
