@@ -142,8 +142,8 @@ Shader "Abyss/Character/Hair"
         // ==========================================
         [Main(Hair, _, off)] _group_Hair ("12. Hair Specific (頭髮特化參數)", Float) = 0
         
-        [Sub(Hair)] [NoScaleOffset] _HairLineMap ("HairLine Map (髮絲紋理)", 2D) = "white" {}
-        [Sub(Hair)] [NoScaleOffset] _AnisoMap ("Aniso Noise Map (高光噪點)", 2D) = "white" {}
+        [Sub(Hair)] _HairLineMap ("HairLine Map (髮絲紋理)", 2D) = "white" {}
+        [Sub(Hair)] _AnisoMap ("Aniso Noise Map (高光噪點)", 2D) = "white" {}
         
         [Sub(Hair)] [HDR] _HairSecondColor ("Second Color (髮絲副色)", Color) = (1, 1, 1, 1)
         [Sub(Hair)] [HDR] _HairTopLightColor ("Top Light Color (頂光顏色)", Color) = (1, 1, 1, 1)
