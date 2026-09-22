@@ -7,7 +7,7 @@
 
 #include "Effects/Effect_Fresnel.hlsl"
 #include "Effects/Effect_Matcap.hlsl"
-#include "Effects/Effect_AnisotropicHighlight.hlsl"
+//#include "Effects/Effect_AnisotropicHighlight.hlsl"
 #include "Effects/Effect_Wetness.hlsl"
 #include "Lighting/Effect_Lighting.hlsl"
 
@@ -45,8 +45,13 @@ half4 frag_forward(Varyings input) : SV_Target
     AbyssSurfaceData surface;
     InitializeSurfaceData(input, surface);
 
-    // 透明度裁切
+    // 透明度裁切 (Opaque / Cutout / Dither 模式)
+    // 即使在 Transparent 模式下，我們也保留基礎的 Clip 剔除極低 Alpha 的雜訊
+    #if defined(_TRANSPARENCY_MODE_TRANSPARENT)
+    clip(surface.alpha - 0.01); // 剃除接近完全透明的像素，減少 Overdraw
+    #else
     DoTransparencyClip(surface.alpha, input.screenPos.xy / input.screenPos.w);
+    #endif
 
     #if defined(_WEATHER_WETNESS_ON)
         ApplyWeatherWetness(surface, _LocalWetness, input.uv);

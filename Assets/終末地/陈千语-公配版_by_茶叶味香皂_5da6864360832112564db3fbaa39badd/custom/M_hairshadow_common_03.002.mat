@@ -27,13 +27,13 @@ Material:
   m_ValidKeywords:
   - _ADD_LIGHT_ON
   - _REFLECTION_ON
-  - _TRANSPARENCY_MODE_OPAQUE
+  - _TRANSPARENCY_MODE_CUTOUT
   - _USE_LIGHTING
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2450
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -152,6 +152,8 @@ Material:
     - _BorderWidth: 0.1
     - _BounceIntensity: 1.2
     - _BumpScale: 1
+    - _CSMSampleBias: 0
+    - _CharGlobalShadowBias: 0.1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -239,8 +241,9 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _SurfaceType: 0
-    - _Transparency_Mode: 0
+    - _Transparency_Mode: 1
     - _UVSec: 0
+    - _UseCharShadow: 0
     - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseOutline: 0
@@ -271,7 +274,7 @@ Material:
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
     - _AnisoColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0, g: 0, b: 0, a: 0}
     - _BorderColor: {r: 1, g: 0.3, b: 0.1, a: 1}
     - _BounceColor: {r: 1, g: 0.9, b: 0.8, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}

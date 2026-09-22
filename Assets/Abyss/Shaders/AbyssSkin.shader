@@ -7,10 +7,16 @@ Shader "Abyss/Character/Skin"
         // ==========================================
         [Main(RenderState, _, off)] _group_RenderState ("1. Render State (系統狀態)", Float) = 0
         [SubEnum(RenderState, UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode", Float) = 2.0
-        [SubKeywordEnum(RenderState, Opaque, Cutout, Dither)] _Transparency_Mode("Transparency Mode", Float) = 0
+        
+        [SubKeywordEnum(RenderState, Opaque, Cutout, Dither, Transparent)] _Transparency_Mode("Transparency Mode", Float) = 0
         [Sub(RenderState)] _AlphaClipThreshold("Alpha Clip Threshold", Range(0.0, 1.0)) = 0.5
         [Sub(RenderState)] _DitherThreshold("Dither Threshold", Range(0, 1)) = 0.5
         [Sub(RenderState)] _DitherScale("Dither Tiling Scale", Range(1, 20)) = 10
+        
+        // 【核心修正】：解除隱藏，並轉化為下拉選單，讓使用者直接在面板控制圖形 API 狀態
+        [SubEnum(RenderState, UnityEngine.Rendering.BlendMode)] _SrcBlend ("Src Blend", Float) = 1.0
+        [SubEnum(RenderState, UnityEngine.Rendering.BlendMode)] _DstBlend ("Dst Blend", Float) = 0.0
+        [SubEnum(RenderState, Off, 0, On, 1)] _ZWrite ("ZWrite", Float) = 1.0
 
         // ==========================================
         // 2. Base Surface (基礎表面屬性)
@@ -171,6 +177,10 @@ Shader "Abyss/Character/Skin"
             Tags { "LightMode" = "UniversalForward" }
             Cull [_CullMode]
             
+            // 【修正】：將 Blend 與 ZWrite 參數化交由材質球控制
+            Blend [_SrcBlend] [_DstBlend]
+            ZWrite [_ZWrite]
+            
             HLSLPROGRAM
                 #pragma target 3.5
                 #pragma multi_compile_instancing
@@ -188,7 +198,7 @@ Shader "Abyss/Character/Skin"
                 // 註冊開關巨集
                 #pragma shader_feature_local _USE_CHAR_SHADOW
                 
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
+                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER _TRANSPARENCY_MODE_TRANSPARENT
                 #pragma shader_feature_local _USE_LIGHTING
                 #pragma shader_feature_local _ADD_LIGHT_ON
                 #pragma shader_feature_local _REFLECTION_ON
@@ -216,7 +226,7 @@ Shader "Abyss/Character/Skin"
                 #pragma target 3.5
                 #pragma multi_compile_instancing
 
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
+                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER _TRANSPARENCY_MODE_TRANSPARENT
                 #pragma shader_feature_local _USE_OUTLINE
 
                 // 【核心修正】：指定專屬函數，並引入獨立檔案
@@ -239,7 +249,7 @@ Shader "Abyss/Character/Skin"
                 #pragma target 3.5
                 #pragma multi_compile_instancing
 
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
+                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER _TRANSPARENCY_MODE_TRANSPARENT
 
                 // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_shadow
@@ -263,7 +273,7 @@ Shader "Abyss/Character/Skin"
                 #pragma target 3.5
                 #pragma multi_compile_instancing
 
-                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER
+                #pragma shader_feature_local _TRANSPARENCY_MODE_OPAQUE _TRANSPARENCY_MODE_CUTOUT _TRANSPARENCY_MODE_DITHER _TRANSPARENCY_MODE_TRANSPARENT
 
                 // 【核心修正】：指定專屬函數，並引入獨立檔案
                 #pragma vertex vert_depth
@@ -351,5 +361,6 @@ Shader "Abyss/Character/Skin"
         }
     }
 
-    CustomEditor "LWGUI.LWGUI"
+    //CustomEditor "LWGUI.LWGUI"
+    CustomEditor "AbyssStandardShaderGUI"
 }

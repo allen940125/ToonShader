@@ -20,7 +20,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -155,6 +155,8 @@ Material:
     - _BorderWidth: 0.1
     - _BounceIntensity: 1.2
     - _BumpScale: 1
+    - _CSMSampleBias: 0
+    - _CharGlobalShadowBias: 0.1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -249,6 +251,7 @@ Material:
     - _SurfaceType: 0
     - _Transparency_Mode: 0
     - _UVSec: 0
+    - _UseCharShadow: 0
     - _UseInnerRim: 1
     - _UseLighting: 1
     - _UseOutline: 0

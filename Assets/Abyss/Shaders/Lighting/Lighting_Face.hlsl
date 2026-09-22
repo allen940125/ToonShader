@@ -25,9 +25,9 @@ inline half3 ComputeLighting_Face(AbyssSurfaceData surface, Light mainLight, hal
     // ==========================================
     half3 normalWS = normalize(surface.normalWS);
     half3 viewDirWS = normalize(surface.viewDirWS);
-    half3 headUpDir = normalize(_HeadUp);
-    half3 headRightDir = normalize(_HeadRight);
-    half3 headForwardDir = normalize(_HeadForward);
+    half3 headUpDir = normalize(_HeadUp.xyz);
+    half3 headRightDir = normalize(_HeadRight.xyz);
+    half3 headForwardDir = normalize(_HeadForward.xyz);
 
     // 取樣臉部基礎貼圖
     half4 sdfRight = SAMPLE_TEXTURE2D(_FaceSDF, sampler_BaseMap, surface.uv);
