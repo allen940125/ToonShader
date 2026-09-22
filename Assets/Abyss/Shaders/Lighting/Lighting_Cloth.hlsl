@@ -6,121 +6,129 @@
 inline half3 ComputeLighting_Cloth(AbyssSurfaceData surface, Light mainLight, half3 indirectDiffuse, float castShadowMask)
 {
     // =============================================================
-    // 1. PBR 物理量準備階段 (能量守恆與材質屬性定義)
+    // 1. 物理量與基底色準備 (維持不變)
     // =============================================================
-    // 粗糙度轉換 (Smoothness -> Perceptual Roughness -> Roughness)
-    // 1. 从表面平滑度转基础粗糙度
     half baseRoughness = 1.0 - surface.smoothness;
-
-    // 2. 区分金属与非金属粗糙度
-    half roughness_nonMetal = saturate(baseRoughness + _RoughnessNonMetal);
-    roughness_nonMetal = saturate((roughness_nonMetal - 0.5) * _RoughnessContrast + 0.5);
-    half roughness_metal = saturate(baseRoughness + _RoughnessMetal);
-    roughness_metal = saturate((roughness_metal - 0.5) * _RoughnessContrast + 0.5);
+    half roughness_nonMetal = saturate((saturate(baseRoughness + _RoughnessNonMetal) - 0.5) * _RoughnessContrast + 0.5);
+    half roughness_metal = saturate((saturate(baseRoughness + _RoughnessMetal) - 0.5) * _RoughnessContrast + 0.5);
     half roughness = lerp(roughness_nonMetal, roughness_metal, surface.metallic);
-    half perceptualRoughness = roughness;
     half smoothness = 1.0 - roughness;
     
-    // 基礎反射率 (F0)：非金屬為 4%，金屬為物體原色
     half3 f0 = lerp(half3(0.04, 0.04, 0.04), surface.albedo, surface.metallic);
-
-    // 漫反射基礎色 (去金屬化)：金屬不產生內部漫反射散射
     half3 rawDiffuse = surface.albedo * (1.0 - surface.metallic);
     half3 baseColor = saturate((rawDiffuse - 0.5) * _BaseColorContrast + 0.5);
 
     // =============================================================
-    // 2. 主光方向、半蘭伯特與陰影遮罩
+    // 2. 統一深層陰影染色 (與 Skin/Face 同步，阻斷環境光色偏)
+    // =============================================================
+    // 從中央管線提取純淨亮度
+    half ambientLum = Luminance(indirectDiffuse);
+    half3 cleanAmbient = half3(ambientLum, ambientLum, ambientLum);
+    
+    // 全域陰影遮罩與染色
+    float shadowAtten = lerp(1.0, castShadowMask, _GlobalShadowStrength);
+    half3 globalShadowTint = lerp(_GlobalShadowColor.rgb, half3(1.0, 1.0, 1.0), shadowAtten);
+    
+    // 定義絕對純淨的暗部底色
+    half3 diffuseDark = baseColor * cleanAmbient * globalShadowTint;
+
+    // =============================================================
+    // 3. 漫反射：NPR Ramp 邏輯 (修復雙重陰影疊加)
     // =============================================================
     float NdotL = dot(surface.normalWS, mainLight.direction);
-    float halfLambert = NdotL * 0.5 + 0.5;
-
-    float shadowAtten = lerp(1.0, castShadowMask, _GlobalShadowStrength);
-    half3 shadowColored = lerp(_GlobalShadowColor.rgb, half3(1.0, 1.0, 1.0), shadowAtten);
-
-    // =============================================================
-    // 3. 漫反射：純色 vs Ramp 貼圖
-    // =============================================================
-    half3 grayDiffuse = baseColor * mainLight.color * halfLambert * castShadowMask;
-    half3 baseDiffuse;
+    float halfLambert = min(NdotL * 0.5 + 0.5, castShadowMask); // 遮罩直接限制半蘭伯特
+    
+    half3 baseDiffuseLight = baseColor * mainLight.color;
+    half3 grayDiffuse = baseDiffuseLight * halfLambert;
+    half3 diffuseLight;
     
     if (_UseRampMode > 0.5)
     {
-        // 【技巧 1：讓陰影改變 Ramp 的 UV 取樣】
-        // 這一行非常關鍵！我們把 castShadowMask 考慮進去。
-        // 如果這個像素被其他物件的陰影遮住 (castShadowMask 接近 0)，
-        // 強制讓它去取樣 Ramp 貼圖最左邊的暗部顏色，避免「身在陰影中卻亮著光」的破綻。
-        float rampUV = min(halfLambert, castShadowMask);
-        half3 stylizedRamp = SAMPLE_TEXTURE2D(_RampMap, sampler_LinearClamp, float2(rampUV, 0.5)).rgb;
-
-        // 準備被混合的底色 (包含主光顏色)
-        half3 blendBase = baseColor * mainLight.color;
-
-        // 【技巧 2：Photoshop 柔光混合公式 (Soft Light)】
-        // 讓底色與 Ramp 色階完美融合，提亮不瞎眼，加深不死黑
-        half3 rampDiffuse = (1.0 - 2.0 * stylizedRamp) * blendBase * blendBase + 2.0 * stylizedRamp * blendBase;
-
-        // 透過 RampStrength 參數控制卡通強弱
-        baseDiffuse = lerp(grayDiffuse, rampDiffuse * castShadowMask, _RampStrength);
+        // 取樣 Ramp
+        half3 stylizedRamp = SAMPLE_TEXTURE2D(_RampMap, sampler_LinearClamp, float2(halfLambert, 0.5)).rgb;
+        // Soft Light 混合
+        half3 rampDiffuse = (1.0 - 2.0 * stylizedRamp) * baseDiffuseLight * baseDiffuseLight + 2.0 * stylizedRamp * baseDiffuseLight;
+        diffuseLight = lerp(grayDiffuse, rampDiffuse, _RampStrength);
     }
     else
     {
-        baseDiffuse = grayDiffuse;
+        diffuseLight = grayDiffuse;
     }
 
-    // 梯度漸變染色 (基於物件空間 Y 軸)
+    // 梯度染色
     half gradient = saturate((surface.positionOS.y - _GradientMinY) / (_GradientMaxY - _GradientMinY + 1e-5));
-    half3 diffGradient = lerp(baseDiffuse * _GradientColor.rgb, baseDiffuse, gradient);
-    
-    // 最終漫反射
-    half3 finalDiffuse = diffGradient * shadowColored;
+    diffuseLight = lerp(diffuseLight * _GradientColor.rgb, diffuseLight, gradient);
+    diffuseDark = lerp(diffuseDark * _GradientColor.rgb, diffuseDark, gradient);
+
+    // 【核心修正】：乾淨的合成，暗部自動退回 diffuseDark，絕不二次變黑
+    half3 finalDiffuse = max(diffuseDark, diffuseLight);
 
     // =============================================================
-    // 4. 直接高光 (Blinn-Phong + Fresnel 能量守恆)
+    // 4. PBR 高光與環境反射 (壓抑布料的塑膠感)
     // =============================================================
     half3 halfDir = normalize(mainLight.direction + surface.viewDirWS);
     half NdotH = max(0, dot(surface.normalWS, halfDir));
     half VdotH = max(0, dot(surface.viewDirWS, halfDir));
 
-    // 保留你的 UI 參數控制邏輯，但與平滑度貼圖聯動
     half shininess = lerp(1.0, _SpecShininess, smoothness);
     half energyConservation = (shininess + 2.0) / (8.0 * 3.1415926);
-    
-    // Fresnel 效應 (Schlick 近似)
     half3 fresnelTerm = f0 + (1.0 - f0) * pow(abs(1.0 - VdotH), 5.0);
     
+    // 拔除 halfLambert 破壞，高光嚴格受實體陰影遮蔽
     half specTemp = pow(NdotH, shininess) * energyConservation;
-    half3 finalSpec = fresnelTerm * mainLight.color * _SpecularColor.rgb * _SpecularIntensity * specTemp * castShadowMask * halfLambert;
+    half3 finalSpec = fresnelTerm * mainLight.color * _SpecularColor.rgb * _SpecularIntensity * specTemp * shadowAtten;
 
-    // =============================================================
-    // 5. 間接光 (GI 漫反射 & 環境鏡面反射)
-    // =============================================================
-    half3 ambient = indirectDiffuse * baseColor;
     half3 envSpec = 0;
-    
     #if defined(_REFLECTION_ON)
         half3 reflectDir = reflect(-surface.viewDirWS, surface.normalWS);
-        // 环境粗糙度独立计算
         half envRoughness = lerp(smoothness, 1.0 - _EnvSmoothness, _EnvSmoothness);
-        envRoughness = envRoughness * (1.7 - 0.7 * envRoughness); // 参考的映射公式
+        envRoughness = envRoughness * (1.7 - 0.7 * envRoughness); 
         half3 envReflection = GlossyEnvironmentReflection(reflectDir, surface.positionWS, envRoughness, 1.0);
         
-        // 环境 Fresnel（考虑粗糙度）
         half NdotV = max(0, dot(surface.normalWS, surface.viewDirWS));
         half3 envFresnel = f0 + (max(smoothness.xxx, f0) - f0) * pow(abs(1.0 - NdotV), 5.0);
-        envSpec = envReflection * envFresnel * _EnvSpecularColor.rgb * _EnvSpecularIntensity;
+        envSpec = envReflection * envFresnel * _EnvSpecularColor.rgb * _EnvSpecularIntensity * surface.occlusion;
     #endif
 
     // =============================================================
-    // 6. AO 應用與合併輸出
+    // 5. 高品質 NPR Cloth Rim Light (濾色混合)
     // =============================================================
-    // AO 影響間接光 (環境反射與漫反射)，通常不該壓暗直接高光
-    // 呼叫終極邊緣光函數
-    half3 inner_rim, final_rim;
-    CalculateAnimeRimLight(surface, mainLight, castShadowMask, inner_rim, final_rim);
+    half3 finalRim = 0;
+    if (_UseRimLight > 0.5)
+    {
+        // 1. 基底 Fresnel
+        half rimNdotV = 1.0 - saturate(dot(surface.normalWS, surface.viewDirWS));
+        half rimFresnel = saturate(pow(rimNdotV, _InnerRimPower));
+        
+        // 2. 光源方向遮罩
+        float3 rimLightDir = normalize(_RimLightDirection.xyz);
+        float rimNdotL = dot(surface.normalWS, rimLightDir);
+        float rimDirMask = smoothstep(_RimPosOffset - _RimDirSoftness, _RimPosOffset + _RimDirSoftness, rimNdotL);
+        
+        // =========================================================
+        // 【核心修正】：絕對陰影阻斷
+        // 使用純粹的 castShadowMask，當進入實體投影區 (數值趨近 0) 時，
+        // 遮罩強制歸零，徹底抹殺該區域的邊緣光。
+        // =========================================================
+        float rimShadowMask = smoothstep(0.01, 0.1, castShadowMask);
+        
+        // 計算最終 Rim 遮罩
+        float finalRimMask = rimFresnel * rimDirMask * rimShadowMask * _InnerRimIntensity;
+        
+        // 取得邊緣光顏色並受控於主光/環境光能量
+        half3 rimColor = (_InnerRimColor.rgb + baseColor) * 0.5;
+        finalRim = rimColor * finalRimMask * max(mainLight.color, cleanAmbient);
+    }
 
-    // 衣服：兩層 Rim 全都要！
-    half3 finalColor = finalDiffuse + finalSpec + ((ambient + envSpec) * surface.occlusion);
-    finalColor += inner_rim + final_rim;
+    // =============================================================
+    // 6. 最終合成 (AO 僅壓暗漫反射，Rim 採濾色混合)
+    // =============================================================
+    // 合併漫反射與高光
+    half3 finalColor = (finalDiffuse * surface.occlusion) + finalSpec + envSpec;
+    
+    // 【核心修正】：Screen 混合 Rim Light (1 - (1-Base)*(1-Rim))
+    // 保證邊緣光柔和、不刺眼、不破壞原本的衣服顏色
+    finalColor = 1.0 - (1.0 - saturate(finalColor)) * (1.0 - saturate(finalRim));
 
     return finalColor;
 }

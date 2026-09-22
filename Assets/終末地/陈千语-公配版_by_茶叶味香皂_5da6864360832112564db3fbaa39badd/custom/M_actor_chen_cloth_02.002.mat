@@ -240,7 +240,7 @@ Material:
     - _RaindropSpeed: 1
     - _RampLightIntensity: 1
     - _RampShadowIntensity: 1
-    - _RampStrength: 1
+    - _RampStrength: 0
     - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
     - _ReflectionIntensity: 1

@@ -237,7 +237,7 @@ Material:
     - _RampLightIntensity: 1
     - _RampShadowIntensity: 1
     - _RampStrength: 1
-    - _ReceiveShadowIntensity: 0
+    - _ReceiveShadowIntensity: 1
     - _ReceiveShadows: 1
     - _ReflectionIntensity: 1
     - _ReflectionOn: 1
@@ -272,7 +272,7 @@ Material:
     - _UseLighting: 1
     - _UseOutline: 0
     - _UseRampMode: 1
-    - _UseRimLight: 1
+    - _UseRimLight: 0
     - _UseWetness: 0
     - _WetDarkenIntensity: 0.5
     - _WetDirContrast: 0.5
